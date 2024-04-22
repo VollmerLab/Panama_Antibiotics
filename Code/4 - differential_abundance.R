@@ -16,48 +16,63 @@ tank_data <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
   rename(time = time_fac)
 
 #### Model ASVs ####
-asv_models <- tank_data %>%
-  filter(exposure == 'D') %>%
-  nest_by(across(domain:species), asv_id) %>%
-  # filter(asv_id %in% c('ASV25', 'ASV8')) %>%
-  mutate(model = list(lmer(log2_cpm_norm ~ time + anti + health + 
-                             (1 | tank) + (1 | geno / fragment),
-                           data = data)),
-         
-         anova(model, ddf = 'Satterthwaite') %>%
-           as_tibble(rownames = 'term') %>%
-           rename(nDF = NumDF,
-                  dDF = DenDF,
-                  fvalue = `F value`,
-                  pvalue = `Pr(>F)`) %>%
-           select(-contains(' ')) %>%
-           pivot_wider(names_from = term,
-                       values_from = -term),
-         
-         
-         effect_time = list(emmeans(model, ~time, 
-                                    lmer.df = 'satterthwaite') %>%
-                              contrast('revpairwise')),
-         effect_anti = list(emmeans(model, ~anti, 
-                                    lmer.df = 'satterthwaite') %>%
-                              contrast('revpairwise')),
-         effect_health = list(emmeans(model, ~health, 
+if(file.exists('../intermediate_files/asv_models.rds.xz')){
+  asv_models <- read_rds('../intermediate_files/asv_models.rds.xz')
+} else {
+  asv_models <- tank_data %>%
+    filter(exposure == 'D') %>%
+    nest_by(across(domain:species), asv_id) %>%
+    # filter(asv_id %in% c('ASV25', 'ASV8')) %>%
+    mutate(model = list(lmer(log2_cpm_norm ~ time + anti + health + 
+                               (1 | tank) + (1 | geno / fragment),
+                             data = data)),
+           
+           anova(model, ddf = 'Satterthwaite') %>%
+             as_tibble(rownames = 'term') %>%
+             rename(nDF = NumDF,
+                    dDF = DenDF,
+                    fvalue = `F value`,
+                    pvalue = `Pr(>F)`) %>%
+             select(-contains(' ')) %>%
+             pivot_wider(names_from = term,
+                         values_from = -term),
+           
+           
+           effect_time = list(emmeans(model, ~time, 
                                       lmer.df = 'satterthwaite') %>%
                                 contrast('revpairwise')),
-         
-         across(starts_with('effect'), 
-                ~broom::tidy(.) %>%
-                  pull(estimate),
-                .names = "coef_{.col}"),
-         
-         plot_data = list(emmeans(model, ~time + anti + health) %>% 
-                            broom::tidy(conf.int = TRUE))) %>%
-  ungroup %>%
-  mutate(across(starts_with('pvalue'), 
-                ~p.adjust(., 'fdr'),
-                .names = 'fdr_{.col}')) %>%
-  rename_with(~str_replace_all(., c('coef_effect' = 'coef',
-                                    'fdr_pvalue' = 'fdr')))
+           effect_anti = list(emmeans(model, ~anti, 
+                                      lmer.df = 'satterthwaite') %>%
+                                contrast('revpairwise')),
+           effect_health = list(emmeans(model, ~health, 
+                                        lmer.df = 'satterthwaite') %>%
+                                  contrast('revpairwise')),
+           
+           across(starts_with('effect'), 
+                  ~broom::tidy(.) %>%
+                    pull(estimate),
+                  .names = "coef_{.col}"),
+           
+           plot_data = list(emmeans(model, ~time + anti + health) %>% 
+                              broom::tidy(conf.int = TRUE))) %>%
+    ungroup %>%
+    mutate(across(starts_with('pvalue'), 
+                  ~p.adjust(., 'fdr'),
+                  .names = 'fdr_{.col}')) %>%
+    rename_with(~str_replace_all(., c('coef_effect' = 'coef',
+                                      'fdr_pvalue' = 'fdr')))
+  
+  write_rds(asv_models, '../intermediate_files/asv_models.rds.xz', compress = 'xz')
+}
+
+#### Write Results ####
+asv_models %>%
+  select(-where(is.list)) %>%
+  mutate(association_time = if_else(coef_time < 0, 'before', 'after'),
+         association_anti = if_else(coef_anti < 0, 'untreated', 'antibiotic'),
+         association_health = if_else(coef_time < 0, 'healthy', 'disease')) %>%
+  write_csv('../Results/individual_asv_results.csv')
+
 
 #### Upset Plot ####
 colour_options <- read_rds('../../Panama_Tank_Field/intermediate_files/asv_colors.rds')
