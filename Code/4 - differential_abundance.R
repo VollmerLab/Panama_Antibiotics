@@ -1,9 +1,18 @@
 #### Libraries ####
 library(tidyverse)
+library(multidplyr)
 library(lmerTest)
+library(qvalue)
 library(emmeans)
 library(ComplexUpset)
 library(cowplot)
+
+alpha <- 0.05
+fdr_or_qvalue <- 'fdr'
+refit_models <- TRUE
+
+#### Functions ####
+safe_qvalue <- possibly(.f = ~qvalue(.)$qvalues, otherwise = NA_real_)
 
 #### Data ####
 tank_data <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
@@ -16,13 +25,20 @@ tank_data <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
   rename(time = time_fac)
 
 #### Model ASVs ####
-if(file.exists('../intermediate_files/asv_models.rds.xz')){
+if(file.exists('../intermediate_files/asv_models.rds.xz') & !refit_models){
   asv_models <- read_rds('../intermediate_files/asv_models.rds.xz')
 } else {
+  
+  cluster <- new_cluster(parallel::detectCores() - 1)
+  cluster_library(cluster, c('dplyr', 'lmerTest', 'emmeans', 
+                             'stringr', 'tidyr'))
+  
   asv_models <- tank_data %>%
     filter(exposure == 'D') %>%
     nest_by(across(domain:species), asv_id) %>%
     # filter(asv_id %in% c('ASV25', 'ASV8')) %>%
+    
+    partition(cluster) %>%
     mutate(model = list(lmer(log2_cpm_norm ~ time + anti + health + 
                                (1 | tank) + (1 | geno / fragment),
                              data = data)),
@@ -55,13 +71,18 @@ if(file.exists('../intermediate_files/asv_models.rds.xz')){
            
            plot_data = list(emmeans(model, ~time + anti + health) %>% 
                               broom::tidy(conf.int = TRUE))) %>%
+    collect %>%
     ungroup %>%
     mutate(across(starts_with('pvalue'), 
                   ~p.adjust(., 'fdr'),
                   .names = 'fdr_{.col}')) %>%
+    rename_with(~str_replace(., 'fdr_pvalue', 'fdr')) %>%
+    mutate(across(starts_with('pvalue'), safe_qvalue,
+                  .names = 'qvalue_{.col}')) %>%
     rename_with(~str_replace_all(., c('coef_effect' = 'coef',
-                                      'fdr_pvalue' = 'fdr')))
+                                      'qvalue_pvalue' = 'qvalue')))
   
+  cluster <- NULL
   write_rds(asv_models, '../intermediate_files/asv_models.rds.xz', compress = 'xz')
 }
 
@@ -80,24 +101,23 @@ microbe_colors <- set_names(colour_options$color_palette$hex,
                             colour_options$color_palette$group)
 levels(colour_options$asv_clumping$Top_order)
 
-asv_models$effect_time[[1]]
 
 base_plot_data <- asv_models %>%
-  select(domain:species, asv_id, starts_with('fdr'), starts_with('coef')) %>%
-  pivot_longer(cols = c(starts_with('fdr'), starts_with('coef')),
+  select(domain:species, asv_id, starts_with(fdr_or_qvalue), starts_with('coef')) %>%
+  pivot_longer(cols = c(starts_with(fdr_or_qvalue), starts_with('coef')),
                names_to = c('.value', 'metric'),
                names_pattern = '(.*)_(.*)') %>%
-  mutate(name = case_when(metric == 'time' & fdr > 0.05 ~ 'no_tme',
-                          metric == 'time' & fdr < 0.05 & coef < 0 ~ 'before',
-                          metric == 'time' & fdr < 0.05 & coef > 0 ~ 'after',
+  mutate(name = case_when(metric == 'time' & !!sym(fdr_or_qvalue) > 0.05 ~ 'no_tme',
+                          metric == 'time' & !!sym(fdr_or_qvalue) < 0.05 & coef < 0 ~ 'before',
+                          metric == 'time' & !!sym(fdr_or_qvalue) < 0.05 & coef > 0 ~ 'after',
                           
-                          metric == 'anti' & fdr > 0.05 ~ 'no_anti',
-                          metric == 'anti' & fdr < 0.05 & coef > 0 ~ 'anti',
-                          metric == 'anti' & fdr < 0.05 & coef < 0 ~ 'untreated',
+                          metric == 'anti' & !!sym(fdr_or_qvalue) > 0.05 ~ 'no_anti',
+                          metric == 'anti' & !!sym(fdr_or_qvalue) < 0.05 & coef > 0 ~ 'anti',
+                          metric == 'anti' & !!sym(fdr_or_qvalue) < 0.05 & coef < 0 ~ 'untreated',
                           
-                          metric == 'health' & fdr > 0.05 ~ 'no_health',
-                          metric == 'health' & fdr < 0.05 & coef > 0 ~ 'disease',
-                          metric == 'health' & fdr < 0.05 & coef < 0 ~ 'healthy'),
+                          metric == 'health' & !!sym(fdr_or_qvalue) > 0.05 ~ 'no_health',
+                          metric == 'health' & !!sym(fdr_or_qvalue) < 0.05 & coef > 0 ~ 'disease',
+                          metric == 'health' & !!sym(fdr_or_qvalue) < 0.05 & coef < 0 ~ 'healthy'),
          .keep = 'unused') %>%
   mutate(value = TRUE) %>%
   pivot_wider(values_fill = FALSE) %>%
