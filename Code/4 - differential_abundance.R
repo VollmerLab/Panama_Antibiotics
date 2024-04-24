@@ -215,7 +215,7 @@ postDose_effects <- tank_data %>%
 
 
 #### Combine ####
-tst <- full_join(select(predose_effects,
+prePost_effects <- full_join(select(predose_effects,
                  asv_id, ttest, p.value, fdr) %>%
             rename(p.value_preDose = p.value,
                    fdr_preDose = fdr),
@@ -224,13 +224,133 @@ tst <- full_join(select(predose_effects,
                  fdr_treatment = fdr),
           by = 'asv_id') 
 
-tst %>%
-  select(asv_id, starts_with(fdr_or_qvalue)) %>%
-  mutate(across(starts_with(fdr_or_qvalue), ~. < alpha)) %>%
+upset_data <- prePost_effects %>%
+  select(order, genus, asv_id, starts_with(fdr_or_qvalue)) %>%
+  mutate(across(starts_with(fdr_or_qvalue), ~. < alpha),
+         genus = if_else(is.na(genus), 'Other', genus),
+         order = if_else(is.na(order), 'Other', order)) 
+
+
+colour_options <- read_rds('../intermediate_files/asv_colors.rds')
+microbe_colors <- set_names(colour_options$color_palette$hex,
+                            colour_options$color_palette$group)
+levels(colour_options$asv_clumping$Top_order)
+
+
+base_plot_data <- upset_data %>%
+  mutate(across(starts_with('fdr_disease'), ~if_else(!fdr_treatment, FALSE, .))) %>%
+  
+  left_join(mutate(colour_options$asv_clumping,
+                   genus = str_remove_all(genus, '\\<i\\>|\\</i\\>')),
+            by = c('order', 'genus')) %>%
+  mutate(group = case_when(!is.na(group) ~ group,
+                           is.na(group) & order == 'Oceanospirillales' ~ 'Oceanospirillales-Other',
+                           is.na(group) & order == 'Flavobacteriales' ~ 'Flavobacteriales-Other',
+                           is.na(group) & order == 'Alteromonadales' ~ 'Alteromonadales-Other',
+                           is.na(group) & order == 'Verrucomicrobiales' ~ 'Verrucomicrobiales-Other',
+                           is.na(group) & order == 'Rhodobacterales' ~ 'Rhodobacterales-Other',
+                           TRUE ~ 'Other-Other'),
+         group = factor(group, levels = levels(colour_options$asv_clumping$group))) %>%
+  # filter(!is.na(group)) %>%
+  select(-Top_order, -Top_genus) %>%
+  rename(the_colour = group) 
+
+
+base_plot <- base_plot_data %>%
+  select(order:asv_id, the_colour, starts_with('fdr_disease'), fdr_treatment, fdr_preDose) %>%
   upset(data = ., 
-        intersect = select(., where(is.logical)) %>% colnames)
+        intersect = select(., where(is.logical)) %>% colnames,
+        base_annotations = list(
+          'Intersection size' = intersection_size(
+            counts = TRUE,
+          ) + 
+            scale_y_continuous(labels=scales::comma_format(), 
+                               expand = expansion(mult = c(0.01, 0.05))) +
+            labs(tag = 'B') +
+            theme_classic() +
+            theme(legend.position = 'none',
+                  panel.background = element_rect(colour = 'black'),
+                  axis.text.x = element_blank(),
+                  axis.ticks.x = element_blank(),
+                  axis.title.x = element_blank(),
+                  axis.title = element_text(colour = 'black', size = 14),
+                  axis.text = element_text(colour = 'black', size = 10),
+                  plot.tag = element_text(colour = 'black', size = 18, 
+                                          face = 'bold', hjust = 0))
+        ),
+        
+        annotations = list(
+          'Order' = ggplot(mapping = aes(fill = the_colour)) +
+            geom_bar(fill = 'white', colour = 'black', stat = 'count', 
+                     position = 'fill', show.legend = FALSE) +
+            geom_bar(stat = 'count', position = 'fill', show.legend = FALSE) +
+            scale_y_continuous(labels=scales::percent_format(), 
+                               expand = expansion(mult = c(0.01, 0.05))) +
+            scale_fill_manual(values = microbe_colors) +
+            labs(y = 'Relative Abundance',
+                 tag = 'A') +
+            theme_classic() +
+            theme(legend.position = 'none',
+                  panel.background = element_rect(colour = 'black'),
+                  axis.ticks.y = element_line(colour = 'black'),
+                  axis.minor.ticks.y.left = element_blank(),
+                  axis.text.x = element_blank(),
+                  axis.ticks.x = element_blank(),
+                  axis.title.x = element_blank(),
+                  axis.title = element_text(colour = 'black', size = 14),
+                  axis.text = element_text(colour = 'black', size = 10),
+                  plot.tag = element_text(colour = 'black', size = 18, 
+                                          face = 'bold', hjust = 0))
+        ),
+        
+        sort_sets = FALSE, 
+        set_sizes=(
+          upset_set_size(geom = geom_bar(fill = c('gray65')),
+                         position = 'right') + #'gray65'
+            geom_text(aes(label = after_stat(count)), hjust = 1.1, stat = 'count',
+                      colour = 'white', fontface = 'bold', size = 4) +
+            # + annotate(geom='text', label='@', x='Drama', y=850, color='white', size=3) +
+            # expand_limits(y = 200) +
+            labs(tag = 'D') +
+            theme_classic() +
+            theme(panel.background = element_rect(colour = 'black'),
+                  axis.ticks.x = element_line(colour = 'black'),
+                  axis.title = element_text(colour = 'black', size = 14),
+                  axis.text.x = element_text(angle = 0,  colour = 'black', size = 10),
+                  axis.title.y = element_blank(),
+                  axis.text.y = element_blank(),
+                  axis.ticks.y = element_blank(),
+                  plot.tag = element_text(colour = 'black', size = 18,
+                                          face = 'bold', hjust = 0))
+        ),
+        
+        matrix = (
+          intersection_matrix() +
+            labs(tag = 'C') +
+            theme_classic() 
+        ),
+        
+        
+        name = NULL,
+        themes = upset_modify_themes(list('intersections_matrix' = theme(axis.text.y = element_text(color = c('black'),
+                                                                                                    size = 14, face = 'bold'),
+                                                                         panel.background = element_rect(colour = 'black'),
+                                                                         panel.border = element_rect(colour = 'black', 
+                                                                                                     fill = 'transparent'),
+                                                                         plot.tag = element_text(colour = 'black', size = 18, 
+                                                                                                 face = 'bold', hjust = 0),
+                                                                         axis.ticks = element_line(colour = 'black'),
+                                                                         axis.line = element_line(colour = "black", 
+                                                                                                  linewidth = rel(1))))),
+        upset_stripes(colors = NA)
+  )
+
+ggdraw(base_plot) +
+  draw_plot(colour_options$legend, 
+            x = 0.75, y = 0.25, width = 0.25, height = 0.75)
 ggsave('../Results/asv_upset.png', 
        height = 12, width = 10, bg = 'white')
+
 
 # preT.test <- tst$ttest[[1]]; posthoc <- tst$posthoc[[1]]; contrast <- tst$planned_contrast[[1]]
 make_plot_data <- function(preT.test, posthoc, contrast){
@@ -250,7 +370,7 @@ make_plot_data <- function(preT.test, posthoc, contrast){
     mutate(time = factor(time, levels = c('before', 'after')))
 }
 
-tst %>%
+prePost_effects %>%
   filter(asv_id %in% c('ASV25', 'ASV8')) %>%
   rowwise(asv_id) %>%
   reframe(make_plot_data(ttest, posthoc, planned_contrast)) %>%
@@ -276,12 +396,12 @@ tst %>%
 
 
 
-tst %>% 
+prePost_effects %>% 
   # filter(asv_id == 'ASV8') %>%
   filter(fdr_treatment < alpha) %>%
   filter(fdr_disease.v.avg < alpha, 
-         p.value_disease.v.h < alpha, 
-         p.value_disease.v.anti < alpha) %>% 
+         fdr_disease.v.h < alpha, 
+         fdr_disease.v.anti < alpha) %>% 
   mutate(name = case_when(!is.na(species) & !is.na(family) ~ 
                             str_c(family, '\n', 
                                   species, ' (', asv_id, ')'),
@@ -323,13 +443,8 @@ tst %>%
 ggsave('../Results/asvs_changing_postExposure.png', height = 15, width = 15)
 
 
-full_join(predose_effects,
-          postDose_effects,
-          by = join_by(domain, phylum, class, order, 
-                       family, genus, species, asv_id)) %>%
-  select(-ttest, -estimate1, -estimate2, -statistic, -parameter:-alternative,
-         -model) %>%
-  rename_with(~str_c('preDose_', .), .cols = all_of(c('estimate', 'p.value', 'fdr', 'q.value'))) %>%
+prePost_effects %>%
+  select(-where(is.list)) %>%
   write_csv('../Results/individual_asv_results.csv')
 
 #### Model ASVs ####

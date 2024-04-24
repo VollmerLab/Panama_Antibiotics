@@ -292,3 +292,9 @@ full_data <- full_join(cpm(otu_tmm, log = TRUE, prior.count = 0.5,
               as_tibble(rownames = 'asv_id'),
             by = c('asv_id'))
 write_csv(full_data, '../intermediate_files/normalized_tank_asv_counts.csv')
+
+
+sample_data(microbiome_data) <- column_to_rownames(metadata, 'sample_id')
+prepped_microbiome_data <- subset_samples(microbiome_data, is.na(anti) | anti == 'N')
+
+write_rds(prepped_microbiome_data, '../intermediate_files/prepped_microbiome.rds.gz')

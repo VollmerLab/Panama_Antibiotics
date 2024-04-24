@@ -7,6 +7,115 @@ library(lme4)
 library(lmerTest)
 library(emmeans)
 library(ComplexUpset)
+library(broom)
+
+alpha <- 0.05
+
+#### Functions ####
+t.test_jds <- function(x, y = NULL, 
+                       alternative = c("two.sided", "less", "greater"),
+                       mu = 0, paired = FALSE, var.equal = FALSE, conf.level = 0.95,
+                       ...){
+  alternative <- match.arg(alternative)
+  
+  if(!missing(mu) && (length(mu) != 1 || is.na(mu)))
+    stop("'mu' must be a single number")
+  if(!missing(conf.level) &&
+     (length(conf.level) != 1 || !is.finite(conf.level) ||
+      conf.level < 0 || conf.level > 1))
+    stop("'conf.level' must be a single number between 0 and 1")
+  if( !is.null(y) ) {
+    dname <- paste(deparse(substitute(x)),"and",
+                   deparse(substitute(y)))
+    if(paired)
+      xok <- yok <- complete.cases(x,y)
+    else {
+      yok <- !is.na(y)
+      xok <- !is.na(x)
+    }
+    y <- y[yok]
+  }
+  else {
+    dname <- deparse(substitute(x))
+    if (paired) stop("'y' is missing for paired test")
+    xok <- !is.na(x)
+    yok <- NULL
+  }
+  x <- x[xok]
+  if (paired) {
+    x <- x-y
+    y <- NULL
+  }
+  nx <- length(x)
+  mx <- mean(x)
+  vx <- var(x)
+  if(is.null(y)) {
+    if(nx < 2) stop("not enough 'x' observations")
+    df <- nx-1
+    stderr <- sqrt(vx/nx)
+    if(stderr < 10 *.Machine$double.eps * abs(mx))
+      stop("data are essentially constant")
+    tstat <- (mx-mu)/stderr
+    method <- if(paired) "Paired t-test" else "One Sample t-test"
+    estimate <-
+      setNames(mx, if(paired)"mean of the differences" else "mean of x")
+  } else {
+    ny <- length(y)
+    if(nx < 1 || (!var.equal && nx < 2))
+      stop("not enough 'x' observations")
+    if(ny < 1 || (!var.equal && ny < 2))
+      stop("not enough 'y' observations")
+    if(var.equal && nx+ny < 3) stop("not enough observations")
+    my <- mean(y)
+    vy <- var(y)
+    method <- paste(if(!var.equal)"Welch", "Two Sample t-test")
+    estimate <- c(mx,my)
+    names(estimate) <- c("mean of x","mean of y")
+    if(var.equal) {
+      df <- nx+ny-2
+      v <- 0
+      if(nx > 1) v <- v + (nx-1)*vx
+      if(ny > 1) v <- v + (ny-1)*vy
+      v <- v/df
+      stderr <- sqrt(v*(1/nx+1/ny))
+    } else {
+      stderrx <- sqrt(vx/nx)
+      stderry <- sqrt(vy/ny)
+      stderr <- sqrt(stderrx^2 + stderry^2)
+      df <- stderr^4/(stderrx^4/(nx-1) + stderry^4/(ny-1))
+    }
+    if(stderr < 10 *.Machine$double.eps * max(abs(mx), abs(my)))
+      stop("data are essentially constant")
+    tstat <- (mx - my - mu)/stderr
+  }
+  if (alternative == "less") {
+    pval <- pt(tstat, df)
+    cint <- c(-Inf, tstat + qt(conf.level, df) )
+  }
+  else if (alternative == "greater") {
+    pval <- pt(tstat, df, lower.tail = FALSE)
+    cint <- c(tstat - qt(conf.level, df), Inf)
+  }
+  else {
+    pval <- 2 * pt(-abs(tstat), df)
+    alpha <- 1 - conf.level
+    cint <- qt(1 - alpha/2, df)
+    cint <- tstat + c(-cint, cint)
+  }
+  cint <- mu + cint * stderr
+  names(tstat) <- "t"
+  names(df) <- "df"
+  names(mu) <- if(paired || !is.null(y)) "difference in means" else "mean"
+  attr(cint,"conf.level") <- conf.level
+  rval <- list(statistic = tstat, parameter = df, p.value = pval,
+               conf.int = cint, estimate = estimate, null.value = mu,
+               alternative = alternative, stderr_pair = c(stderrx, stderry),
+               method = method, data.name = dname)
+  class(rval) <- "htest"
+  return(rval)
+}
+
+safe_qvalue <- possibly(.f = ~qvalue(.)$qvalues, otherwise = NA_real_)
 
 #### Data ####
 tank_data <- read_rds("../intermediate_files/full_tank_microbiome.rds")
@@ -43,6 +152,56 @@ alpha_diversity %>%
   stat_summary(fun.data = mean_se, position = position_dodge(0.5)) +
   facet_wrap(~alpha_metric, scales = 'free_y') +
   labs(colour = 'Treatment')
+
+#### Model with/without antibiotics before disease dose ####
+predose_effects <- alpha_diversity %>%
+  filter(time == 'before',
+         exposure == 'D') %>%
+  nest_by(alpha_metric) %>%
+  mutate(spread = abs(min(data$value) - max(data$value))) %>%
+  reframe(ttest = list(with(data, t.test_jds(value[anti == 'N'], value[anti == 'A']))),
+          
+          broom::tidy(ttest)) %>%
+  mutate(fdr = p.adjust(p.value, method = 'fdr'),
+         q.value = safe_qvalue(p.value))
+
+filter(predose_effects, fdr < alpha)
+
+#### Model outcome/antibiotics after disease dose ####
+postDose_effects <- alpha_diversity %>%
+  filter(time == 'after', exposure == 'D') %>%
+  mutate(treatment = str_c(anti, health, sep = '_')) %>%
+  nest_by(alpha_metric) %>%
+  reframe(treatment_model = list(aov(value ~ treatment, data = data)),
+          tidy(treatment_model) %>%
+            mutate(dDF = df[term == 'Residuals']) %>%
+            filter(term != 'Residuals') %>%
+            select(-term),
+          
+          posthoc = list(emmeans(treatment_model, ~treatment)),
+          
+          planned_contrast = list(contrast(posthoc,
+                                           method = list(disease.v.avg = c(-1/2, 1, -1/2),
+                                                         disease.v.h = c(0, 1, -1),
+                                                         disease.v.anti = c(-1, 1, 0)), 
+                                           side = '>')),
+          
+          tidy(planned_contrast) %>%
+            select(contrast, p.value) %>%
+            pivot_wider(names_from = contrast, values_from = p.value,
+                        names_prefix = 'p.value_')) %>%
+  
+  mutate(fdr = p.adjust(p.value, method = 'fdr'),
+         q.value = safe_qvalue(p.value)) %>%
+  mutate(across(starts_with('p.value_disease'), 
+                ~p.adjust(., method = 'fdr'),
+                .names = 'fdr_{.col}')) %>%
+  rename_with(~str_replace_all(., '_p.value_', '_'))
+
+
+
+
+
 
 #### Model only disease exposed through time ####
 alpha_models <- alpha_diversity %>%
