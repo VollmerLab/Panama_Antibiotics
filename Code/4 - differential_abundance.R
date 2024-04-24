@@ -150,37 +150,23 @@ predose_effects %>%
   distinct 
 
 #### Just After Dose comparison ####
-postDose_effects <- tank_data %>%
-  filter(time == 'after') %>%
-  nest_by(across(domain:species), asv_id) %>%
-  mutate(spread = abs(min(data$log2_cpm_norm) - max(data$log2_cpm_norm))) %>%
-  filter(spread > 1) %>%
-  reframe(model = list(aov(log2_cpm_norm ~ anti * exposure, data = data)),
-          tidy(model) %>%
-            select(term, p.value) %>%
-            filter(term != 'Residuals') %>%
-            pivot_wider(names_from = term, values_from = 'p.value',
-                        names_prefix = 'p.value_') %>%
-            rename_with(~str_replace_all(., ':', 'X'))) %>%
-  mutate(across(starts_with('p.value'), ~p.adjust(., method = 'fdr'), .names = 'fdr_{.col}'),
-         across(starts_with('p.value'), ~safe_qvalue(.), .names = 'q.value_{.col}')) %>%
-  rename_with(~str_replace_all(., '_p.value_', '_'))
+# postDose_effects <- tank_data %>%
+#   filter(time == 'after') %>%
+#   nest_by(across(domain:species), asv_id) %>%
+#   mutate(spread = abs(min(data$log2_cpm_norm) - max(data$log2_cpm_norm))) %>%
+#   filter(spread > 1) %>%
+#   reframe(model = list(aov(log2_cpm_norm ~ anti * exposure, data = data)),
+#           tidy(model) %>%
+#             select(term, p.value) %>%
+#             filter(term != 'Residuals') %>%
+#             pivot_wider(names_from = term, values_from = 'p.value',
+#                         names_prefix = 'p.value_') %>%
+#             rename_with(~str_replace_all(., ':', 'X'))) %>%
+#   mutate(across(starts_with('p.value'), ~p.adjust(., method = 'fdr'), .names = 'fdr_{.col}'),
+#          across(starts_with('p.value'), ~safe_qvalue(.), .names = 'q.value_{.col}')) %>%
+#   rename_with(~str_replace_all(., '_p.value_', '_'))
 
-#### Combine ####
-full_join(predose_effects,
-          postDose_effects,
-          by = join_by(domain, phylum, class, order, family, genus, species, asv_id)) %>%
-  select(asv_id, starts_with(fdr_or_qvalue)) %>%
-  mutate(across(starts_with(fdr_or_qvalue), ~. < alpha)) %>%
-  rename(fdr_preDose = fdr) %>%
-  
-  upset(data = ., 
-        intersect = select(., where(is.logical)) %>% colnames)
-ggsave('../Results/asv_upset.png', 
-       height = 12, width = 10, bg = 'white')
-
-# preT.test <- tst$ttest[[1]]; anova_model <- tst$model[[1]]
-make_plot_data <- function(preT.test, anova_model){
+make_plot_data <- function(preT.test, anova_model, posthoc){
   emmeans(anova_model, ~exposure * anti) %>%
     cld(Letters = LETTERS) %>%
     broom::tidy() %>%
@@ -196,45 +182,106 @@ make_plot_data <- function(preT.test, anova_model){
 }
 
 
+#### Just disease dose after ####
+postDose_effects <- tank_data %>%
+  filter(time == 'after', exposure == 'D') %>%
+  mutate(treatment = str_c(anti, health, sep = '_')) %>%
+  nest_by(across(domain:species), asv_id) %>%
+  reframe(treatment_model = list(aov(log2_cpm_norm ~ treatment, data = data)),
+          tidy(treatment_model) %>%
+            mutate(dDF = df[term == 'Residuals']) %>%
+            filter(term != 'Residuals') %>%
+            select(-term),
+          
+          posthoc = list(emmeans(treatment_model, ~treatment)),
+          
+          planned_contrast = list(contrast(posthoc,
+                                           method = list(disease.v.avg = c(-1/2, 1, -1/2),
+                                                         disease.v.h = c(0, 1, -1),
+                                                         disease.v.anti = c(-1, 1, 0)), 
+                                           side = '>')),
+          
+          tidy(planned_contrast) %>%
+            select(contrast, p.value) %>%
+            pivot_wider(names_from = contrast, values_from = p.value,
+                        names_prefix = 'p.value_')) %>%
+  
+  mutate(fdr = p.adjust(p.value, method = 'fdr'),
+         q.value = safe_qvalue(p.value)) %>%
+  mutate(across(starts_with('p.value_disease'), 
+                ~p.adjust(., method = 'fdr'),
+                .names = 'fdr_{.col}')) %>%
+  rename_with(~str_replace_all(., '_p.value_', '_'))
 
-full_join(predose_effects,
-          postDose_effects,
-          by = join_by(domain, phylum, class, order, 
-                       family, genus, species, asv_id)) %>%
+
+#### Combine ####
+tst <- full_join(select(predose_effects,
+                 asv_id, ttest, p.value, fdr) %>%
+            rename(p.value_preDose = p.value,
+                   fdr_preDose = fdr),
+          rename(postDose_effects,
+                 p.value_treatment = p.value,
+                 fdr_treatment = fdr),
+          by = 'asv_id') 
+
+tst %>%
+  select(asv_id, starts_with(fdr_or_qvalue)) %>%
+  mutate(across(starts_with(fdr_or_qvalue), ~. < alpha)) %>%
+  upset(data = ., 
+        intersect = select(., where(is.logical)) %>% colnames)
+ggsave('../Results/asv_upset.png', 
+       height = 12, width = 10, bg = 'white')
+
+# preT.test <- tst$ttest[[1]]; posthoc <- tst$posthoc[[1]]; contrast <- tst$planned_contrast[[1]]
+make_plot_data <- function(preT.test, posthoc, contrast){
+  posthoc %>%
+    cld(Letters = LETTERS) %>%
+    broom::tidy() %>%
+    mutate(time = 'after',
+           .group = str_trim(.group)) %>%
+    separate(treatment, into = c('anti', 'health')) %>%
+    mutate(simple_sig = if_else(all(tidy(contrast)$p.value < alpha), '*', '')) %>%
+    bind_rows(tibble(anti = c('N', 'A'),
+                     estimate = preT.test$estimate,
+                     std.error = preT.test$stderr_pair,
+                     simple_sig = if_else(preT.test$p.value < alpha, '*', ''),
+                     time = 'before', health = 'H',
+                     exposure = 'pre')) %>%
+    mutate(time = factor(time, levels = c('before', 'after')))
+}
+
+tst %>%
   filter(asv_id %in% c('ASV25', 'ASV8')) %>%
   rowwise(asv_id) %>%
-  reframe(make_plot_data(ttest, model)) %>%
+  reframe(make_plot_data(ttest, posthoc, planned_contrast)) %>%
 
   ggplot(aes(x = time, y = estimate, 
              ymin = estimate - std.error,
              ymax = estimate + std.error,
-             shape = exposure,
-             colour = anti)) +
+             shape = anti,
+             colour = health)) +
   geom_errorbar(width = 0.1,
                 position = position_dodge(0.5)) +
   geom_point(position = position_dodge(0.5), 
              size = 4) +
-  geom_text(data = . %>% filter(time == 'after', anti == 'A'),
-            aes(label = .group, y = Inf),
-            position = position_dodge(0.5),
-            vjust = 1, show.legend = FALSE) +
-  geom_text(data = . %>% filter(time == 'after', anti == 'N'),
-            aes(label = .group, y = Inf),
-            position = position_dodge(0.5),
-            vjust = 2, show.legend = FALSE) +
-  geom_text(data = . %>% filter(time == 'before', anti == 'N'),
-            aes(label = .group, y = Inf),
-            vjust = 1, colour = 'black', size = 12) +
-  facet_wrap(~asv_id)
+  
+  geom_text(data = . %>% filter((time == 'after' & health == 'D') | 
+                                  (time == 'before' & anti == 'A')),
+            aes(y = Inf, label = simple_sig),
+            colour = 'black', vjust = 1, size = 8) +
+  
+  facet_wrap(~asv_id) +
+  labs(x = NULL, 
+       y = 'log2CPM')
 
 
 
-full_join(predose_effects,
-          postDose_effects,
-          by = join_by(domain, phylum, class, order, 
-                       family, genus, species, asv_id)) %>%
-  filter((fdr_exposure < alpha & fdr_anti < alpha) | 
-           fdr_antiXexposure < alpha) %>%
+tst %>% 
+  # filter(asv_id == 'ASV8') %>%
+  filter(fdr_treatment < alpha) %>%
+  filter(fdr_disease.v.avg < alpha, 
+         p.value_disease.v.h < alpha, 
+         p.value_disease.v.anti < alpha) %>% 
   mutate(name = case_when(!is.na(species) & !is.na(family) ~ 
                             str_c(family, '\n', 
                                   species, ' (', asv_id, ')'),
@@ -251,31 +298,28 @@ full_join(predose_effects,
                             str_c(phylum, '\n', 
                                   '(', asv_id, ')'),
                           TRUE ~ asv_id)) %>%
-  filter(!is.na(estimate)) %>%
+  # filter(!is.na(estimate)) %>%
   rowwise(name) %>%
-  reframe(make_plot_data(ttest, model)) %>%
+  reframe(make_plot_data(ttest, posthoc, planned_contrast)) %>%
   
   ggplot(aes(x = time, y = estimate, 
              ymin = estimate - std.error,
              ymax = estimate + std.error,
-             shape = exposure,
-             colour = anti)) +
+             shape = anti,
+             colour = health)) +
   geom_errorbar(width = 0.1,
                 position = position_dodge(0.5)) +
   geom_point(position = position_dodge(0.5), 
              size = 4) +
-  geom_text(data = . %>% filter(time == 'after', anti == 'A'),
-            aes(label = .group, y = Inf),
-            position = position_dodge(0.5),
-            vjust = 1, show.legend = FALSE) +
-  geom_text(data = . %>% filter(time == 'after', anti == 'N'),
-            aes(label = .group, y = Inf),
-            position = position_dodge(0.5),
-            vjust = 2, show.legend = FALSE) +
-  geom_text(data = . %>% filter(time == 'before', anti == 'N'),
-            aes(label = .group, y = Inf),
-            vjust = 1, colour = 'black', size = 12) +
-  facet_wrap(~name, scales = 'free_y')
+  
+  geom_text(data = . %>% filter((time == 'after' & health == 'D') | 
+                                  (time == 'before' & anti == 'A')),
+            aes(y = Inf, label = simple_sig),
+            colour = 'black', vjust = 1, size = 8) +
+  
+  facet_wrap(~name, scales = 'free_y') +
+  labs(x = NULL, 
+       y = 'log2CPM')
 ggsave('../Results/asvs_changing_postExposure.png', height = 15, width = 15)
 
 
