@@ -253,7 +253,7 @@ make_microbe_plot <- function(data, highest_taxon = 'order', lower_taxon = 'genu
   
   update_data <- data %>%
     tax_glom(lower_taxon) %>%
-    psmelt() %>%
+    psmelt() %>% 
     filter(Abundance > 0) %>%
     as_tibble() %>% 
     
@@ -377,11 +377,19 @@ make_microbe_plot <- function(data, highest_taxon = 'order', lower_taxon = 'genu
   
 }
 
-
+# phylo <- microbiome_data
+describe_phyloseq <- function(phylo){
+  microbiome::tax_tibble(phylo, 'asv_id') %>%
+  summarise(across(everything(), 
+                   ~n_distinct(., na.rm = TRUE))) %>%
+    relocate(asv_id, .after = species)
+}
 
 #### Data ####
 microbiome_data <- read_rds('../intermediate_files/full_tank_microbiome.rds')
 
+#### Descriptives ####
+describe_phyloseq(microbiome_data)
 
 #### Make Plot ####
 microbial_diversity <- microbiome_data %>%
@@ -393,5 +401,70 @@ plot_grid(microbial_diversity$plot,
           cowplot::plot_grid(NULL, microbial_diversity$legend, NULL, ncol = 1, rel_heights = c(0.12, 1, 0.12)), 
           rel_widths = c(1, .25))
 ggsave('../Results/overall_composition.png', height = 10, width = 10, bg = 'white')
-
 write_rds(microbial_diversity[-1], '../intermediate_files/asv_colors.rds')
+
+#### Describe post rarity purge ####
+analyzed_asvs <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
+         show_col_types = FALSE) %>%
+  pull(asv_id) %>%
+  unique
+
+subset_taxa(microbiome_data, otu_table(microbiome_data) %>% colnames %in% analyzed_asvs) %>%
+  describe_phyloseq
+
+nonRare_microbial_diversity <- subset_taxa(microbiome_data, 
+                                           otu_table(microbiome_data) %>% 
+                                             colnames %in% analyzed_asvs) %>%
+  make_microbe_plot(highest_taxon = 'order', lower_taxon = 'genus',
+                    legend_key_size = 1, legend_text_size = 14, 
+                    top_choices = rev(unique(microbial_diversity$color_palette$Top_order)[-6]))
+
+
+plot_grid(nonRare_microbial_diversity$plot,
+          cowplot::plot_grid(NULL, nonRare_microbial_diversity$legend, NULL, ncol = 1, rel_heights = c(0.12, 1, 0.12)), 
+          rel_widths = c(1, .25))
+ggsave('../Results/nonRare_composition.png', height = 10, width = 10, bg = 'white')
+
+
+#### Post Variance Purge ####
+analyzed_asvs <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
+         show_col_types = FALSE)  %>%
+  mutate(anti = factor(anti, levels = c('N', 'A')),
+         exposure = factor(exposure, levels = c('N', 'D')),
+         health = factor(health, levels = c('H', 'D')),
+         time_fac = factor(time_fac, levels = c('before', 'after'))) %>%
+  select(-time) %>%
+  rename(time = time_fac) %>%
+  filter(exposure == 'D') %>%
+  mutate(treatment = str_c(anti, health, sep = '_')) %>% 
+  
+  
+  nest_by(across(domain:species), asv_id) %>%
+  
+  #Remove samples which will break tests
+  filter(!summarise(data,
+                    var = sd(log2_cpm_norm) < 1e-12,
+                    .by = c('time', 'treatment')) %>%
+           pull(var) %>%
+           any) %>%
+  pull(asv_id) %>%
+  unique
+
+subset_taxa(microbiome_data, otu_table(microbiome_data) %>% colnames %in% analyzed_asvs) %>%
+  describe_phyloseq
+
+
+
+nonRare_variant_microbial_diversity <- subset_taxa(microbiome_data, 
+                                           otu_table(microbiome_data) %>% 
+                                             colnames %in% analyzed_asvs) %>%
+  make_microbe_plot(highest_taxon = 'order', lower_taxon = 'genus',
+                    legend_key_size = 1, legend_text_size = 14, 
+                    top_choices = rev(unique(microbial_diversity$color_palette$Top_order)[-6]))
+
+
+plot_grid(nonRare_variant_microbial_diversity$plot,
+          cowplot::plot_grid(NULL, nonRare_variant_microbial_diversity$legend, NULL, 
+                             ncol = 1, rel_heights = c(0.12, 1, 0.12)), 
+          rel_widths = c(1, .25))
+ggsave('../Results/nonRare_variant_composition.png', height = 10, width = 10, bg = 'white')

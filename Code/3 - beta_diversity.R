@@ -1,20 +1,18 @@
 #### Libraries ####
+library(phyloseq)
 library(tidyverse)
 library(vegan)
 library(patchwork)
 
-#### Data ####
-tank_data_cpm <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv', 
-                           show_col_types = FALSE) %>%
-  filter(exposure == 'D') %>%
-  select(asv_id, sample_id, log2_cpm_norm) %>%
-  pivot_wider(names_from = asv_id, values_from = log2_cpm_norm)
+distance_metric <- 'robust.aitchison'
+redo_analysis <- FALSE
+alpha <- 0.05
 
-tank_metadata <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv', 
-                          show_col_types = FALSE) %>%
-  filter(exposure == 'D') %>%
-  select(sample_id, plate:norm.factors) %>%
-  distinct %>%
+#### Data ####
+microbiome_data <- read_rds('../intermediate_files/full_tank_microbiome.rds')
+
+tank_full_data <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
+                      show_col_types = FALSE) %>%
   mutate(anti = factor(anti, levels = c('N', 'A')),
          exposure = factor(exposure, levels = c('N', 'D')),
          health = factor(health, levels = c('H', 'D')),
@@ -22,126 +20,306 @@ tank_metadata <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv'
   select(-time) %>%
   rename(time = time_fac)
 
-tank_metadata %>%
-  filter(geno == 'BL') %>%
-  filter(str_detect(sample_id, 'N_H'))
+tank_metadata <- tank_full_data %>%
+  select(-asv_id, -domain:-species, -log2_cpm_norm:-n_reads) %>%
+  distinct %>%
+  mutate(treatment = str_c(anti, health, sep = '_'))
 
+tank_data_cpm <- tank_full_data %>%
+  select(sample_id, asv_id, log2_cpm_norm) %>%
+  pivot_wider(names_from = asv_id, 
+              values_from = log2_cpm_norm)
 
-if(!file.exists('../intermediate_files/taxonomy.csv.gz')){
-  taxonomy <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv', 
-                       show_col_types = FALSE) %>%
-    select(asv_id, domain:species) %>%
-    distinct %>%
-    mutate(across(everything(), str_replace_na)) %>%
-    write_csv('../intermediate_files/taxonomy.csv.gz')
-} else {
-  taxonomy <- read_csv('../intermediate_files/taxonomy.csv.gz', 
-                       show_col_types = FALSE) %>%
-    mutate(across(everything(), str_replace_na))
-}
+taxonomy <- select(tank_full_data, asv_id, domain:species) %>%
+  distinct()
+
+fully_analyzed_asvs <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
+                          show_col_types = FALSE)  %>%
+  mutate(anti = factor(anti, levels = c('N', 'A')),
+         exposure = factor(exposure, levels = c('N', 'D')),
+         health = factor(health, levels = c('H', 'D')),
+         time_fac = factor(time_fac, levels = c('before', 'after'))) %>%
+  select(-time) %>%
+  rename(time = time_fac) %>%
+  filter(exposure == 'D') %>%
+  mutate(treatment = str_c(anti, health, sep = '_')) %>% 
+  
+  
+  nest_by(across(domain:species), asv_id) %>%
+  
+  #Remove samples which will break tests
+  filter(!summarise(data,
+                    var = sd(log2_cpm_norm) < 1e-12,
+                    .by = c('time', 'treatment')) %>%
+           pull(var) %>%
+           any) %>%
+  pull(asv_id) %>%
+  unique
 
 #### PERMANOVA ####
-if(file.exists('../intermediate_files/adonis.rds.gz')){
-  the_adonis <- read_rds('../intermediate_files/adonis.rds.gz')
+if(file.exists('../intermediate_files/adonis_post.rds.gz') & !redo_analysis){
+  the_adonis_pre <- read_rds('../intermediate_files/adonis_pre.rds.gz')
+  the_adonis_post <- read_rds('../intermediate_files/adonis_post.rds.gz')
 } else {
   library(parallel)
   clus <- makeCluster(detectCores() - 1)
   clusterEvalQ(clus, library(vegan))
   
-  adon_y_data <- column_to_rownames(tank_data_cpm, 'sample_id')
+  pre_metadata <- filter(tank_metadata, time == 'before')
+  pre_distance <- filter(tank_data_cpm, sample_id %in% pre_metadata$sample_id) %>%
+    column_to_rownames('sample_id') %>%
+    vegdist(., binary = FALSE, method = distance_metric)
   
-  the_adonis <- adonis2(vegdist(adon_y_data, binary = FALSE, method = 'bray') ~ 
-                          time + health + anti, 
-                        permutations = 9999, by = 'terms',
-                        data = tank_metadata, parallel = clus)
+  # pre_distance <- subset_samples(microbiome_data, otu_table(microbiome_data) %>% 
+  #                  rownames %in% pre_metadata$sample_id) %>%
+  #   distance(method = distance_metric)
+  
+  the_adonis_pre <-  adonis2(pre_distance ~ anti, 
+            permutations = 9999, by = 'terms',
+            data = pre_metadata, parallel = clus)
+  write_rds(the_adonis_pre, '../intermediate_files/adonis_pre.rds.gz')
+  
+  the_beta_pre <- betadisper(pre_distance, pre_metadata$anti,
+                             bias.adjust = TRUE) %>%
+    anova(permutations = 9999)
+  write_rds(the_beta_pre, '../intermediate_files/beta_pre.rds.gz')
+  
+  post_metadata <- filter(tank_metadata, time == 'after')
+  post_distance <- filter(tank_data_cpm, sample_id %in% post_metadata$sample_id) %>%
+    column_to_rownames('sample_id') %>%
+    vegdist(., binary = FALSE, method = distance_metric)
+  # post_distance <- subset_samples(microbiome_data, otu_table(microbiome_data) %>% 
+  #                                  rownames %in% post_metadata$sample_id) %>%
+  #   distance(method = distance_metric)
+  the_adonis_post <- adonis2(post_distance ~ treatment, 
+                            permutations = 9999, by = 'terms',
+                            data = post_metadata, parallel = clus)
+  write_rds(the_adonis_post, '../intermediate_files/adonis_post.rds.gz')
+  
+  the_beta_post <- betadisper(post_distance, post_metadata$treatment,
+                              bias.adjust = TRUE) %>%
+    anova(permutations = 9999)
+  write_rds(the_beta_post, '../intermediate_files/beta_post.rds.gz')
   
   stopCluster(cl = clus)
-  write_rds(the_adonis, '../intermediate_files/adonis.rds.gz')
+  
 }
 
-the_adonis
+the_adonis_pre
+the_beta_pre
+the_adonis_post
+the_beta_post
 
-#### VEGAN ####
-if(file.exists('../intermediate_files/tank_nmds.rds.gz')){
-  the_nmds <- read_rds('../intermediate_files/tank_nmds.rds.gz')
+#### NMDS ####
+if(file.exists('../intermediate_files/post_nmds.rds.gz') & !redo_analysis){
+  the_nmds_pre <- read_rds('../intermediate_files/pre_nmds.rds.gz')
+  the_nmds_post <- read_rds('../intermediate_files/post_nmds.rds.gz')
 } else {
   library(parallel)
   clus <- makeCluster(detectCores() - 1)
   clusterEvalQ(clus, library(vegan))
-  the_nmds <- column_to_rownames(tank_data_cpm, 'sample_id') %>%
-    metaMDS(distance = 'bray', binary = FALSE, trymax = 1000, 
+  
+  
+  pre_metadata <- filter(tank_metadata, time == 'before')
+  the_nmds_pre <- filter(tank_data_cpm, sample_id %in% pre_metadata$sample_id) %>%
+    column_to_rownames('sample_id') %>%
+    metaMDS(distance = distance_metric, binary = FALSE, trymax = 1000,
             parallel = clus)
+  # the_nmds_pre <- subset_samples(microbiome_data, otu_table(microbiome_data) %>% 
+  #                  rownames %in% pre_metadata$sample_id) %>%
+  #   distance(method = distance_metric) %>%
+  #   metaMDS(trymax = 1000, parallel = clus)
+  
+  
+  write_rds(the_nmds_pre, '../intermediate_files/pre_nmds.rds.gz')
+  
+  
+  post_metadata <- filter(tank_metadata, time == 'after')
+  the_nmds_post <- filter(tank_data_cpm, sample_id %in% post_metadata$sample_id) %>%
+    column_to_rownames('sample_id') %>%
+    metaMDS(distance = distance_metric, binary = FALSE, trymax = 1000,
+            parallel = clus)
+  
+  # the_nmds_post <- subset_samples(microbiome_data, otu_table(microbiome_data) %>% 
+  #                                   rownames %in% post_metadata$sample_id) %>%
+  #   distance(method = distance_metric) %>%
+  #   metaMDS(trymax = 1000, parallel = clus)
+  
+  write_rds(the_nmds_post, '../intermediate_files/post_nmds.rds.gz')
+  
   stopCluster(cl = clus)
-  write_rds(the_nmds, '../intermediate_files/field_tank_nmds.rds.gz')
+}
+
+veganCovEllipse<-function(x, se = TRUE, conf = 0.95, npoints = 100){
+  #X is a dataframe of 2 coordinates
+  
+  covariance_mat <- cov.wt(x, wt=rep(1/nrow(x), nrow(x)))
+  
+  cov <- covariance_mat$cov
+  
+  if(se){cov <- cov * sum(covariance_mat$wt^2)}
+  
+  center <- covariance_mat$center
+  
+  scale <- sqrt(qchisq(conf, 2))
+  
+  theta <- (0:npoints) * 2 * pi/npoints
+  Circle <- cbind(cos(theta), sin(theta))
+  t(center + scale * t(Circle %*% chol(cov))) %>% as_tibble()
+}
+
+veganGetCentroids <- function(x){
+  #X is a dataframe of 2 coordinates
+  
+  covariance_mat <- cov.wt(x, wt=rep(1/nrow(x), nrow(x)))
+  
+  cov <- covariance_mat$cov
+  enframe(covariance_mat$center) %>%
+    pivot_wider()
 }
 
 
-health_plot <- scores(the_nmds)$sites %>%
-  as_tibble(rownames = 'sample_id') %>%
+nmds_data <- bind_rows(
+  scores(the_nmds_pre)$sites %>%
+    as_tibble(rownames = 'sample_id'),
+  scores(the_nmds_post)$sites %>%
+    as_tibble(rownames = 'sample_id'),
+) %>%
   left_join(tank_metadata, by = 'sample_id') %>%
-  ggplot(aes(x = NMDS1, y = NMDS2, colour = health)) +
-  geom_point(size = 3)
+  mutate(time = str_to_sentence(time) %>% str_c('\nDisease Dose') %>% fct_inorder()) 
 
-time_plot <- scores(the_nmds)$sites %>%
-  as_tibble(rownames = 'sample_id') %>%
-  left_join(tank_metadata, by = 'sample_id') %>%
-  ggplot(aes(x = NMDS1, y = NMDS2, colour = time)) +
-  geom_point(size = 3)
+centroid_data <- nmds_data %>%
+  select(time, anti, health, NMDS1, NMDS2) %>%
+  nest_by(time, anti, health) %>%
+  reframe(veganGetCentroids(data))
 
-anti_plot <- scores(the_nmds)$sites %>%
-  as_tibble(rownames = 'sample_id') %>%
-  left_join(tank_metadata, by = 'sample_id') %>%
-  ggplot(aes(x = NMDS1, y = NMDS2, colour = anti)) +
-  geom_point(size = 3)
+ellipse_data <- nmds_data %>%
+  select(time, anti, health, NMDS1, NMDS2) %>%
+  nest_by(time, anti, health) %>%
+  reframe(veganCovEllipse(data, se = FALSE, conf = 0.66))
 
-health_plot + time_plot + anti_plot
-ggsave('../Results/nmds_plots.png')
 
-if(file.exists('../intermediate_files/field_tank_asvArrows.rds.gz')){
-  asv_fit <- read_rds('../intermediate_files/field_tank_asvArrows.rds.gz')
+#### Fit biplot ####
+if(file.exists('../intermediate_files/post_asvArrows.rds.gz') & !redo_analysis){
+  pre_asv_arrows <- read_rds('../intermediate_files/pre_asvArrows.rds.gz')
+  prost_asv_arrows <- read_rds('../intermediate_files/post_asvArrows.rds.gz')
 } else {
-  asv_fit <- field_data_cpm %>%
+  
+  pre_metadata <- filter(tank_metadata, time == 'before')
+  pre_asv_arrows <- filter(tank_data_cpm, sample_id %in% pre_metadata$sample_id) %>%
     select(-sample_id) %>%
-    envfit(the_nmds, env = .,
+    select(all_of(fully_analyzed_asvs)) %>%
+    envfit(the_nmds_pre, env = .,
            permutations = 9999)
-  write_rds(asv_fit, '../intermediate_files/field_tank_asvArrows.rds.gz')
+  write_rds(pre_asv_arrows, '../intermediate_files/pre_asvArrows.rds.gz')
+  
+  post_metadata <- filter(tank_metadata, time == 'after')
+  post_asv_arrows <- filter(tank_data_cpm, sample_id %in% post_metadata$sample_id) %>%
+    select(-sample_id) %>%
+    select(all_of(fully_analyzed_asvs)) %>%
+    envfit(the_nmds_post, env = .,
+           permutations = 9999)
+  write_rds(post_asv_arrows, '../intermediate_files/post_asvArrows.rds.gz')
 }
 
+vectors_to_tibble <- function(vegan_vector){
+  as_tibble(vegan_vector$arrows, rownames = 'asv_id') %>%
+    mutate(r2 = vegan_vector$r,
+           p.value = vegan_vector$pvals)
+}
 
-#### Plot ####
-colony_points_nmds <- scores(the_nmds)$sites %>%
-  as_tibble(rownames = 'sample_id') %>%
-  left_join(field_metadata, by = 'sample_id')
+sig_asvs <- bind_rows(before = vectors_to_tibble(pre_asv_arrows$vectors),
+          after = vectors_to_tibble(post_asv_arrows$vectors),
+          .id = 'time') %>%
+  left_join(taxonomy, by = 'asv_id') %>%
+  mutate(time = str_to_sentence(time) %>% str_c('\nDisease Dose') %>% fct_inorder()) %>%
+  mutate(fdr = p.adjust(p.value, 'fdr'), .by = time) %>%
+  filter(fdr < alpha) 
 
-filter(colony_points_nmds, NMDS1 > 0.8)
 
-health_plot <- colony_points_nmds %>% 
-  mutate(health = if_else(health == 'D', 'Diseased', 'Healthy')) %>%
+
+bind_rows(before = as_tibble(scores(the_nmds_pre)$species, rownames = 'asv_id'),
+         after = as_tibble(scores(the_nmds_post)$species, rownames = 'asv_id'),
+         .id = 'time') %>%
+  left_join(taxonomy, by = 'asv_id') %>%
+  mutate(time = str_to_sentence(time) %>% str_c('\nDisease Dose') %>% fct_inorder()) %>%
+  filter(!is.na(family)) %>%
+  select(time, family, NMDS1, NMDS2) %>%
+  nest_by(time, family) %>%
+  filter(nrow(data) > 5) %>%
+  reframe(veganGetCentroids(data)) %>%
+  
   ggplot(aes(x = NMDS1, y = NMDS2)) +
-  geom_point(aes(colour = health, shape = health)) +
-  guides(colour = guide_legend(override.aes = list(size = 3))) +
-  labs(colour = 'Disease\nState',
-       shape = 'Disease\nState') +
+  geom_point() +
+  facet_wrap(~time)
+
+
+bind_rows(before = as_tibble(scores(the_nmds_pre)$species, rownames = 'asv_id'),
+          after = as_tibble(scores(the_nmds_post)$species, rownames = 'asv_id'),
+          .id = 'time') %>%
+  left_join(taxonomy, by = 'asv_id') %>%
+  filter(!is.na(family)) %>%
+  select(time, family, NMDS1, NMDS2) %>%
+  nest_by(time, family) %>%
+  filter(nrow(data) > 5) %>%
+  reframe(veganGetCentroids(data)) %>%
+  pivot_wider(names_from = time, values_from = c(NMDS1, NMDS2)) %>%
+  mutate(dist = sqrt((NMDS1_after - NMDS1_before)^2 + (NMDS2_after - NMDS2_before)^2)) %>%
+  arrange(-dist)
+
+#### Make Plot ####
+nmds_data %>%
+  ggplot(aes(x = NMDS1, y = NMDS2)) +
+  geom_path(data = ellipse_data, aes(colour = health, linetype = anti),
+            linewidth = 1.5, show.legend = FALSE) +
+  
+  geom_point(aes(fill = health, shape = anti), size = 1.5) +
+  
+  geom_point(data = centroid_data, aes(fill = health, shape = anti),
+             size = 5) +
+  
+  geom_segment(data = sig_asvs, colour = 'black', xend = 1, yend = 1) +
+  
+  scale_colour_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
+                                                                type = "continuous"),
+                                       c('H', 'D')),
+                    breaks = c('D', 'H'), 
+                    labels = c('H' = 'Healthy', 'D' = 'Diseased'),
+                    drop = FALSE) +
+  scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
+                                                                type = "continuous"),
+                                       c('H', 'D')),
+                    breaks = c('D', 'H'), 
+                    labels = c('H' = 'Healthy', 'D' = 'Diseased'),
+                    drop = FALSE) +
+  
+  scale_shape_manual(values = c('N' = 'triangle filled', 'A' = 'triangle down filled'),
+                     breaks = c('N', 'A'),
+                     labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
+  scale_linetype_manual(values = c('N' = 'solid', 'A' = 'dotted'),
+                     breaks = c('N', 'A'),
+                     labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
+  
+  guides(#colour = guide_legend(override.aes = list(size = 4, shape = 'circle filled')),
+         fill = guide_legend(override.aes = list(size = 4, shape = 'circle filled', linewidth = 2)),
+         #shape = guide_legend(override.aes = list(size = 4, fill = 'black')),
+         linetype = guide_legend(override.aes = list(size = 4, fill = 'black', linewidth = 2))) +
+  labs(x = 'NMDS1', 
+       y = 'NMDS2',
+       colour = 'Health\nState',
+       fill = 'Health\nState',
+       shape = 'Antibiotic\nTreatment',
+       linetype = 'Antibiotic\nTreatment') +
+  facet_wrap(~time) +
   theme_classic() +
-  theme(legend.position = 'right',
+  theme(strip.background = element_blank(),
         panel.background = element_rect(colour = 'black'),
-        strip.text = element_text(colour = 'black', size = 14),
-        axis.title = element_text(colour = 'black', size = 14),
-        axis.text = element_text(colour = 'black', size = 10))
-# ggsave('../Results/nmds_field_tank.png', height = 7, width = 7)
+        legend.key = element_blank())
+ggsave('../Results/asv_nmds.png', height = 5, width = 12)
 
-timepoint_plot <- colony_points_nmds %>% 
-  mutate(timepoint = str_replace_all(timepoint, c('W' = 'Jan', 'S' = 'Jul'))) %>%
-  ggplot(aes(x = NMDS1, y = NMDS2)) +
-  geom_point(data=. %>% select(-timepoint), 
-             colour="grey60", size = 0.75) +
-  geom_point(aes(colour = site, shape = health), size = 1.5) +
-  facet_wrap(~timepoint, labeller = labeller(timepoint = ~str_replace(., '_', ' - '))) +
-  guides(shape = 'none') +
-  labs(colour = 'Site') +
-  theme_classic() +
-  theme(panel.background = element_rect(colour = 'black'),
-        strip.background = element_blank(),
-        strip.text = element_text(colour = 'black', size = 14),
-        axis.title = element_text(colour = 'black', size = 14),
-        axis.text = element_text(colour = 'black', size = 10))
+
+
+
+
+
+

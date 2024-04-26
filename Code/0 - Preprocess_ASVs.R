@@ -221,6 +221,7 @@ sample_data(microbiome_data) <- column_to_rownames(metadata, 'sample_id')
 #### Subset to just tank data & asvs present in any samples ####
 tank_microbiome <- microbiome_data %>%
   subset_samples(dataset == 'tank') %>%
+  subset_samples(exposure %in% c('D', 'pre')) %>%
   phyloseq_filter_sample_wise_abund_trim(minabund = 1)
 
 sample_data(tank_microbiome) <- sample_data(tank_microbiome) %>%
