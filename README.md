@@ -10,8 +10,8 @@ We analyzed the alpha diversity and how it changes across treatments across all 
 After removal of ASVs due to rarity (present in <10% of samples) 787 unique ASVs remained representing 21 classes, 54 orders, 87 families, and 155 genera.
 ![image info](Results/nonRare_composition.png)
 
-We find that before introducing the disease homogenate the microbial community significantly differs based on treatment with the antibiotic (r<sup>2</sup> = 0.11, *F*<sub>(1,32)</sub> = 3.81, *p* = 0.0058) without having substantially different dispersions (*F*<sub>(1,32)</sub> = 1.80, *p* = 0.19). After dosing with the disease homogenate the combination of disease outcome and prior antibiotic treatment significantly influences the microbial community (r<sup>2</sup> = 0.13, *F*<sub>(2,62)</sub> = 4.47, *p* < 0.0001) without having substantially different dispersions (*F*<sub>(2,62)</sub> = 0.96, *p* = 0.39). Indicating the observed differences are driven by primary differences in microbial composition not as a result of changes in the variation within groupings.
-![image info](Results/asv_nmds.png)
+We find that before introducing the disease homogenate the microbial community significantly differs based on treatment with the antibiotic (r<sup>2</sup> = 0.06, *F*<sub>(1,32)</sub> = 2.15, *p* = 0.0058) likely due to the substantially different dispersions (*F*<sub>(1,32)</sub> = 4.76, *p* = 0.037). After dosing with the disease homogenate the combination of disease outcome and prior antibiotic treatment significantly influences the microbial community (r<sup>2</sup> = 0.09, *F*<sub>(2,62)</sub> = 3.08, *p* < 0.0001) without having substantially different dispersions (*F*<sub>(2,62)</sub> = 1.52, *p* = 0.22). Indicating the observed differences are driven by primary differences in microbial composition not as a result of changes in the variation within groupings.
+![image info](Results/asv_dbrda.png)
 
 
 Prior to the analysis of individual ASVs, ASVs which were invariant in one or more of the sampling times/treatments were removed leaving 392 ASVs across 18 classes, 48 orders, 70 families, and 112 genera.

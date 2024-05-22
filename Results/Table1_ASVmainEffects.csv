@@ -1,0 +1,590 @@
+phylum,class,order,family,genus,species,asv_id,VAR_p.value,chisq.value,df,p.value,q.value
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV1,4.4927357283589806e-12,11.97493255863975,4,0.017538649916253105,0.049071937937268696
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV3,2.6396569033861373e-9,10.734524479363667,4,0.029715316703884664,0.07177676143915317
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV4,6.254587732915083e-11,12.515081577003514,4,0.013905097889897704,0.04303613393900533
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV6,2.813033510403479e-9,9.830261029167023,4,0.043386065867938604,0.09733336635991922
+Campylobacterota,Epsilonproteobacteria,Campylobacterales,Arcobacteraceae,NA,NA,ASV7,0.29873129444408136,4.79905319289041,4,0.3085441263000334,0.3439932296757134
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,NA,ASV8,3.2375600497881976e-6,32.543326380225196,4,1.4812918231389005e-6,4.144552788221964e-5
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV9,2.2996146680339328e-8,51.56069895807862,4,1.7043261984136779e-10,1.4305762957714219e-8
+Campylobacterota,Epsilonproteobacteria,Campylobacterales,Arcobacteraceae,Halarcobacter,Halarcobacter bivalviorum,ASV10,1.2361680734477326e-4,2.4812391595388945,4,0.6479983337300945,0.48235570607058553
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV11,1.0774963449380268e-9,11.413719179231922,4,0.022287511771679515,0.05846149430997945
+Verrucomicrobiota,Verrucomicrobiia,Verrucomicrobiales,Rubritaleaceae,Rubritalea,NA,ASV12,7.13165680626259e-11,80.65984024711153,4,1.262416902526614e-16,2.119293475411804e-14
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV15,4.242539055624846e-4,5.345403010488013,4,0.2536565711345695,0.29987901349784996
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV17,1.9004435044646345e-6,2.6238541209821538,4,0.6226033387422476,0.4716441278835971
+Verrucomicrobiota,Verrucomicrobiia,Verrucomicrobiales,Verrucomicrobiaceae,Haloferula,NA,ASV20,7.356422273220585e-19,98.51248909715129,4,2.0392704475571767e-20,6.8468863898420794e-18
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV22,0.05306910785350193,9.172698443859407,4,0.05692485359043989,0.1149712916808237
+Pseudomonadota,Gammaproteobacteria,Thiotrichales,Fastidiosibacteraceae,Cysteiniphilum,Cysteiniphilum litorale,ASV25,1.5133310791614972e-6,50.09116016799497,4,3.4560244627775386e-10,1.9339438184456693e-8
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,NA,NA,ASV26,4.793029692110456e-6,11.066726863131201,4,0.02582424377348789,0.06506961990184959
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV30,1.5852906372166157e-6,24.69329633445073,4,5.7981713157546966e-5,7.786984863213046e-4
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Phaeobacter,Phaeobacter italicus,ASV35,8.902047413439952e-4,17.282680136064055,4,0.0017031429207988817,0.010589504273491009
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV36,2.160770992581622e-6,11.79435079962904,4,0.01894787607199591,0.05214575993850423
+Pseudomonadota,Betaproteobacteria,Burkholderiales,Sphaerotilaceae,Roseateles,NA,ASV37,0.19624008757673714,NA,4,NA,NA
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV39,0.020086549369921772,4.791083301374776,4,0.30941298953112956,0.3439932296757134
+Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Erythrobacteraceae,Qipengyuania,NA,ASV40,4.945565407689146e-5,38.690888264818135,4,8.069516948525787e-8,3.010393895939378e-6
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Seonamhaeicola,NA,ASV41,0.08955429240646208,30.116932401835967,4,4.6333518909549205e-6,9.722850284378119e-5
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV48,0.1467078391090334,3.353374623844261,4,0.5005201808733659,0.4275986204989639
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV52,0.06628978136386048,3.217720257446424,4,0.5220735842313163,0.4367006491759352
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,NA,ASV54,1.3616411753664365e-4,17.028142521898037,4,0.0019087639884762672,0.01144412260432067
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV56,7.437963384422112e-7,21.116176100031563,4,3.003078045762419e-4,0.0028008020417022404
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV58,0.018805119004659424,10.608779135080205,4,0.031331120193018674,0.07460623193642614
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Henriciella,NA,ASV64,2.8723838500211606e-4,2.1671523867856997,4,0.705047253427187,0.5025920492972886
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV68,8.525191111153297e-16,21.427216198322476,4,2.6051324648875305e-4,0.0025725817835752195
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV69,7.321613119178726e-7,13.230474437215685,4,0.010202871473971168,0.036561191693402835
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV71,0.003336549199229693,11.56699521838142,4,0.020879138660875828,0.05653393163702058
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV75,0.08689287372906734,20.013609276721517,4,4.963193670161042e-4,0.004385265797162028
+Pseudomonadota,Gammaproteobacteria,Moraxellales,Moraxellaceae,Acinetobacter,Acinetobacter venetianus,ASV80,0.018013689259308685,2.9855321300712667,4,0.5602494759846155,0.45109051991472693
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Olleya,NA,ASV82,9.380420820356324e-6,17.166658356684575,4,0.0017940060673435876,0.010951648945652056
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Shimia,Shimia marina,ASV83,4.830944961036765e-14,25.071449861006666,4,4.8672690792647826e-5,6.809142303488507e-4
+Pseudomonadota,Alphaproteobacteria,Rickettsiales,Rickettsiaceae,Rickettsia,NA,ASV84,0.6635051320704568,8.142981020062026,4,0.08647882009371259,0.15044256956604093
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV85,0.14297994125896252,5.355518044348153,4,0.2527244746082078,0.29987901349784996
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV86,6.836088487435138e-5,13.68649689584154,4,0.008365866558632598,0.032285682863135795
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV87,9.776347052272062e-7,38.85801378621653,4,7.453096981808224e-8,3.010393895939378e-6
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV92,5.821180974149695e-14,25.505316396652425,4,3.980866047847721e-5,5.811229461868569e-4
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Thalassovita,Thalassovita mediterranea,ASV93,8.700092018177431e-10,59.29291626419037,4,4.084012990161552e-12,4.5707151450120687e-10
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV98,3.258131526243395e-4,14.257111449015971,4,0.006518099297110902,0.026367027730040706
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV103,0.37374122632521845,15.881146584254129,4,0.003182864891904168,0.015412997620504573
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV104,0.01161561884805194,6.184320480541985,4,0.18579948330124715,0.2555390141723964
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV105,0.15460619649243304,7.773390551227065,4,0.10024089765775247,0.16337892072846666
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV107,0.06646691043330599,8.050934198415034,4,0.089730127699870807,0.1523695414811458
+Bacteroidota,Saprospiria,Saprospirales,Lewinellaceae,Lewinella,Lewinella cohaerens,ASV109,6.789367528504148e-4,5.045256234503309,4,0.2826853656429276,0.322420247503114
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV110,0.0028404747314953733,12.084240647875786,4,0.01673570167279672,0.0473005710817023
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV112,6.865054456846457e-4,9.910402386883847,4,0.041964292302942,0.09584751658645746
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,Tenacibaculum litopenaei,ASV116,7.205555989056606e-4,15.859633678516442,4,0.0032134152863521233,0.015412997620504573
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV118,0.0024615113842605604,7.40484032867227,4,0.11597938031653142,0.18455109431329017
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV122,0.008938011783753549,21.992308187535517,4,2.0112821100985945e-4,0.0021198526745317948
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV123,1.037270999291425e-6,4.687393823972159,4,0.3209018848524971,0.35441898740242544
+Verrucomicrobiota,Verrucomicrobiia,Verrucomicrobiales,Verrucomicrobiaceae,Haloferula,NA,ASV124,1.6540137000452385e-23,34.13280265411604,4,6.998866846469768e-7,2.1362562288709348e-5
+Planctomycetota,Phycisphaerae,Phycisphaerales,Phycisphaeraceae,Urania-1B-19 marine sediment group,NA,ASV131,0.5075644010201593,12.890822274932253,4,0.011821761517491893,0.03969177218991923
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV133,0.0011778735212817876,3.036992873212937,4,0.5516539313392786,0.4463103074068204
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Nonlabens,Nonlabens tegetincola,ASV134,2.767180449733296e-7,NA,4,NA,NA
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Alcanivoracaceae,Alcanivorax,Alcanivorax jadensis,ASV135,0.33894150918558275,21.202933655461386,4,2.8863856665884514e-4,0.0027688830385498675
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV136,0.02591945531586888,4.05418021903106,4,0.398723010942245,0.3891626514811591
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV137,0.3693523022044458,5.5331632631525896,4,0.23682974525130482,0.28966056881406765
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,Vibrio tubiashii,ASV141,3.2862147377185736e-6,4.173503214895774,4,0.3830336903825207,0.3824388054718837
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Stieleria,NA,ASV142,7.043559517787022e-5,8.768125947834694,4,0.06716387938259193,0.130349078703181
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,Marinobacter nauticus,ASV145,0.0012048424700312824,2.465173743539249,4,0.6508826420123153,0.48235570607058553
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,Aureispira,Aureispira maritima,ASV146,4.5474871220831823e-7,18.83658641555853,4,8.462210157820985e-4,0.006929760834019718
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV149,0.014489263784276736,16.586066258518965,4,0.00232562110026045,0.012800514331137608
+Planctomycetota,Planctomycetia,Planctomycetales,Planctomycetaceae,Fuerstiella,Fuerstiella marisgermanici,ASV150,5.297870941303332e-4,15.553453260643014,4,0.0036808075301351874,0.016700508124748253
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV151,0.0010011150853912229,16.175392692396,4,0.0027926204420981307,0.014217881708342376
+Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Erythrobacteraceae,NA,NA,ASV152,0.17885524446684517,8.204745341519507,4,0.0843595709222663,0.14818563952269254
+Bacillota,Bacilli,Bacillales,Staphylococcaceae,Staphylococcus,NA,ASV153,0.4234036322318101,12.663812725027846,4,0.013040820486905087,0.042379111716603544
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Oceanobacter,NA,ASV156,0.17501718034872815,15.738789281744694,4,0.003390465352765392,0.01559390006287659
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Aureicoccus,Aureicoccus marinus,ASV160,2.3149236699448245e-7,17.654176901926135,4,0.001441680616954544,0.009314805929858026
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV161,0.0034252193236403664,6.175678594457793,4,0.18640701264464435,0.2555390141723964
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV165,0.3787354170448847,8.68413688793061,4,0.06949812418383304,0.13183117182270856
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,NA,NA,ASV166,1.7289644448759873e-9,30.56187514780022,4,3.760560191911035e-6,9.018676411956551e-5
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV167,0.2785234249931163,4.6337660022062765,4,0.32697959381596164,0.3576025200096027
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV168,8.540659300543943e-4,7.080234907360046,4,0.13170844212547375,0.20100609574201994
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,Marinobacter nauticus,ASV171,0.18120555111725778,2.062851581101464,4,0.724199853343361,0.5094189718225652
+Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Erythrobacteraceae,NA,NA,ASV173,2.4537866312459884e-8,2.6875629428833974,4,0.6113926855875254,0.46800363830995345
+Pseudomonadota,Alphaproteobacteria,NA,NA,NA,NA,ASV174,6.57332534981898e-11,50.13775755843365,4,3.379454715343451e-10,1.9339438184456693e-8
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,NA,ASV176,0.30414461400657666,2.03341788687338,4,0.7296122892143734,0.510351269133565
+Actinomycetota,Actinomycetes,Propionibacteriales,Propionibacteriaceae,Cutibacterium,Cutibacterium acnes,ASV179,0.46956864210395544,8.646816350981716,4,0.07055981827425113,0.1326333867788755
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella poriferorum,ASV183,3.564381855280725e-5,24.52362322591314,4,6.271417777108232e-5,8.098613644014224e-4
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV184,0.0036743422148515998,14.78472377832874,4,0.005169186794913454,0.021969158946990443
+Bacteroidota,Saprospiria,Saprospirales,Lewinellaceae,NA,NA,ASV187,1.3130579838745328e-17,12.414060803052116,4,0.01452370107258334,0.04349090938680272
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Shimia,Shimia marina,ASV191,6.0352052774933763e-5,19.612149392084902,4,5.955851155284765e-4,0.005127403844148298
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV193,1.835641718525693e-8,7.844495341699695,4,0.09744351511613375,0.16037662530538838
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Alcanivoracaceae,Alcanivorax,NA,ASV194,0.7642658907356927,9.245998936312933,4,0.055236338649034294,0.11239816872026229
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV195,0.029433395686554373,13.198644349401366,4,0.010344884642093724,0.036561191693402835
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV197,4.760513311959557e-11,13.935545444294677,4,0.0075036348730941355,0.02963951299260341
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV200,4.969213485166414e-18,26.134311630824588,4,2.9731213333372947e-5,4.991153580674223e-4
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV201,7.427862693190687e-7,10.547898290652434,4,0.03214356058477618,0.07600180981203354
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,NA,NA,ASV203,0.4558196383857894,11.436581858349916,4,0.022071741959197137,0.05846149430997945
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV205,0.041756831512046344,3.205849483358109,4,0.5239866729780741,0.4367006491759352
+Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Erythrobacteraceae,Qipengyuania,NA,ASV206,4.305819936831481e-8,1.8517799684818301,4,0.7629965312809146,0.5238369979484857
+Pseudomonadota,Alphaproteobacteria,Candidatus Pelagibacterales,Candidatus Pelagibacteraceae,Pelagibacter,Candidatus Pelagibacter ubique,ASV207,0.0183095733134063,9.311175563640461,4,0.05377515413942276,0.11076750043026833
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,Aureispira,Aureispira maritima,ASV218,8.706362349840165e-9,30.249456470034513,4,4.3541801244916705e-6,9.722850284378119e-5
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV222,2.4960385068356005e-11,21.575232272139132,4,2.4345787321602017e-4,0.002477012396122029
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,Marinobacter salsuginis,ASV228,0.3487030702893514,12.442463673709302,4,0.014347116697333748,0.04339702397890815
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV237,0.38892323068154305,8.732852196690803,4,0.06813502080552003,0.1308827203722035
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV243,6.857877658719154e-6,5.555193136881723,4,0.23492038969478538,0.28966056881406765
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV248,0.003402086485393435,11.216613986716524,4,0.024234464637768436,0.06307569085531711
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV250,8.298978779955942e-12,12.241120727376922,4,0.015645468782304772,0.04567820571688444
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV252,6.083479546823784e-6,7.081876212852425,4,0.13162418711035173,0.20100609574201994
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Thaumasiovibrio,Thaumasiovibrio occultus,ASV253,0.2554406153790605,9.865491073948455,4,0.0427554571098466,0.09699472914495122
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV256,4.309944611497937e-10,25.898648834701426,4,3.316905022002054e-5,5.062075882611792e-4
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV259,0.5747849694260817,7.510938276905638,4,0.11122792715829438,0.17868407725561447
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,NA,ASV261,2.5875572027471157e-8,5.2943539488992055,4,0.25840593533742184,0.30230051294991706
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Sulfitobacter,Sulfitobacter faviae,ASV264,8.073011356736417e-4,16.139789938309004,4,0.002837209486235963,0.014217881708342376
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV265,0.005543305417532955,5.154492985608842,4,0.27180969061689325,0.31377759821156814
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV266,0.004568689978469001,4.5540807427042,4,0.33618298060948926,0.36125213059206757
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV269,0.12061511440476207,7.652337460704146,4,0.105176456528189,0.17059507362502524
+Pseudomonadota,Alphaproteobacteria,Candidatus Pelagibacterales,Candidatus Pelagibacteraceae,Pelagibacter,Candidatus Pelagibacter ubique,ASV270,0.026859557843002438,4.167121600342574,4,0.3838606177067699,0.3824388054718837
+Bacillota,Bacilli,Lactobacillales,Streptococcaceae,Streptococcus,NA,ASV271,0.13098550094360542,4.730235182895472,4,0.3161132689715767,0.3502824619378284
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,Tritonibacter,Tritonibacter multivorans,ASV272,1.4806458542129148e-7,22.51919261103473,4,1.5794126993298074e-4,0.0018285882459344223
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,Aureispira,Aureispira maritima,ASV273,3.685801691200724e-7,17.96594210069567,4,0.0012531557565468008,0.008494164613429148
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Stappiaceae,NA,NA,ASV275,0.002873286023513486,15.211871527694662,4,0.004281364149846404,0.01891415187401696
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV279,0.003922843203043527,12.080209008852222,4,0.01676467156138168,0.0473005710817023
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV280,6.029955883077109e-4,1.6904662294299733,4,0.7924487090515079,0.530012047105971
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV282,4.1795559108499013e-7,7.2474423913978425,4,0.12337566869850894,0.1944769846540183
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Kordia,NA,ASV283,0.2261629586963335,2.82971438105734,4,0.5867144467976504,0.4610738371005116
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV285,7.810521645885401e-8,14.274183387596663,4,0.006469484407284584,0.026367027730040706
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella algicola,ASV288,0.0011764591332552037,11.05347377501709,4,0.025969570803641182,0.06506961990184959
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV289,1.0835477078612233e-4,2.449597387465399,4,0.6536833252598098,0.48235570607058553
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV291,1.6940838030762238e-4,16.666832885094102,4,0.002243281978351404,0.01255309782031056
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV292,0.9337037454105859,9.329661258817385,4,0.05336748395944106,0.11076750043026833
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,NA,ASV294,2.1932326416005904e-8,15.225059395835121,4,0.00425648484386782,0.01891415187401696
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Stappiaceae,Roseibium,Roseibium hamelinense,ASV296,1.5501684347256587e-5,28.797194776446034,4,8.595076989982506e-6,1.6032290080572508e-4
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV297,8.204345839858791e-5,8.039965779118543,4,0.09012511888047384,0.1523695414811458
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,Tenacibaculum holothuriorum,ASV299,0.03097080690917332,9.12174765561115,4,0.05812737424880628,0.11548146819869451
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,Pseudoteredinibacter,Pseudoteredinibacter isoporae,ASV302,0.022972213321455166,0.3824861762716061,4,0.9838855355460123,0.5785311712773876
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,Pseudooceanicola,NA,ASV304,7.701727452579771e-9,40.30954975675293,4,3.735088481606425e-8,1.7915178944930653e-6
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV310,1.8269901291865365e-12,9.454798131383338,4,0.05068437743464613,0.10839088443396146
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV316,0.3839587359186561,13.742427667280577,4,0.008164159089033342,0.03187361362158689
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Spongiibacteraceae,Spongiibacter,Spongiibacter marinus,ASV317,1.6569618654728823e-4,15.82000790173985,4,0.003270444842159538,0.01546130171119045
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Alcanivoracaceae,Alcanivorax,Alcanivorax profundi,ASV318,0.15921694143191553,0.7852707733184111,4,0.9404117450658546,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV320,0.05855229279712593,4.937591647830018,4,0.2937611329047722,0.33209029284427455
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Shimia,Shimia thalassica,ASV322,1.7536899697244703e-4,0.31290592756789365,4,0.9889658941920835,0.5805018149458314
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Stappiaceae,Roseibium,Roseibium hamelinense,ASV323,0.003914038711617943,9.345058455175955,4,0.05303017767250281,0.11076750043026833
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV325,1.757616633960633e-5,12.953815202122053,4,0.011503679746076514,0.039013946513813014
+Pseudomonadota,Alphaproteobacteria,Maricaulales,Maricaulaceae,Oceanicaulis,Oceanicaulis stylophorae,ASV328,0.01541523283365342,18.780904810023223,4,8.677863115185276e-4,0.006937161432442309
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV333,0.6360780151146677,6.4566293327437245,4,0.16754368148487506,0.2368537851898291
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Mariniblastus,Mariniblastus fucicola,ASV338,4.498409223600671e-6,5.651964923797466,4,0.22669105610230098,0.28613504037719534
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV339,0.005873878051338195,9.015458381424434,4,0.06071425423522088,0.11921004462134063
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV342,0.2850912199357673,17.94512501566829,4,0.0012649471516389154,0.008494164613429148
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV345,0.13368279030468241,5.528350498681917,4,0.23724866479076695,0.28966056881406765
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,Ruegeria arenilitoris,ASV346,1.8042086175668222e-8,18.440505632987183,4,0.00101194455759984,0.0074221561562520235
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV347,7.634402694474622e-4,5.36819781314009,4,0.25156020335429863,0.29987901349784996
+Bacteroidota,Flavobacteriia,Flavobacteriales,Crocinitomicaceae,Salinirepens,Salinirepens amamiensis,ASV355,2.470602703493998e-11,23.642618924819722,4,9.418959170133634e-5,0.0011294400376250602
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Luteirhabdus,Luteirhabdus pelagi,ASV357,7.343618811582815e-6,0.8647835617526236,4,0.9295579208655311,0.5652110419797785
+Planctomycetota,Phycisphaerae,Phycisphaerales,Phycisphaeraceae,Phycisphaera,NA,ASV359,0.009694565268868189,2.7658642656485055,4,0.597739394699558,0.4642375400936181
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Ponticaulis,Ponticaulis koreensis,ASV362,7.9253966546017e-4,21.982439065098983,4,2.0204000083944438e-4,0.0021198526745317948
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Shimia,Shimia marina,ASV364,5.311626772413923e-6,6.797047983822624,4,0.14700995643466522,0.21743987401527495
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV365,0.07022940363771221,13.459747005498217,4,0.009234756758756502,0.03407237166808705
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV368,0.01756978960359696,16.853756708044425,4,0.0020635791637410392,0.011945695399857278
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV370,4.784208110514241e-4,8.070043270854828,4,0.08904585544112396,0.1523695414811458
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,NA,ASV371,0.49609149598597935,11.534640943610482,4,0.021169046020663964,0.05686035543091383
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV373,3.0433732783984717e-13,7.48288069016358,4,0.11246655558055778,0.17981354198773097
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV374,0.0807548741347574,5.673682889794693,4,0.22487918935917975,0.28613504037719534
+Pseudomonadota,Betaproteobacteria,Burkholderiales,Burkholderiaceae,Paraburkholderia,NA,ASV383,0.002176333021639788,3.5392912603834294,4,0.47192922601868276,0.42029460891325887
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,NA,ASV385,0.00469185710097508,6.508232033368568,4,0.16427243704995786,0.23468407355592918
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Allomuricauda,NA,ASV386,1.2503428907412907e-6,12.205193198612452,4,0.015888873987549616,0.04590655540658889
+Pseudomonadota,Alphaproteobacteria,SAR11 clade,Clade III,NA,NA,ASV390,7.333472693293462e-4,3.564664738828876,4,0.46811428617101164,0.41900787396514183
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV394,6.305562289291822e-6,14.961719669181651,4,0.004781275178371539,0.02084833181019898
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,NA,ASV395,0.14021073486250463,2.4957695597592187,4,0.6453934787181144,0.48235570607058553
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV401,4.480485848533893e-4,12.189384907905458,4,0.015997137305588566,0.04590655540658889
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Marixanthomonas,Marixanthomonas ophiurae,ASV403,0.28855942396830164,1.5354325364320083,4,0.8203470482743087,0.5411256662134943
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV405,0.0011995660402004847,5.903759214164673,4,0.20645180338874727,0.26956050176677065
+Bdellovibrionota,Bdellovibrionia,Bdellovibrionales,Bdellovibrionaceae,OM27 clade,NA,ASV407,0.14800301512514963,3.2770384954208223,4,0.5125785153968971,0.4313261602857014
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Allomuricauda,NA,ASV411,0.0026025696269559822,3.4922948031267174,4,0.4790509034285778,0.422821521690015
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV412,0.003704696326425835,16.479239766237022,4,0.002439117131510952,0.013208675262635727
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV413,0.1442304166035175,7.171770236801798,4,0.12708463657303384,0.19754115841522354
+Bacteroidota,Flavobacteriia,Flavobacteriales,Crocinitomicaceae,Crocinitomix,Crocinitomix algicola,ASV419,0.03596388381272706,3.5304112776110617,4,0.47326933472913757,0.42037304607544973
+Pseudomonadota,Alphaproteobacteria,Rhodospirillales,AEGEAN-169 marine group,NA,NA,ASV423,0.1144475326704597,9.778084845483548,4,0.044336411252983376,0.09775381014940773
+Pseudomonadota,Alphaproteobacteria,Candidatus Pelagibacterales,Candidatus Pelagibacteraceae,Pelagibacter,Candidatus Pelagibacter ubique,ASV425,0.5041590366110931,6.593798344465827,4,0.15897544344940542,0.23007019271083193
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV428,0.0683337270229524,3.0902563652931603,4,0.5428364684675244,0.443489562600417
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV430,0.12157719028943018,12.800355442333661,4,0.01229363408223321,0.040466757474791205
+Pseudomonadota,Alphaproteobacteria,Rickettsiales,Rickettsiaceae,NA,NA,ASV431,1.371465826870496e-4,1.46800619709694,4,0.8322932525506139,0.5449732003089085
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Ascidiaceibacter,Ascidiaceibacter salegens,ASV434,2.455010559503621e-6,13.650739511400122,4,0.00849736836733791,0.03242052696161203
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella flava,ASV439,2.414168042532979e-10,11.43139115803707,4,0.022120551541986822,0.05846149430997945
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Ketobacteraceae,Ketobacter,Ketobacter alkanivorans,ASV441,5.21819063421509e-4,16.142517436203168,4,0.002833768903216377,0.014217881708342376
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV442,0.142229527138174,3.629201982640396,4,0.45850665001856783,0.4165034254239302
+Pseudomonadota,Gammaproteobacteria,Thiotrichales,Fastidiosibacteraceae,Cysteiniphilum,Cysteiniphilum marinum,ASV445,1.8370218419617772e-5,3.875797802487377,4,0.4230756667088384,0.39649319692601015
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV453,0.03577114596048731,1.2038752009013054,4,0.877460179996927,0.550670651432627
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV454,4.7275493661181304e-4,1.2665921381593723,4,0.8670176301568895,0.5495832097387456
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,Thalassotalea loyana,ASV456,0.07399266595786516,1.634490791083324,4,0.8025801449139497,0.5335430032085158
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV457,3.597514729742148e-14,4.927772718946001,4,0.2947890758575485,0.3321340625129611
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,Aureispira,Aureispira maritima,ASV458,1.2449412277708609e-9,1.3150362004824876,4,0.8588193025717139,0.5486097006633387
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,NA,NA,ASV462,0.11054681135860825,9.489451741913498,4,0.04996444248191962,0.10761371062193598
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV468,1.2081609876365832e-4,NA,4,NA,NA
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter profundi,ASV476,1.4019766594353178e-12,4.274705113692807,4,0.37010325403101363,0.3763713818641971
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,NA,ASV478,0.021304563468107503,10.944190286131011,4,0.027198450813275356,0.066656406504849
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Phyllobacteriaceae,Mesorhizobium,Mesorhizobium terrae,ASV484,0.43354261271785133,4.611981417101981,4,0.32947509252167767,0.3591618237724747
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV490,2.3451533806027385e-8,13.029647388022697,4,0.011131836401910549,0.03813809845049088
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,NA,ASV493,0.37393124900117247,6.451134316575049,4,0.16789547466219001,0.2368537851898291
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Ponticaulis,Ponticaulis koreensis,ASV494,2.4300661169817423e-5,35.132826040128734,4,4.3624630940182826e-7,1.4647046555498459e-5
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,Tritonibacter,Tritonibacter mobilis,ASV499,6.364200685141462e-5,6.13324997989032,4,0.1894156304877647,0.2555390141723964
+Bacteroidota,Flavobacteriia,Flavobacteriales,Crocinitomicaceae,Crocinitomix,Crocinitomix algicola,ASV504,0.07437576089476813,17.509514002520454,4,0.0015384160394744232,0.009745771522239589
+Pseudomonadota,Gammaproteobacteria,Pasteurellales,Pasteurellaceae,Haemophilus,Haemophilus parainfluenzae,ASV507,0.004455805781349183,10.090276667871455,4,0.03893413268768765,0.08953564053845524
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV513,4.7848182738251925e-9,18.142644292924135,4,0.0011573409926823428,0.008095401532665109
+Bacteroidota,Saprospiria,Saprospirales,NA,NA,NA,ASV518,2.3454246392567784e-4,7.818577421723839,4,0.09845461041734878,0.16125028579401215
+Pseudomonadota,Gammaproteobacteria,Moraxellales,Moraxellaceae,Acinetobacter,NA,ASV520,0.013530109861800695,5.595266179425,4,0.23148155418583533,0.28966056881406765
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV526,3.277496718977154e-8,11.057165553211293,4,0.025929009230521983,0.06506961990184959
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Ponticaulis,Ponticaulis koreensis,ASV535,1.173780809338712e-9,29.162439189998562,4,7.2453311337443845e-6,1.430960393904261e-4
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,NA,NA,ASV537,0.18294961134124488,2.149894509621681,4,0.7082121942359236,0.5037785797910015
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,NA,NA,ASV539,0.003155115531290454,6.805001372745912,4,0.14655888746386891,0.21743987401527495
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Ascidiaceibacter,Ascidiaceibacter salegens,ASV544,8.344605165716214e-9,32.24858352444858,4,1.7018515783392283e-6,4.395382002051992e-5
+Bacteroidota,Cytophagia,Cytophagales,Reichenbachiellaceae,Reichenbachiella,Reichenbachiella faecimaris,ASV545,0.005217891032291884,3.8693521665461468,4,0.42397575816072874,0.39649319692601015
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Marinomonas,Marinomonas communis,ASV551,0.018495955775134125,10.226390832695966,4,0.0367820325680027,0.08516987668133474
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,Thalassotalea loyana,ASV553,3.088116209209788e-5,6.0603475619032245,4,0.19468658222617893,0.26006903367762907
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Rhodopirellula,NA,ASV557,0.0528270230637542,17.65269113095215,4,0.001442642952649099,0.009314805929858026
+Bdellovibrionota,Bacteriovoracia,Bacteriovoracales,Halobacteriovoraceae,Halobacteriovorax,Halobacteriovorax marinus,ASV558,0.3553887864394943,9.824804923737947,4,0.043484522659857625,0.09733336635991922
+Verrucomicrobiota,Verrucomicrobiia,Verrucomicrobiales,Rubritaleaceae,Rubritalea,NA,ASV559,0.036455301207919684,4.439888976670732,4,0.3497347151613067,0.36810045658718393
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV562,0.002067857434002844,3.717152145843839,4,0.44563615820689595,0.40880634919145087
+Pseudomonadota,Betaproteobacteria,Burkholderiales,Comamonadaceae,Curvibacter,Curvibacter lanceolatus,ASV564,0.2721993483420936,12.595794288935277,4,0.013429373749985131,0.042701929874592544
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV565,0.05304831395841524,3.9156080816329615,4,0.41754751786975525,0.39649319692601015
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV566,7.762593894950853e-5,4.09253963227166,4,0.39362681636825986,0.3864353678925313
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Aureicoccus,Aureicoccus marinus,ASV575,0.0321108600084971,12.830384366803399,4,0.0121350018184175,0.04034008119688427
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Algicola,Algicola bacteriolytica,ASV595,0.006327144181314002,11.625080765162654,4,0.02036830434654961,0.055599138240758954
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV599,3.348705765043474e-4,18.439376916037798,4,0.001012459907531061,0.0074221561562520235
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV601,4.489555806963737e-7,0.7316959060168722,4,0.94736341424486,0.5652110419797785
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Ascidiaceibacter,Ascidiaceibacter salegens,ASV602,1.0729084504489825e-5,25.98538799657788,4,3.186001883973859e-5,5.062075882611792e-4
+Bacillota,Bacilli,Lactobacillales,Lactobacillaceae,Latilactobacillus,NA,ASV606,0.06803095125996134,5.764999114190391,4,0.21739911065392312,0.27859593021155293
+Pseudomonadota,Gammaproteobacteria,NA,NA,Sedimenticola,Sedimenticola selenatireducens,ASV609,0.0064766838943451175,3.6149463573685656,4,0.46061702733536064,0.4168543853341923
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV617,0.09275073536213718,12.538902159546753,4,0.013763015842057273,0.04303613393900533
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Kordia,Kordia zhangzhouensis,ASV629,8.039761626745935e-24,27.738953691304438,4,1.4088294711437911e-5,2.4895630130187017e-4
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,Aureispira,Aureispira maritima,ASV630,0.3087452868676964,10.298976360836916,4,0.03568162870468136,0.08319562212872897
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Pseudofulvibacter,Pseudofulvibacter geojedonensis,ASV636,0.30503991703061917,3.728850363948129,4,0.44394371770915775,0.40836954501552375
+Myxococcota,NA,Nannocystales,Nannocystaceae,NA,NA,ASV641,3.937088958704634e-6,4.128773259574808,4,0.3888587152480535,0.385713967350112
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,Pseudooceanicola,NA,ASV645,0.0038424434010746,22.406668601243357,4,1.663153150845803e-4,0.0018613553172720804
+Pseudomonadota,Betaproteobacteria,Burkholderiales,Burkholderiaceae,Ralstonia,Ralstonia insidiosa,ASV646,0.23247632929318823,16.712923565087877,4,0.0021975886713522675,0.01250583493285445
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV648,0.24198835695826681,2.7191615960470266,4,0.6058657678057083,0.4668313181894669
+Planctomycetota,Phycisphaerae,Phycisphaerales,Phycisphaeraceae,CL500-3,NA,ASV653,0.02228096920092617,14.364715637269644,4,0.006217561644453786,0.026094465702434233
+Bdellovibrionota,Bdellovibrionia,Bdellovibrionales,Bdellovibrionaceae,OM27 clade,NA,ASV660,2.497097217392465e-9,20.203365707512727,4,4.5528537014415815e-4,0.0041314287481324895
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV661,8.056206773862695e-4,3.7850268313673907,4,0.4358803074513743,0.40316137673960484
+Bacteroidota,Cytophagia,Cytophagales,Fulvivirgaceae,Fulvivirga,NA,ASV662,0.0012886959572352406,7.874032711443503,4,0.09630306013657405,0.16006891978877527
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV669,0.021536646311238142,3.6714499584787967,4,0.4522919728073866,0.41378154022059205
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV670,1.0192983807749338e-11,14.25924753895325,4,0.006511996916419239,0.026367027730040706
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV671,0.08845045253129327,1.7192608883824965,4,0.7872159575863077,0.5275631579651756
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV679,2.6606282173151312e-11,5.199512510421916,4,0.2674319549757731,0.31069463385178364
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV680,0.24823856187984136,7.122161532654484,4,0.12957166402863246,0.19955923880522108
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV681,3.5429760700441393e-6,15.789121912522539,4,0.0033155856812761633,0.01546130171119045
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Salinimonas,Salinimonas iocasae,ASV682,0.012533022860214064,10.955312130788192,4,0.02707086183012317,0.066656406504849
+Myxococcota,NA,Polyangiales,Polyangiaceae,Chondromyces,NA,ASV683,0.012529943092169466,2.453451864338981,4,0.6529898996740876,0.48235570607058553
+Pseudomonadota,Gammaproteobacteria,Moraxellales,Moraxellaceae,Psychrobacter,Psychrobacter pacificensis,ASV685,1.1215557197847854e-5,1.4103678722538349,4,0.8423910431273534,0.5463958057944521
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Hyphomicrobiaceae,Methyloceanibacter,Methyloceanibacter caenitepidi,ASV688,0.0100413457716272,9.694411696333175,4,0.04590221372307514,0.10007629207897632
+Bacillota,Bacilli,Lactobacillales,Lactobacillaceae,Lactobacillus,Lactobacillus iners,ASV689,0.1578869498508416,8.305052756220679,4,0.08102162174047131,0.14625350528082898
+Pseudomonadota,Alphaproteobacteria,Rhodospirillales,AEGEAN-169 marine group,NA,NA,ASV690,0.14708043888941255,3.0819585781542056,4,0.5442047439007714,0.443489562600417
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV705,0.24248358333112252,3.131409580634951,4,0.5360801597160264,0.4430162455570572
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Actibacter,Actibacter sediminis,ASV713,0.025621146982289626,3.3728812577909486,4,0.4974682727669313,0.4275986204989639
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Oleispira,Oleispira lenta,ASV717,0.032637749461107445,12.36783348485802,4,0.014815638498107018,0.043634883159655545
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV718,7.24094087521236e-9,9.766732725824921,4,0.04454580674778098,0.09775381014940773
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Nitrobacteraceae,Bradyrhizobium,NA,ASV724,0.39386700719181705,1.6317640214580362,4,0.8030721610704181,0.5335430032085158
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV728,8.916368980460672e-13,6.550626810697271,4,0.16162830485058807,0.23193840440491575
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV740,0.11994697278969882,14.832439333248363,4,0.005061669497431596,0.021788005578270746
+Pseudomonadota,Gammaproteobacteria,Chromatiales,Oceanococcaceae,Oceanococcus,Oceanococcus atlanticus,ASV742,3.8039087418625077e-7,0.9431049438815999,4,0.9182968954981268,0.5646882739204167
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV745,3.0939590853375454e-4,3.0853646495227505,4,0.5436428532061809,0.443489562600417
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,NA,ASV747,0.26199858510471646,3.8654521035710094,4,0.42452105785653027,0.39649319692601015
+Pseudomonadota,Alphaproteobacteria,Kordiimonadales,Kordiimonadaceae,Kordiimonas,Kordiimonas laminariae,ASV751,0.060469691623331726,3.583728368952511,4,0.4652619748385821,0.41880033847639714
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,Hyphomonas atlantica,ASV753,1.367031469175455e-4,3.4044900878915865,4,0.4925486119960014,0.425824375001339
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Phaeobacter,Phaeobacter italicus,ASV763,5.15360401673816e-10,3.4873534118359695,4,0.47980388977261823,0.422821521690015
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Mariniblastus,Mariniblastus fucicola,ASV767,0.002672336832769517,3.9266378469599967,4,0.416025374015359,0.39649319692601015
+Bacteroidota,Flavobacteriia,Flavobacteriales,Cryomorphaceae,NS10 marine group,NA,ASV768,7.827565651589877e-5,14.11039389899646,4,0.0069509323134730175,0.027783187476282577
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Gilvibacter,Gilvibacter sediminis,ASV779,0.007537025271266747,3.3283924661614774,4,0.504446332701507,0.4275986204989639
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,NA,NA,ASV784,0.931117617913737,2.953998770583425,4,0.565552876990583,0.4521080309967642
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV786,0.27803240593469886,1.8436151966516519,4,0.7644937738571809,0.5238369979484857
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV788,0.48122741926282975,11.07321078603804,4,0.025753431068766576,0.06506961990184959
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Celeribacter,NA,ASV795,0.06252837961330844,18.382033543935925,4,0.001038985888922535,0.0074221561562520235
+Lentisphaerota,Lentisphaeria,Lentisphaerales,Lentisphaeraceae,Lentisphaera,NA,ASV799,0.18008767243708648,0.7786122242293495,4,0.94129217867443,0.5652110419797785
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,NA,ASV805,0.517564144552898,2.7097508779064317,4,0.6075094155450722,0.4668313181894669
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,Pseudoteredinibacter,Pseudoteredinibacter isoporae,ASV816,3.158849452953542e-4,5.976200322199592,4,0.20093271188850978,0.2656043754822313
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,NA,ASV817,0.0026896039487963883,0.9973800702494681,4,0.9101929959550429,0.5631611682316903
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV819,0.002307406888616023,5.894885821155679,4,0.20713699237287808,0.26956050176677065
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV824,0.009458581941730316,0.2719023100359752,4,0.9915550278291776,0.5805066623821445
+Planctomycetota,Phycisphaerae,Phycisphaerales,Phycisphaeraceae,SM1A02,NA,ASV831,8.161410326301432e-10,5.534295138080585,4,0.23673131642083647,0.28966056881406765
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Cohaesibacteraceae,Cohaesibacter,Cohaesibacter gelatinilyticus,ASV838,1.5525814531495158e-5,7.03996125678642,4,0.13379146530080718,0.20234558449334267
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV846,3.7921598243089634e-5,6.14234353383354,4,0.18876717427060677,0.2555390141723964
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Alcanivoracaceae,Marinicella,NA,ASV850,2.5303655306516007e-4,9.276042254033522,4,0.05455816017882501,0.11169511112707639
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV852,0.009766692198835377,4.281446494991757,4,0.36925414192619266,0.3763713818641971
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,NA,NA,ASV854,0.09576994010056147,6.377037030236264,4,0.17270481386862727,0.24203996396562433
+Actinomycetota,Actinomycetes,Actinomycetales,Actinomycetaceae,Schaalia,NA,ASV858,0.1046314397796787,8.5216834375159,4,0.07423268833412691,0.13619538607750087
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Dokdonia,Dokdonia lutea,ASV859,0.00715967126765159,10.679472308220845,4,0.030412578107743192,0.07293626130411861
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV860,2.648756071038242e-7,9.133081346504415,4,0.05785780732881698,0.11548146819869451
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,NA,ASV861,0.19188714018195585,5.656788865165955,4,0.22628750877869958,0.28613504037719534
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Oleispira,Oleispira lenta,ASV865,0.08898172699513654,3.022235524232999,4,0.5541112586292019,0.44722074406929035
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Thalassolituus,Thalassolituus maritimus,ASV869,1.3404007367434742e-4,1.4566272112312972,4,0.8342956300358464,0.5449732003089085
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,Alteromonas halophila,ASV871,0.9904517253250781,6.678116832338272,4,0.1539078786108514,0.224673221315907
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV872,0.16779917334966687,4.2189697133091055,4,0.3771818733699961,0.37916011164029256
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV875,0.0027514027761521283,4.117710144987164,4,0.3903098430745984,0.385713967350112
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV877,0.007310501638716097,6.743016747857714,4,0.1501079977848547,0.2210483518988685
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,Vibrio xuii,ASV886,0.9431965667765336,3.3182090851439496,4,0.5060523712357636,0.4275986204989639
+Bacteroidota,Cytophagia,Cytophagales,Reichenbachiellaceae,Reichenbachiella,Reichenbachiella faecimaris,ASV887,3.335067980213583e-6,2.76032336411504,4,0.5987008250133127,0.4642375400936181
+Pseudomonadota,Alphaproteobacteria,Rhodospirillales,AEGEAN-169 marine group,NA,NA,ASV895,0.16249996169910724,7.978811103294905,4,0.09235746175941346,0.15427452837590552
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV902,7.076656615739362e-5,2.452551971452415,4,0.6531517695800596,0.48235570607058553
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV903,0.024111359267547983,7.176912339233447,4,0.12682938148871253,0.19754115841522354
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV912,2.4383742465835218e-8,24.108351325647114,4,7.597793368603571e-5,9.448046240087685e-4
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,Sessilibacter,Sessilibacter corallicola,ASV914,1.971542463146291e-6,6.9795743446265774,4,0.1369715728598102,0.2057650318048564
+Pseudomonadota,Gammaproteobacteria,Chromatiales,NA,NA,NA,ASV915,0.36692596926632326,3.5862627549305093,4,0.4648836808067633,0.41880033847639714
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV917,0.7939334316080036,4.377653283099208,4,0.3573021072081367,0.3691224948888824
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV928,9.228190348412384e-8,4.815353453987118,4,0.3067733800761247,0.34333233948529157
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,Marinobacter vinifirmus,ASV931,0.5537893453768172,6.136497470164519,4,0.18918382558917507,0.2555390141723964
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV933,7.223738200779479e-4,8.707540405371665,4,0.06884007768262665,0.13132487012848312
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella algicola,ASV937,0.003309502951012127,0.7542774017583556,4,0.9444705629346236,0.5652110419797785
+Pseudomonadota,Alphaproteobacteria,Rickettsiales,Rickettsiaceae,Rickettsia,NA,ASV938,0.13868684462046088,0.7859783576372752,4,0.9403179160746348,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV942,0.14093298424991618,2.9565021049807148,4,0.5651308612236225,0.4521080309967642
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,Tenacibaculum xiamenense,ASV945,0.0018634522157874882,0.7139154837182011,4,0.9496018359013761,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Neptuniibacter,NA,ASV946,0.047425890537779354,5.7875203355825064,4,0.2155882688800337,0.27733387128481357
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV948,0.08346175825643606,1.9872036875916046,4,0.7381126163613291,0.5130902877271076
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV953,6.853598511464502e-5,1.623411020181514,4,0.804578422336151,0.5335430032085158
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV954,0.01112448166689078,3.095482737312278,4,0.5419756852207015,0.443489562600417
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Photobacterium,NA,ASV955,0.22430488787092287,2.4456391983328687,4,0.6543956641198415,0.48235570607058553
+Pseudomonadota,NA,NA,NA,NA,NA,ASV956,0.05366694233059239,2.8523102989356284,4,0.5828371934196167,0.4604437944835622
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,Thalassotalea euphylliae,ASV959,0.37731252650736924,6.3447771934454424,4,0.17483721815239234,0.2435763629029654
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Vibrio,Vibrio neptunius,ASV960,3.4725556078872566e-4,3.4001571569443674,4,0.49322111185042333,0.425824375001339
+Verrucomicrobiota,Verrucomicrobiia,Verrucomicrobiales,Rubritaleaceae,Rubritalea,NA,ASV965,0.18278396221396126,1.0705276194353504,4,0.8989196905893919,0.5580575625548989
+Pseudomonadota,Alphaproteobacteria,Rickettsiales,Rickettsiaceae,Rickettsia,NA,ASV967,0.020100928427640358,2.256583735604837,4,0.6886844125714768,0.49753993595092677
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV972,0.14257908385192514,4.651924958139874,4,0.32491119522240547,0.3565016509075834
+Verrucomicrobiota,Verrucomicrobiia,Verrucomicrobiales,DEV007,NA,NA,ASV980,0.4350999455178771,5.050349566220215,4,0.28217022251473856,0.322420247503114
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV982,0.009399866148631838,0.3842243287252109,4,0.9837480096040605,0.5785311712773876
+Bdellovibrionota,Bacteriovoracia,Bacteriovoracales,Halobacteriovoraceae,Halobacteriovorax,Halobacteriovorax marinus,ASV984,0.0030339811744197155,5.617428194183143,4,0.22959865507379232,0.28871967119195807
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,Rhodovulum,Rhodovulum iodosum,ASV989,0.23805471380416265,5.4713005308900815,4,0.24226372790139547,0.29242239563204364
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,NA,ASV996,2.1527571540884602e-5,0.1412923696620551,4,0.9976190314318808,0.5805066623821445
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1002,0.0019753204139410312,12.648550079293212,4,0.013127042542349308,0.042379111716603544
+Bacteroidota,Cytophagia,Cytophagales,NA,NA,NA,ASV1004,1.9212199430538676e-4,1.7542519319303886,4,0.7808407147332028,0.5260072088102425
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Litoribrevibacter,Litoribrevibacter euphylliae,ASV1020,0.580047514044411,6.899208167487831,4,0.14131144969520482,0.21086918996632412
+Pseudomonadota,Gammaproteobacteria,Thiohalobacterales,Thiohalobacteraceae,Thiohalobacter,Thiohalobacter thiocyanaticus,ASV1024,4.481211204274024e-9,9.3678199019116,4,0.05253526695448157,0.11076750043026833
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV1026,7.012390373618597e-4,3.625941630074618,4,0.4589887125517061,0.4165034254239302
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1027,0.24394736753572185,1.074711443602689,4,0.8982634810404857,0.5580575625548989
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Nitrobacteraceae,Bradyrhizobium,NA,ASV1030,0.007228245423842513,4.024802139183993,4,0.40265965141739124,0.3918657567302604
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Stappiaceae,NA,NA,ASV1034,0.16823732763795207,11.024927515007036,4,0.026285287275711958,0.06537282538931677
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1036,0.33565148894786284,8.085692817830493,4,0.08848911555798301,0.1523695414811458
+Myxococcota,NA,Haliangiales,Kofleriaceae,NA,NA,ASV1044,1.810639194951496e-6,6.1876770897497995,4,0.18556399026458095,0.2555390141723964
+Actinomycetota,Actinomycetes,Micrococcales,Microbacteriaceae,Microbacterium,Microbacterium luteum,ASV1053,4.70310466945946e-9,7.574972825045073,4,0.1084483890494714,0.17505642951130065
+Actinomycetota,Actinomycetes,Micrococcales,Micrococcaceae,Kocuria,NA,ASV1061,6.688455086321666e-4,2.8126123408318637,4,0.5896575654710186,0.4610738371005116
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV1065,0.06904390635988825,2.035866689672036,4,0.7291619239335585,0.510351269133565
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1066,0.2278039099757502,8.641541833104258,4,0.07071110017098411,0.1326333867788755
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Pseudofulvibacter,Pseudofulvibacter geojedonensis,ASV1069,0.708601489203528,8.022341604408203,4,0.0907632127535578,0.1523695414811458
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV1074,2.608796913510259e-7,5.1530119504147,4,0.2719547366369343,0.31377759821156814
+Bacteroidota,Cytophagia,Cytophagales,Microscillaceae,Microscilla,Microscilla marina,ASV1081,0.24566270682903243,4.462765696912698,4,0.3469853647683929,0.36810045658718393
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV1085,2.4985685229429294e-4,2.280190392756369,4,0.6843779988915032,0.49736172437264786
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1090,0.37816581403170707,2.930342253994997,4,0.569549319069644,0.4542213431704093
+Bacteroidota,Cytophagia,Cytophagales,Amoebophilaceae,Candidatus Amoebophilus,NA,ASV1092,0.03001573972600693,2.496514530720723,4,0.6452600288068934,0.48235570607058553
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1095,0.14045307001272922,5.5638153005050865,4,0.23417675194984283,0.28966056881406765
+Verrucomicrobiota,Verrucomicrobiia,Verrucomicrobiales,Rubritaleaceae,Rubritalea,NA,ASV1099,0.15947107769509877,8.193547904982443,4,0.08474011546157384,0.14818563952269254
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1105,5.414008344172731e-7,6.0533955741925025,4,0.19519598873959831,0.26006903367762907
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Oceanobacter,NA,ASV1109,0.04948005474940992,1.3309751402952552,4,0.8560986581278236,0.5486097006633387
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Halioxenophilus,Halioxenophilus aromaticivorans,ASV1115,0.059440887691453295,6.372344757937011,4,0.1730135133102868,0.24203996396562433
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Halieaceae,NA,NA,ASV1118,0.594491228953878,5.350802216413329,4,0.25315866905720924,0.29987901349784996
+Bacteroidota,NA,NA,NA,NA,NA,ASV1120,0.0020061175249528646,12.39597864624657,4,0.014637221206279066,0.04349090938680272
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Halieaceae,NA,NA,ASV1125,0.4178972968033931,2.8595030618009987,4,0.5816057132759751,0.4604437944835622
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,Thalassotalea loyana,ASV1132,0.0020213104617443074,4.953223307026271,4,0.292130839431242,0.3313629833581519
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV1136,1.9845011273074693e-6,5.4910827439585095,4,0.2405144262442545,0.291782785540951
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1142,5.1527395634651135e-5,NA,4,NA,NA
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1144,0.18856175888608745,7.281474266196694,4,0.12174045547041129,0.19280458497321465
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,Thalassotalea montiporae,ASV1145,0.001585277454629038,4.1047279669417325,4,0.3920179628986783,0.3859845174121372
+Bacteroidota,Cytophagia,Cytophagales,Fulvivirgaceae,Fulvivirga,Fulvivirga lutimaris,ASV1147,0.46064996217291654,7.846207739703709,4,0.09737705506128994,0.16037662530538838
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1148,0.05809525619760476,1.740613676011799,4,0.7833275558070896,0.5260072088102425
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1153,0.0012696082486019342,6.711609099645277,4,0.1519361039986612,0.22276338038906368
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,NA,NA,NA,ASV1155,0.04260902658121641,1.3119148263648097,4,0.8593507865050929,0.5486097006633387
+Pseudomonadota,Alphaproteobacteria,Parvularculales,Parvularculaceae,Parvularcula,Parvularcula mediterranea,ASV1156,0.0025649747047206237,11.16613207330316,4,0.024759019383309457,0.06394526383555332
+Pseudomonadota,Gammaproteobacteria,Arenicellales,Arenicellaceae,Arenicella,NA,ASV1162,0.2662079011637977,1.7785415648739122,4,0.7764058777368084,0.5255707070842538
+Bacteroidota,Flavobacteriia,Flavobacteriales,NA,NA,NA,ASV1175,0.007050164740217335,1.9998186716902175,4,0.7357922358214746,0.5130902877271076
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,Pseudoteredinibacter,Pseudoteredinibacter isoporae,ASV1176,0.07882336229332657,6.497317238896973,4,0.16495949743855928,0.23468407355592918
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Neptuniibacter,Neptuniibacter caesariensis,ASV1189,0.13195405795814272,18.999212685541455,4,7.862241897820118e-4,0.006599403858903981
+Bacteroidota,Saprospiria,Saprospirales,Lewinellaceae,Neolewinella,Neolewinella agarilytica,ASV1190,0.0021651142012594784,4.004712194116079,4,0.40536849922046103,0.3929795210465349
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Stappiaceae,Roseibium,Roseibium hamelinense,ASV1217,0.41870831759169175,5.201664905884111,4,0.2672241666706515,0.31069463385178364
+Bdellovibrionota,Bacteriovoracia,Bacteriovoracales,Bacteriovoracaceae,Peredibacter,NA,ASV1224,0.008631609912765606,4.423555101112584,4,0.3517083448462141,0.36834496062534106
+Fusobacteriota,Fusobacteriia,Fusobacteriales,Fusobacteriaceae,NA,NA,ASV1227,0.0021043387075298714,2.7091896725015294,4,0.6076074982081827,0.4668313181894669
+Pseudomonadota,Alphaproteobacteria,Candidatus Pelagibacterales,Candidatus Pelagibacteraceae,Pelagibacter,Candidatus Pelagibacter ubique,ASV1229,0.016753998105046235,8.026097396076096,4,0.0906268778015112,0.1523695414811458
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Rhizobiaceae,Rhizobium,NA,ASV1236,0.44565213099244094,1.519767435669749,4,0.8231342405396235,0.5418995466808706
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1242,0.4611472282730551,4.447020924265369,4,0.34887573136067246,0.36810045658718393
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV1243,0.286111512696691,2.169289874799995,4,0.7046553996696412,0.5025920492972886
+Actinomycetota,Actinomycetes,Micromonosporales,Micromonosporaceae,NA,NA,ASV1245,0.22428895637836663,2.242942133307696,4,0.691175630273183,0.4979902003234544
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV1264,2.294183209691176e-8,3.4015380663919688,4,0.4930067202805628,0.425824375001339
+Bacteroidota,Cytophagia,Cytophagales,Amoebophilaceae,Candidatus Amoebophilus,NA,ASV1271,0.004791498757151629,2.2544780552525494,4,0.6890688263161645,0.49753993595092677
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV1278,2.2961920178719952e-4,3.8673271505666706,4,0.4242588281177196,0.39649319692601015
+Planctomycetota,Planctomycetia,Planctomycetales,Planctomycetaceae,Fuerstiella,Fuerstiella marisgermanici,ASV1280,9.299757602020234e-5,2.9160436599384227,4,0.5719721728364268,0.45507266087136916
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Allomuricauda,Allomuricauda onchidii,ASV1291,0.010709147718389777,16.038365052523837,4,0.0029681131671448462,0.014655135522477608
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Pleioneaceae,Aliikangiella,Aliikangiella marina,ASV1310,0.050196477532469676,3.3355326641397864,4,0.503322183771002,0.4275986204989639
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1313,0.001171702604691097,1.967575965168112,4,0.7417226868665412,0.513634830131318
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Henriciella,NA,ASV1320,2.1906504623848916e-7,8.19539943132001,4,0.08467708019022012,0.14818563952269254
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV1324,0.017481746936057332,9.075294645809276,4,0.05924478123314038,0.11700905579774878
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1332,0.043573912502744956,4.5857198479154455,4,0.3325039766909801,0.35998825325283695
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Actibacterium,Actibacterium atlanticum,ASV1334,1.0718025026438936e-7,2.0675681921472044,4,0.7233327326616898,0.5094189718225652
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1340,0.0020987930366222402,2.7360528860476903,4,0.6029207245853966,0.46643247364720714
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV1357,0.013792810657965216,8.529871738575405,4,0.07398692398123309,0.13619538607750087
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,Thalassotalea loyana,ASV1358,0.41307603898860246,0.212148101356799,4,0.9947565986489163,0.5805066623821445
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV1375,0.014188815641223977,4.393295977390161,4,0.35538796345412954,0.36834496062534106
+Pseudomonadota,Alphaproteobacteria,Sneathiellales,Sneathiellaceae,Sneathiella,NA,ASV1381,0.01472552291939215,1.608505492743672,4,0.8072626239622995,0.5335430032085158
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV1385,0.058952997408325186,2.5848327342248805,4,0.6295122764922564,0.4749659637729077
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,NA,NA,ASV1390,0.002115806547469302,1.2158430204917205,4,0.8754833433679075,0.550458936595206
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Halomonadaceae,Cobetia,NA,ASV1391,0.1077069268844722,1.2284337657431912,4,0.8733953639037004,0.5501764153186809
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Aureisphaera,Aureisphaera salina,ASV1394,0.06405848966421429,18.5501578784996,4,9.630959676556054e-4,0.0074221561562520235
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1410,0.0014655456122226703,4.171861752144181,4,0.3832462593638463,0.3824388054718837
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1421,1.916261116837112e-12,1.9038596474687373,4,0.7534359353087157,0.5183759021640066
+Pseudomonadota,Betaproteobacteria,NA,NA,NA,NA,ASV1428,0.006411596212863317,3.874251180883115,4,0.42329151452323965,0.39649319692601015
+Bdellovibrionota,Bdellovibrionia,Bdellovibrionales,Bdellovibrionaceae,OM27 clade,NA,ASV1435,0.3627731809327186,4.514058176019881,4,0.3408837970684112,0.3644978800528311
+Rhodothermota,Rhodothermia,Rhodothermales,Rubricoccaceae,Rubrivirga,NA,ASV1443,2.3991748871504354e-8,8.729842912570653,4,0.06821848428171312,0.1308827203722035
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1450,5.0605525625720684e-5,NA,4,NA,NA
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV1471,0.0033441436360297535,5.302723857623401,4,0.2576220476703229,0.30230051294991706
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1478,0.006193693066787816,8.778232306638857,4,0.06688806282885419,0.130349078703181
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Allomuricauda,NA,ASV1509,4.426136134727915e-5,4.586857097277264,4,0.3323723459909055,0.35998825325283695
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV1518,0.4651100636886293,0.8403954210273904,4,0.9329519165634822,0.5652110419797785
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,Tritonibacter,Tritonibacter litoralis,ASV1520,1.0877931346465593e-4,18.42102460350845,4,0.001020875696154244,0.0074221561562520235
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Salipiger,Salipiger bermudensis,ASV1523,0.09588818949631879,4.2260884462777994,4,0.3762719499718735,0.37916011164029256
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Blastopirellula,NA,ASV1531,0.012726224670119907,8.285360576635506,4,0.08166694998635131,0.14663006457566144
+Pseudomonadota,Alphaproteobacteria,Maricaulales,Maricaulaceae,Maricaulis,NA,ASV1545,0.0024196378496102113,13.531628329406036,4,0.008950169010442632,0.033764438031794186
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,Pseudoteredinibacter,Pseudoteredinibacter isoporae,ASV1555,0.007790993721927686,3.399278231495464,4,0.4933576002011015,0.425824375001339
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV1559,0.28227609565730477,0.7160212207154043,4,0.9493385803988909,0.5652110419797785
+Bacteroidota,Saprospiria,Saprospirales,NA,NA,NA,ASV1561,1.1421582659898149e-4,6.550309367322753,4,0.16164795937497087,0.23193840440491575
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1576,4.607168896013866e-5,5.400534972696752,4,0.2486118645197128,0.2981138239854977
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Psychrosphaera,NA,ASV1581,0.19017919992396795,5.843803706844419,4,0.21112072545205743,0.2736839955323092
+Bacteroidota,Flavobacteriia,Flavobacteriales,Crocinitomicaceae,NA,NA,ASV1583,0.4435858544450445,13.095979631560489,4,0.010816218724942444,0.03768115798445798
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Aquimarina,Aquimarina salinaria,ASV1588,0.04412669891059473,2.780137132959901,4,0.5952662395765739,0.46371621058042684
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1592,5.697146635391783e-4,1.8011867470513263,4,0.7722652234600225,0.5255707070842538
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Oleispira,Oleispira lenta,ASV1606,0.7166246884694727,2.4185813445280893,4,0.6592719419972025,0.4830106636275419
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1611,0.0015857259282945875,4.413048450441671,4,0.3529825450904454,0.36834496062534106
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Roseovarius,Roseovarius pacificus,ASV1617,5.705540095311488e-4,4.2845210081573075,4,0.3688673969412905,0.3763713818641971
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,NA,NA,ASV1633,0.8712782379685803,NA,4,NA,NA
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV1639,4.513019982311603e-4,3.332494033580997,4,0.5038003880256692,0.4275986204989639
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV1645,0.0935996653904036,6.137618000445651,4,0.1891039013221258,0.2555390141723964
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,Pseudoteredinibacter,Pseudoteredinibacter isoporae,ASV1668,0.01834886235137438,1.068716057628442,4,0.8992034550184965,0.5580575625548989
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Patiriisocius,Patiriisocius marinus,ASV1675,0.2165318843759893,2.8840842772060813,4,0.5774072201232884,0.4583108500525725
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Cellvibrionaceae,Maricurvus,Maricurvus nonylphenolicus,ASV1681,0.0032978230031110835,0.8526753126964695,4,0.9312499371973275,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1687,0.0038362181241215136,1.4069682100190477,4,0.842983008041244,0.5463958057944521
+Pseudomonadota,Gammaproteobacteria,Enterobacterales,Enterobacteriaceae,Enterobacter,NA,ASV1693,0.19211249036526615,0.6945795606501045,4,0.9519956858470114,0.5652110419797785
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Ponticaulis,Ponticaulis koreensis,ASV1712,0.0145127518538478,1.3160197472642088,4,0.8586517419978761,0.5486097006633387
+Pseudomonadota,Gammaproteobacteria,Salinisphaerales,Salinisphaeraceae,Salinisphaera,Salinisphaera japonica,ASV1718,0.0395937347248054,2.306287758643686,4,0.6796245023182079,0.49497857229128683
+Bacteroidota,Chitinophagia,Chitinophagales,Chitinophagaceae,Sediminibacterium,NA,ASV1724,0.027082080018261713,2.626139224155282,4,0.6221997270099346,0.4716441278835971
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV1730,0.06502636352087832,5.463072541131479,4,0.24299455266233055,0.29242239563204364
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV1738,0.6845937742145605,2.194487705969288,4,0.7000385869574831,0.5022204842813833
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Ponticaulis,NA,ASV1739,3.0176566325122196e-4,12.504038686174907,4,0.013971449082542131,0.04303613393900533
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV1740,0.10464444946081054,4.4990860290411385,4,0.34265586689255856,0.36522955522657174
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV1748,4.7856271926232557e-4,3.834172331746255,4,0.42891310362899465,0.3989150382845948
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV1754,1.1030907048244237e-7,2.807719057306166,4,0.5905010022663706,0.4610738371005116
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Phyllobacteriaceae,Lentilitoribacter,Lentilitoribacter donghaensis,ASV1760,1.0957191067998869e-4,13.221677976496256,4,0.010241926172013392,0.036561191693402835
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Roseovarius,Roseovarius pacificus,ASV1788,5.348735448205276e-7,9.774965111846745,4,0.044393862126876085,0.09775381014940773
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV1790,4.7605728935816476e-4,13.315417854768999,4,0.009833148667945935,0.03588583649592758
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Psychrosphaera,NA,ASV1793,0.0013737553011712357,1.4238307292144843,4,0.8400427255646044,0.5463958057944521
+Bacteroidota,Saprospiria,Saprospirales,NA,NA,NA,ASV1799,5.904416535345495e-4,5.91683754753724,4,0.20544557380325656,0.26944809647103246
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV1830,2.3967965109487774e-4,8.065647162767101,4,0.08920283953228392,0.1523695414811458
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV1837,4.134501210422887e-6,3.95781960168976,4,0.4117444430672724,0.3949826309848728
+Bdellovibrionota,Bacteriovoracia,Bacteriovoracales,Bacteriovoracaceae,Peredibacter,NA,ASV1874,0.0172292840226296,1.7888958834497644,4,0.7745132826833483,0.5255707070842538
+Planctomycetota,Planctomycetia,Planctomycetales,Planctomycetaceae,Fuerstiella,Fuerstiella marisgermanici,ASV1886,0.0016322792320146175,2.40483592326243,4,0.661753511610609,0.4830106636275419
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,Marinobacter salsuginis,ASV1908,0.02643736952258624,2.099791325754021,4,0.7174107228459092,0.5081685903343645
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,NA,NA,ASV1944,0.00916128729484482,1.3613825988188335,4,0.8508783561346711,0.5486097006633387
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Mariniblastus,Mariniblastus fucicola,ASV1963,0.0035661132834774777,6.027286767760549,4,0.19711972760103,0.2615940521444022
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Dokdonia,Dokdonia lutea,ASV1964,0.4305055491467198,4.393536603889454,4,0.35535858238522194,0.36834496062534106
+Bacteroidota,Saprospiria,Saprospirales,Lewinellaceae,Lewinella,Lewinella cohaerens,ASV1965,3.949074738302955e-4,6.126322687651199,4,0.18991094692463464,0.2555390141723964
+Pseudomonadota,Gammaproteobacteria,Chromatiales,NA,NA,NA,ASV2014,0.1790613276205339,1.239064927588155,4,0.8716259018195895,0.550093852177404
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,Ruegeria arenilitoris,ASV2043,4.33032944658487e-7,0.9498593425755497,4,0.9173012322566272,0.5646882739204167
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV2044,0.204474450987208,3.992186492070639,4,0.40706432580992374,0.3929795210465349
+Bacteroidota,Flavobacteriia,Flavobacteriales,Owenweeksiaceae,Croceimicrobium,Croceimicrobium hydrocarbonivorans,ASV2054,0.07585267441343564,1.4598466092480284,4,0.8337295334128887,0.5449732003089085
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV2061,3.994582566603523e-4,3.2342302754262446,4,0.5194199768664347,0.4359904266840955
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Dokdonia,Dokdonia lutea,ASV2066,0.6704234703846341,9.354569656778207,4,0.05282283328779109,0.11076750043026833
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,Ruegeria conchae,ASV2079,0.0015907678970510943,NA,4,NA,NA
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV2080,0.167382304726921,0.2428355786096774,4,0.993199209515853,0.5805066623821445
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV2084,1.0588633738379136e-5,3.76594440386579,4,0.4386074639883151,0.40456930593316737
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV2089,0.055205453860069406,3.8611138327847407,4,0.42512823014759943,0.39649319692601015
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV2094,0.0030573534800847953,16.923685035519398,4,0.002000065429231033,0.011781148862036989
+Planctomycetota,Phycisphaerae,Phycisphaerales,Phycisphaeraceae,SM1A02,NA,ASV2096,8.744479743633907e-9,8.396798163836229,4,0.07807788907977681,0.14170155980876456
+Bacteroidota,Flavobacteriia,Flavobacteriales,Crocinitomicaceae,Crocinitomix,NA,ASV2105,4.332044724502559e-4,16.255759041839287,4,0.0026944906050930077,0.014135624361450865
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,Marinobacter nauticus,ASV2111,7.578973552608527e-5,6.621366482983239,4,0.15730214616648952,0.22863407880324502
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV2141,2.3365843302703006e-5,NA,4,NA,NA
+Planctomycetota,Planctomycetia,Pirellulales,Pirellulaceae,Mariniblastus,Mariniblastus fucicola,ASV2144,3.8054854232491623e-08,2.6766025327087712,4,0.613315032893024,0.46800363830995345
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV2187,0.13203749199912906,3.478129988469491,4,0.4812115103599508,0.42288670571497383
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Ponticaulis,NA,ASV2188,9.22278986784876e-9,4.577559178737233,4,0.3334497702578737,0.35998825325283695
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Marisediminitalea,Marisediminitalea aggregata,ASV2189,4.329290922938178e-6,8.205438130969338,4,0.08433607937167581,0.14818563952269254
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV2199,0.0015562703250079299,10.76910389769993,4,0.02928526957417075,0.07125058521716858
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV2225,8.94115286763917e-4,5.488695204958667,4,0.24072496875985663,0.291782785540951
+Pseudomonadota,Alphaproteobacteria,Parvularculales,Parvularculaceae,Parvularcula,NA,ASV2260,6.579207279346137e-4,3.3680731353660707,4,0.4982194061700337,0.4275986204989639
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Pseudofulvibacter,Pseudofulvibacter geojedonensis,ASV2285,0.0031216018815040506,0.7574575629305835,4,0.9440587499205185,0.5652110419797785
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV2293,1.3229523474253652e-4,1.144701021205418,4,0.8871165828278222,0.5556920760232641
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV2305,0.004742398055782375,2.061060456631078,4,0.7245291574141973,0.5094189718225652
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella algicola,ASV2357,0.04950441048429877,1.7422411380023843,4,0.7830309292260899,0.5260072088102425
+Bacteroidota,Flavobacteriia,Flavobacteriales,Owenweeksiaceae,Croceimicrobium,Croceimicrobium hydrocarbonivorans,ASV2370,0.0449396618619127,4.365028820377061,4,0.3588528615899766,0.3695873599684436
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV2382,2.3664833231435783e-6,5.667521722255068,4,0.22539190506685763,0.28613504037719534
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV2404,3.994292214350334e-4,3.1124107584084535,4,0.539193111908723,0.443489562600417
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Aureicoccus,Aureicoccus marinus,ASV2411,5.977734723020177e-4,3.463312425509815,4,0.48347865294004094,0.42288670571497383
+Actinomycetota,Acidimicrobiia,Acidimicrobiales,Ilumatobacteraceae,Ilumatobacter,Ilumatobacter fluminis,ASV2424,1.385562059773136e-4,2.6526322987275224,4,0.6175284215468533,0.4701502347085642
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV2456,9.343796759877967e-6,0.8479592398318828,4,0.9319052627385496,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV2457,1.6904699343311938e-4,1.8142482097475412,4,0.7698745482323291,0.5255707070842538
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV2468,0.010433093477893484,11.877577133331595,4,0.018285235180976283,0.05073801543827887
+Bacteroidota,Saprospiria,Saprospirales,Saprospiraceae,NA,NA,ASV2482,1.2056907328020498e-6,0.9934895687108789,4,0.9107815716129333,0.5631611682316903
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,NA,NA,NA,ASV2526,0.017095439609296152,4.0778320381551705,4,0.3955748957496391,0.38721564693117794
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV2550,1.8313763165406283e-5,10.383132547943642,4,0.034445456179031206,0.08087498242757814
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV2554,0.024390546473909987,1.2504803022719306,4,0.8697194757818907,0.5499243756377061
+Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Erythrobacteraceae,NA,NA,ASV2585,6.7079266332837e-5,2.8215658920050757,4,0.5881158201710838,0.4610738371005116
+Pseudomonadota,Betaproteobacteria,Burkholderiales,Sphaerotilaceae,Roseateles,NA,ASV2589,0.0015753822703760577,9.315091491624024,4,0.05368854787152059,0.11076750043026833
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV2604,3.07890899862166e-5,2.1977193316937336,4,0.6994468400263927,0.5022204842813833
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV2617,9.95153937235578e-6,5.952669364181427,4,0.20271094695936773,0.2669041448027178
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV2635,0.009746019125018752,3.3129995534070673,4,0.5068752332949203,0.4275986204989639
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV2645,0.37142113019259043,8.6210638380246,4,0.07130135726962537,0.132997533846116
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV2653,0.0017048420366265996,8.465711614393422,4,0.07593340030131342,0.13855854720652605
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV2679,0.29847526635920485,NA,4,NA,NA
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV2700,0.00730590097473429,5.577286091877647,4,0.23301903666551446,0.28966056881406765
+Bacillota,Bacilli,Lactobacillales,Streptococcaceae,Streptococcus,NA,ASV2702,0.007686761031848381,3.0559101182463158,4,0.548512966158302,0.4459181428345863
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV2710,9.378207150164028e-7,2.495493180506324,4,0.6454429902560428,0.48235570607058553
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Oceanospirillaceae,Marinomonas,Marinomonas communis,ASV2726,7.845650058043639e-5,4.457939702574169,4,0.34756391723149166,0.36810045658718393
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella flava,ASV2756,1.9820552725501283e-4,1.3035892956392579,4,0.8607662606870254,0.5486097006633387
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV2769,1.177309348172441e-5,1.1147329238384607,4,0.8919276739982058,0.5566287826572615
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV2870,1.053258671427362e-5,3.9042683253108104,4,0.4191167287754078,0.39649319692601015
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,NA,ASV2910,0.4406153244761587,0.7600167362166158,4,0.9437265701001968,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Alcanivoracaceae,Alcanivorax,Alcanivorax jadensis,ASV2922,1.9309065224485837e-5,3.2047250956407316,4,0.5241681007512173,0.4367006491759352
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV3016,0.11934318081670686,4.549038035768738,4,0.33677237419123324,0.36125213059206757
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV3018,8.794391243230885e-4,1.26346494268397,4,0.8675430395208241,0.5495832097387456
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV3047,0.006296734759667901,3.4539425661602348,4,0.48491594620275186,0.42288670571497383
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV3064,0.004274102708918853,9.161559102466667,4,0.0571857189728354,0.1149712916808237
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV3068,0.03565904836926401,2.0571673177637138,4,0.7252449534805746,0.5094189718225652
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV3102,1.9623158604770117e-5,8.604042501102738,4,0.07179552472061172,0.13317941261326927
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,NA,NA,ASV3103,0.18465730836387673,3.4557185200101292,4,0.48464330498528607,0.42288670571497383
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV3109,1.0575587711430787e-10,0.5517246860968723,4,0.9682741242670094,0.5713527943911653
+Bdellovibrionota,Bdellovibrionia,Bdellovibrionales,Bdellovibrionaceae,OM27 clade,NA,ASV3117,0.09463501415514204,3.5752894823421806,4,0.46652312873161755,0.4188127296500554
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella poriferorum,ASV3152,3.317941187274946e-4,1.8007191316598083,4,0.7723507811809758,0.5255707070842538
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV3226,0.0027822867143033696,1.1182774631011447,4,0.8913615463326381,0.5566287826572615
+Pseudomonadota,Alphaproteobacteria,Sphingomonadales,Sphingomonadaceae,Sphingomonas,NA,ASV3229,1.4132765747584217e-5,1.9905647556133945,4,0.7374943921062119,0.5130902877271076
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV3246,1.3955369142084318e-4,6.121258601429117,4,0.19027377194865425,0.2555390141723964
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,NA,NA,ASV3265,1.2088158367856893e-11,12.586832384881031,4,0.013481402408352132,0.042701929874592544
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella aquimaris,ASV3286,0.02129097444700876,5.5641238210436965,4,0.2341501809316835,0.28966056881406765
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV3289,0.0011202496077631968,4.853616768770297,4,0.30264975790244836,0.33985012859218366
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV3317,2.2779987932690744e-8,7.056348821427932,4,0.13294024302531382,0.20196796552752985
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Dokdonia,Dokdonia lutea,ASV3374,0.5652880161176557,4.115544603796968,4,0.3905943767929062,0.385713967350112
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,NA,ASV3402,0.06219198092554538,2.1692475489897687,4,0.7046631587084786,0.5025920492972886
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV3447,0.0028623615968969766,5.05464033849081,4,0.2817368652905153,0.322420247503114
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas ascidiicola,ASV3462,0.20725726900254315,0.6878775394241285,4,0.9528154107520153,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV3469,0.003397742399893996,5.301712740666854,4,0.2577166358642434,0.30230051294991706
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Dokdonia,Dokdonia lutea,ASV3481,9.989153678973314e-5,3.822900298370104,4,0.4305039158627294,0.3992885271430473
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,NA,ASV3503,8.376189416982859e-6,2.8199512930090544,4,0.5883936959261677,0.4610738371005116
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV3559,0.0017528432296201346,3.170224224375156,4,0.5297536271849267,0.4402616632193212
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV3600,0.0015572065592995925,4.6599270956066,4,0.32400310157396417,0.3565016509075834
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV3759,0.006586349402029071,2.5496811348850517,4,0.6357622554324213,0.47860604327170847
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV3819,0.8221378218129626,2.617621041220157,4,0.6237048278376823,0.4716441278835971
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV3821,2.663629330139422e-4,6.973821733680696,4,0.13727811082642558,0.2057650318048564
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV3840,0.20228761574112278,1.3539828181528386,4,0.8521522686560505,0.5486097006633387
+Thermodesulfobacteriota,Desulfobulbia,Desulfobulbales,NA,NA,NA,ASV3880,0.14491485414715657,5.7940484639347885,4,0.21506585670070888,0.27733387128481357
+Pseudomonadota,Gammaproteobacteria,Vibrionales,Vibrionaceae,Thaumasiovibrio,NA,ASV3881,1.1205640848946492e-9,2.4416735386584745,4,0.6551096050829782,0.48235570607058553
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Alteromonas,NA,ASV3883,6.495237520024006e-4,13.081103034363714,4,0.010886234341612074,0.03768115798445798
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV3926,1.8034848960304839e-4,NA,4,NA,NA
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV3944,0.030094277098637996,3.161263947773082,4,0.5312101072332881,0.44038204364982075
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Tenacibaculum,Tenacibaculum holothuriorum,ASV3968,0.1819376858802887,2.4095397038236523,4,0.6609039736699006,0.4830106636275419
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Alcanivoracaceae,Alcanivorax,NA,ASV4011,1.1404285588838453e-4,4.334018164923919,4,0.362684689170343,0.37239150519385233
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,Salinimonas,Salinimonas chungwhensis,ASV4090,6.998886845763177e-7,12.475434514815333,4,0.014144754976267574,0.043173875981289925
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Allomuricauda,NA,ASV4104,0.044918918571931185,3.986874306386267,4,0.4077851336724056,0.3929795210465349
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV4108,1.189044553871854e-5,3.981716695489925,4,0.4084858808363632,0.3929795210465349
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Pseudoalteromonadaceae,Pseudoalteromonas,NA,ASV4311,0.006121411627944974,1.3015977757357686,4,0.8611043869844708,0.5486097006633387
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella ulvae,ASV4340,6.60089246670449e-5,0.8286775078526083,4,0.9345626213716065,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV4356,1.787286396512638e-7,0.8094089787639811,4,0.93718222690924,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Alcanivoracaceae,Marinicella,NA,ASV4451,0.010013899144646373,4.219593259602717,4,0.3771021029502489,0.37916011164029256
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV4488,1.9661045239247267e-6,1.3570421591894701,4,0.8516258569425601,0.5486097006633387
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV4523,0.0017460882097565815,3.1256266853946304,4,0.5370265600549019,0.4430162455570572
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV4535,0.003505399234712902,1.778485625503391,4,0.7764160992561038,0.5255707070842538
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV4743,8.614115177352366e-4,1.6134496624473669,4,0.8063728014824547,0.5335430032085158
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Mesoflavibacter,Mesoflavibacter zeaxanthinifaciens,ASV4794,9.070293220919862e-4,0.9601626761721194,4,0.9157752600935329,0.5646882739204167
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV4840,0.001051061519272149,9.4877072656068009,4,0.05000044952289897,0.10761371062193598
+Pseudomonadota,Alphaproteobacteria,Rhodospirillales,AEGEAN-169 marine group,NA,NA,ASV4895,0.001055126888804297,0.5651116108702521,4,0.9668605572633203,0.5713527943911653
+Myxococcota,NA,NA,NA,NA,NA,ASV4913,2.3387401246072661e-4,NA,4,NA,NA
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV5021,7.015721610584808e-6,13.49443770845761,4,0.009096323730096875,0.03393451876642358
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,NA,NA,ASV5027,1.403392011297382e-8,1.4585995030759753,4,0.8339488638213733,0.5449732003089085
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV5083,1.397633238531147e-4,1.6701137209539239,4,0.7961390736050123,0.5314216581229262
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV5196,0.0011041830868727073,8.261960236673572,4,0.0824400908293802,0.1472308801772574
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV5377,1.5030010335446725e-5,16.36035333404576,4,0.0025718489117959407,0.013706393570370427
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV5378,0.34542480270131887,0.7855806525652639,4,0.9403706599432762,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV5380,0.061082189833446994,1.9418559494258127,4,0.74645235412979,0.5156845485473995
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV5438,0.10194794238241071,1.9663096220833365,4,0.7419555854851828,0.513634830131318
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,NA,ASV5462,1.983663282794683e-5,0.7040940252638959,4,0.9508230862149788,0.5652110419797785
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV5528,0.1295031250431104,1.7564810258089496,4,0.780434025053195,0.5260072088102425
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,NA,NA,ASV5566,0.03128052655786097,1.9331018496364187,4,0.7480617760663943,0.5157352296499911
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella algicola,ASV5568,4.576827843828615e-4,1.4313518047225382,4,0.8387280279525244,0.5463958057944521
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Alteromonadaceae,NA,NA,ASV5638,6.342732183210101e-4,0.1613441368585542,4,0.996915830602219,0.5805066623821445
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,NA,ASV5760,1.018971826596241e-6,5.039321616857923,4,0.28328659666936445,0.322420247503114
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Pleioneaceae,Pleionea,Pleionea mediterranea,ASV5886,0.008069217162176083,3.3188937379644843,4,0.5059442913997444,0.4275986204989639
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Paracoccaceae,NA,NA,ASV6019,2.075143530381592e-12,7.129948671890395,4,0.12917832771706778,0.19955923880522108
+Pseudomonadota,Alphaproteobacteria,Hyphomicrobiales,Stappiaceae,Roseibium,NA,ASV6125,3.7014293948755027e-9,4.267244373452683,4,0.3710447502182567,0.3763713818641971
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Marinobacteraceae,Marinobacter,Marinobacter vinifirmus,ASV6379,1.2056246441763354e-4,NA,4,NA,NA
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV6598,6.267008341589886e-6,2.1216127867264123,4,0.7134028336210058,0.5063980041501907
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV6640,0.04552550955712911,2.424102007639985,4,0.6582760790419218,0.4830106636275419
+Pseudomonadota,Gammaproteobacteria,NA,NA,NA,NA,ASV6773,9.145606267163813e-8,3.6547745329723136,4,0.4547378369307405,0.4148886642435246
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV7097,0.3310585782543004,1.2679452206902164,4,0.8667901470861823,0.5495832097387456
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Ruegeria,NA,ASV7296,9.692024463819428e-12,4.392768335069575,4,0.35545239657994554,0.36834496062534106
+Bacteroidota,Flavobacteriia,Flavobacteriales,Crocinitomicaceae,Crocinitomix,Crocinitomix algicola,ASV7310,0.0012015495935607972,2.2712539556483455,4,0.6860075072335811,0.49746917268171503
+Bacteroidota,Flavobacteriia,Flavobacteriales,Flavobacteriaceae,Winogradskyella,Winogradskyella algicola,ASV7654,0.02801529620192432,0.6216308521414384,4,0.9606299422664752,0.5688416092751333
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,NA,NA,ASV8120,7.343637282830664e-10,2.6769850540020745,4,0.6132478974044824,0.46800363830995345
+Pseudomonadota,Gammaproteobacteria,Alteromonadales,Colwelliaceae,Thalassotalea,Thalassotalea loyana,ASV8157,0.011687366186340541,2.9738471085841933,4,0.5622115209706579,0.4515873369830496
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,Endozoicomonas atrinae,ASV8385,0.029835264599796872,7.208437445810708,4,0.12527477852769148,0.19654779063638966
+Pseudomonadota,Alphaproteobacteria,Hyphomonadales,Hyphomonadaceae,Hyphomonas,NA,ASV8390,3.745587121825599e-5,3.516716583791821,4,0.475341107832766,0.42109924242595925
+Pseudomonadota,Alphaproteobacteria,Rhodobacterales,Roseobacteraceae,Shimia,Shimia marina,ASV8635,0.011163959724114582,3.8979126566182973,4,0.4199981352612868,0.39649319692601015
+Pseudomonadota,Gammaproteobacteria,Cellvibrionales,Halieaceae,NA,NA,ASV8890,3.505376542405318e-4,3.5571865661353113,4,0.469236442060578,0.41900787396514183
+Pseudomonadota,Gammaproteobacteria,Oceanospirillales,Endozoicomonadaceae,Endozoicomonas,NA,ASV9152,0.0028632251039436346,3.041262819258276,4,0.5509440706718796,0.4463103074068204
+Pseudomonadota,Gammaproteobacteria,Pseudomonadales,Pseudomonadaceae,Pseudomonas,NA,ASV12199,0.77863987136448,0.8508496568725709,4,0.9315038704024413,0.5652110419797785
