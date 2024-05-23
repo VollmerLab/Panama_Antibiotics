@@ -1,45 +1,33 @@
-##TODO - 
+##TODO - Fix table 2 to have DF and t
 
 #### Libraries ####
 library(multcomp)
 library(tidyverse)
 library(broom)
-library(biostat)
+library(lmerTest)
 library(qvalue)
 library(ComplexUpset)
+# library(biostat)
 library(cowplot)
 library(patchwork)
-library(metap)
+# library(metap)
 library(ggtext)
 
-alpha_var <- 0.01
 alpha_test <- 0.05
 fdr_or_qvalue <- '_fdr.bh'#'_q.value'
-randomEffect <- TRUE
 y_metric <- 'rclr' #'log2_cpm_norm'
-NPERM_GSEA <- 1000
 
 #### Functions ####
 safe_qvalue <- possibly(.f = ~qvalue(.)$qvalues, otherwise = NA_real_) #better method for doing this! - only want to sub 0 when it fails
 
-fit_model <- function(formula, data, variance_equal, verb = FALSE){
-  if(variance_equal){
-    glmmTMB::glmmTMB(formula, 
-                     data = data, verbose = verb)
-  } else {
-    glmmTMB::glmmTMB(formula, 
-                     dispformula = ~time + anti,
-                     data = data, verbose = verb)
-  }
-}
-
-tidy_model <- function(model){
-  the_anova <- car::Anova(model)
+tidy_model <- function(model, DF_method){
+  the_anova <- anova(model, ddf = DF_method)
   
   as_tibble(the_anova) %>%
-    rename(df = Df,
-           chisq.value = Chisq,
-           p.value = `Pr(>Chisq)`)
+    rename(ndf = NumDF,
+           ddf = DenDF,
+           f.value = `F value`,
+           p.value = `Pr(>F)`)
 }
 
 posthoc_padjust <- function(data, alpha){
@@ -68,114 +56,6 @@ posthoc_padjust <- function(data, alpha){
   
 }
 
-chisq_from_formula = function(formula, data) {
-  chisq.test(
-    ftable(formula, data)
-  )
-}
-
-upset_test_jds <- function (data, intersect, ...){
-  comparison = do.call(compare_between_intersections_jds, c(list(data, 
-                                                                 intersect), list(...)))
-  if (nrow(comparison) == 0) {
-    stop("No variables to compare")
-  }
-  significant_hits = comparison[comparison$fdr < 0.05, "variable"]
-  if (length(significant_hits)) {
-    print(paste(paste(significant_hits, collapse = ", "), 
-                "differ significantly between intersections"))
-  }
-  result = comparison[order(comparison$fdr), ]
-  result
-}
-
-compare_between_intersections_jds <- function (data, intersect, test = kruskal.test, tests = list(), 
-                                               ignore = list(), ignore_mode_columns = TRUE, mode = "exclusive_intersection", 
-                                               ...) 
-{
-  data = upset_data(data, intersect, mode = mode, ...)
-  isect = data$with_sizes
-  isect = isect[(isect[, paste0("in_", mode)] == 1) & (isect$intersection %in% 
-                                                         data$plot_intersections_subset), ]
-  modes = c("exclusive_intersection", "inclusive_intersection", 
-            "exclusive_union", "inclusive_union")
-  if (ignore_mode_columns) {
-    ignore = c(ignore, paste0("in_", modes), paste0(modes, 
-                                                    "_size"), "exclusive_intersection")
-  }
-  ignore = c("intersection", ignore)
-  candidate_variables = setdiff(setdiff(names(isect), intersect), 
-                                ignore)
-  results = list()
-  for (variable in candidate_variables) {
-    if (variable %in% names(tests)) {
-      var_test = tests[[variable]]
-    }
-    else {
-      var_test = test
-    }
-    isect$intersection = as.factor(isect$intersection)
-    result = var_test(as.formula(paste(variable, "~ intersection")), 
-                      data = isect)
-    results[[length(results) + 1]] = list(variable = variable, 
-                                          p.value = result$p.value, statistic = result$statistic, 
-                                          parameter = result$parameter,
-                                          test = result$method)
-  }
-  if (length(results) == 0) {
-    headers = c("variable", "p.value", "statistic", "parameter", "test", 
-                "fdr")
-    results = data.frame(matrix(ncol = length(headers), 
-                                nrow = 0, dimnames = list(NULL, headers)))
-  }
-  else {
-    results = do.call(rbind, lapply(results, data.frame))
-    results$fdr = p.adjust(results$p.value, "BH")
-    rownames(results) = results$variable
-  }
-  results
-}
-
-row_fisher <- function(x, k, m, N, direction = 'two.sided'){
-  ##https://dputhier.github.io/ASG/practicals/go_statistics_td/go_statistics_td_2015.html
-  #x - number of marked genes in selection
-  #m - number of marked genes total
-  #k - number of genes in selection
-  #N - total number of genes
-  
-  data.frame(significant = c(x, m - x),
-             not_significant = c(k - x, N - m - (k - x))) %>%
-    fisher.test(alternative = direction) %>%
-    tidy
-}
-
-calc_enrichment_score <- function(rank_metric, set_inclusion, alpha = 1, permute = FALSE){
-  #set inclusion is a vector of TRUE (in set) and FALSE (not in set) 
-  # same order as rank metric 
-  
-  if(permute){
-    set_inclusion <- sample(set_inclusion, replace = FALSE)
-  }
-  
-  n <- length(set_inclusion) # Number of genes
-  nk <- sum(set_inclusion) # Number of genes in the gene set
-  
-  # Define the cumulative distribution functions
-  FGk <- cumsum((abs(rank_metric) ^ alpha) * set_inclusion) / sum((abs(rank_metric) ^ alpha) * set_inclusion)
-  FG_bar_k <- cumsum(!set_inclusion) / sum(!set_inclusion)
-  
-  # Calculate the enrichment score using the Kolmogorov-Smirnov (K-S) statistic
-  SGSEAk <- max(FGk - FG_bar_k)
-  SGSEAk
-}
-
-stouffers_method <- function(p){
-  #Adapted from metap::sumz function
-  zp <- (qnorm(p, lower.tail = FALSE) %*% rep(1, length(p))) / sqrt(sum(rep(1, length(p))^2))
-  tibble(z.value = as.numeric(zp), p.value = pnorm(as.numeric(zp), lower.tail = FALSE))
-}
-
-
 #### Data ####
 tank_data <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
                       show_col_types = FALSE) %>%
@@ -195,9 +75,9 @@ if(file.exists('../intermediate_files/all_asv_models.rds.xz')){
   library(multidplyr)
   cluster <- new_cluster(parallel::detectCores() - 1)
   cluster_library(cluster, c('multcomp', 'emmeans',
-                             'tidyverse', 'broom'))
-  cluster_copy(cluster, c('alpha_var', 'y_metric', 'alpha_test',
-                          'fit_model', 'tidy_model'))
+                             'tidyverse', 'broom',
+                             'lmerTest'))
+  cluster_copy(cluster, c('y_metric', 'tidy_model', 'alpha_test'))
   
   prePost_effects <- tank_data %>%
     
@@ -205,69 +85,49 @@ if(file.exists('../intermediate_files/all_asv_models.rds.xz')){
     # mutate(!!sym(y_metric) := !!sym(y_metric) + rnorm(nrow(.), 0, 1e-8)) %>%
     
     nest_by(across(domain:species), asv_id) %>%
-    
-    #Remove samples which will break tests
-    filter(!summarise(data,
-                      var = sd(!!sym(y_metric)) < 1e-12,
-                      .by = c('time_treat')) %>%
-             pull(var) %>%
-             any) %>%
-    
-    ungroup %>%
-    rowwise(domain:species, asv_id) %>%
-    
     partition(cluster) %>%
     
-    #Test for equal variance in both pre and post data and use appropriate test
-    summarise(varTest = list(car::leveneTest(!!sym(y_metric) ~ time * anti, #time_treat, 
-                                           data = data, center = median)),
-            tidy(varTest) %>%
-              select(p.value) %>%
-              rename(VAR_p.value = p.value),
-            
-            model = list(fit_model(!!sym(y_metric) ~ time_treat + 
-                                     (1 | tank) + 
-                                     (1 | geno / fragment),
-                                   data, 
-                                   variance_equal = TRUE)), #VAR_p.value > alpha_var
-            
-            
-            tidy_model(model),
-            
-            #Posthocs
-            posthoc = list(emmeans::emmeans(model, 
-                                            ~ time_treat, 
-                                            data = data, 
-                                            adjust = 'none')),
-            
-            contrast = list(emmeans::contrast(posthoc,
-                                              method = list('disease' = c(0, 1, -1/2, 0, -1/2),
-                                                            'antibiotic' = c(1/2, 0, -1/2, 1/2, -1/2),
-                                                            'time' = c(1/2, 0, 1/2, -1/2, -1/2)),
+    summarise(model = list(lmer(!!sym(y_metric) ~ time_treat + 
+                                  (1 | tank) + 
+                                  (1 | geno / fragment),
+                                data, control = lmerControl(check.conv.singular = .makeCC(action = "ignore", tol = 1e-4)))),
+              
+              tidy_model(model, 'Satterthwaite'),
+              
+              #Posthocs
+              posthoc = list(emmeans::emmeans(model, 
+                                              ~ time_treat, 
+                                              data = data, 
+                                              lmer.df = 'satterthwaite',
                                               adjust = 'none')),
-            
-            contrast %>%
-              tidy %>%
-              select(contrast, estimate, p.value) %>%
-              rename(groups = contrast,
-                     coef = estimate) %>%
-              pivot_wider(names_from = groups, 
-                          values_from = c(coef, p.value), 
-                          names_glue = "{groups}_{.value}"),
-            
-            #Plotting
-            metrics = list(cld(posthoc,
-                               Letters = LETTERS, 
-                               alpha = alpha_test) %>%
-                             tidy %>%
-                             select(time_treat, estimate, std.error, .group) %>%
-                             mutate(.group = str_trim(.group)) %>%
-                             rename(mean_est = estimate,
-                                    se_est = std.error) %>%
-                             separate(time_treat, into = c('time', 'anti', 'health')) %>%
-                             mutate(anti = factor(anti, levels = c('N', 'A')),
-                                    health = factor(health, levels = c('H', 'D')),
-                                    time = factor(time, levels = c('before', 'after'))))) %>%
+              contrast = list(emmeans::contrast(posthoc,
+                                                method = list('disease' = c(0, 1, -1/2, 0, -1/2),
+                                                              'antibiotic' = c(1/2, 0, -1/2, 1/2, -1/2),
+                                                              'time' = c(1/2, 0, 1/2, -1/2, -1/2)),
+                                                adjust = 'none')),
+              
+              contrast %>%
+                tidy %>%
+                select(contrast, estimate, p.value) %>%
+                rename(groups = contrast,
+                       coef = estimate) %>%
+                pivot_wider(names_from = groups, 
+                            values_from = c(coef, p.value), 
+                            names_glue = "{groups}_{.value}"),
+              
+              #Plotting
+              metrics = list(cld(posthoc,
+                                 Letters = LETTERS, 
+                                 alpha = alpha_test) %>%
+                               tidy %>%
+                               select(time_treat, estimate, std.error, .group) %>%
+                               mutate(.group = str_trim(.group)) %>%
+                               rename(mean_est = estimate,
+                                      se_est = std.error) %>%
+                               separate(time_treat, into = c('time', 'anti', 'health')) %>%
+                               mutate(anti = factor(anti, levels = c('N', 'A')),
+                                      health = factor(health, levels = c('H', 'D')),
+                                      time = factor(time, levels = c('before', 'after'))))) %>%
     collect %>%
     ungroup %>%
     
@@ -277,12 +137,6 @@ if(file.exists('../intermediate_files/all_asv_models.rds.xz')){
            .after = 'p.value') %>%
     
     posthoc_padjust(alpha_test) %>%
-    # mutate(across(c(ends_with('_p.value'), -contains('VAR')),
-    #               list(fdr.bh = ~p.adjust(., 'BH'),
-    #                    fdr.by = ~p.adjust(., 'BY'),
-    #                    q.value = ~safe_qvalue(.)))) %>%
-    # rename_with(~str_replace(., '_p.value_', '_'))  %>%
-    
     mutate(name = case_when(!is.na(species) & !is.na(family) ~ 
                               str_c(family, '<br></br>', 
                                     '<i>', species, '</i> (', asv_id, ')'),
@@ -311,8 +165,7 @@ prePost_effects %>%
 #### Summarize Results ####
 
 prePost_effects %>%
-  select(asv_id, class, order, family, genus, contains(str_remove(fdr_or_qvalue, '^_')), 
-         -chisq.value) %>%
+  select(asv_id, class, order, family, genus, contains(str_remove(fdr_or_qvalue, '^_'))) %>%
   mutate(across(contains(str_remove(fdr_or_qvalue, '^_')), ~replace_na(., 1))) %>%
   rename(!!sym(str_c('global', fdr_or_qvalue)) := !!sym(str_remove(fdr_or_qvalue, '^_'))) %>%
   pivot_longer(cols = contains(str_remove(fdr_or_qvalue, '^_')),
@@ -332,8 +185,8 @@ prePost_effects %>%
   
 
 asv_assocation_directions <- prePost_effects %>%
-  select(asv_id, class, order, family, genus, contains(fdr_or_qvalue), 
-         -chisq.value,  contains('coef')) %>%
+  select(asv_id, class, order, family, genus, 
+         contains(fdr_or_qvalue), contains('coef')) %>%
   pivot_longer(cols = c(contains(fdr_or_qvalue), contains('coef')),
                names_to = c('metric', '.value'),
                names_pattern = '(.*)_(.*)') %>%
@@ -369,8 +222,9 @@ prePost_effects %>%
 
 #### Tables ####
 prePost_effects %>%
-  select(phylum:asv_id, VAR_p.value, 
-         chisq.value, df, p.value, q.value) %>%
+  select(phylum:asv_id, 
+         ndf, ddf, f.value, p.value, 
+         all_of(str_remove(fdr_or_qvalue, '^_'))) %>%
   write_csv('../Results/Table1_ASVmainEffects.csv')
 
 prePost_effects %>%
@@ -379,7 +233,7 @@ prePost_effects %>%
          starts_with('time'),
          starts_with('antibiotic'),
          starts_with('disease')) %>%
-  select(-ends_with('fdr.bh'), -ends_with('fdr.by')) %>%
+  select(-ends_with('q.value'), -ends_with('fdr.by')) %>%
   write_csv('../Results/Table2_ASVpostHocs.csv')
 
 #### Just the Pathogens ####
@@ -389,84 +243,6 @@ prePost_effects %>%
   select(asv_id, ends_with(fdr_or_qvalue), metrics) 
 
 prePost_effects$model[[which(prePost_effects$asv_id == 'ASV8')]]
-
-#### Average across taxa level - test if at least one of the sub-taxa is significant ####
-# - change to stouffers version
-taxonomic_significance <- prePost_effects %>%
-  select(phylum:genus, asv_id, ends_with('_p.value'), -contains('VAR')) %>%
-  pivot_longer(cols = phylum:genus,
-               names_to = 'taxon_level',
-               values_to = 'taxon_name') %>%
-  filter(!is.na(taxon_name)) %>%
-  group_by(taxon_level, taxon_name) %>%
-  summarise(across(c(ends_with('_p.value'), -contains('VAR')), 
-                   ~ -2 * sum(log(.)),
-                   .names = '{.col}_chisq.value'),
-            n = n(),
-            .groups = 'drop') %>%
-  rename_with(~str_remove_all(., '_p.value')) %>%
-  mutate(across(ends_with('chisq.value'), 
-                ~pchisq(., df = 2 * n, lower.tail = FALSE),
-                .names = '{.col}_p.value')) %>%
-  rename_with(~str_remove_all(., 'chisq.value_')) %>%
-  
-  mutate(across(ends_with('p.value'),
-                list(fdr.bh = ~p.adjust(., 'fdr'), 
-                     fdr.by = ~p.adjust(., 'BY'), 
-                     q.value = ~safe_qvalue(.))),
-         .by = 'taxon_level') %>%
-  rename_with(~str_replace_all(., '_p.value_', '_'))
-
-filter(taxonomic_significance, if_any(ends_with(fdr_or_qvalue), ~. < alpha_test)) %>%
-  filter(taxon_level == 'family')
-
-#### Test Directionality & Significance across taxonomic levels ####
-taxonomic_changes <- prePost_effects %>%
-  select(phylum:genus, asv_id, 
-         ends_with('_p.value'), -contains('VAR'),
-         ends_with('coef')) %>%
-  
-  pivot_longer(cols = c(ends_with('_p.value'), ends_with('coef')),
-               names_to = c('association', '.value'),
-               names_pattern = '(.*)_(.*)') %>%
-  pivot_longer(cols = c(phylum:genus),
-               names_to = c('taxonomic_level'),
-               values_to = 'taxon') %>%
-  filter(!is.na(p.value),
-         !is.na(taxon)) %>%
-  
-  group_by(taxonomic_level, taxon, association) %>% 
-  
-  summarise(n_asv = n_distinct(asv_id),
-            median_coef = median(coef),
-            positive = list(two2one(p.value, two = rep(TRUE, n()), invert = coef < 0)), 
-            #these are meant to be inverted
-            negative = list(two2one(p.value, two = rep(TRUE, n()), invert = coef > 0)),
-            .groups = 'rowwise') %>%
-  
-  mutate(stouffers_method(positive) %>%
-           rename_with(~str_c('positive_', .)),
-         stouffers_method(negative) %>%
-           rename_with(~str_c('negative_', .)),
-         .keep = 'unused') %>%
-  select(-ends_with('z.value')) %>%
-  ungroup %>%
-  mutate(p.value = if_else(median_coef < 0, negative_p.value, positive_p.value)) %>%
-  select(-negative_p.value, -positive_p.value) %>%
-  
-  mutate(fdr.bh = p.adjust(p.value, 'BH'),
-         fdr.by = p.adjust(p.value, 'BY'),
-         q.value = safe_qvalue(p.value), 
-         .after = 'p.value',
-         .by = c(taxonomic_level, association)) 
-
-filter(taxonomic_changes, taxonomic_level == 'family') %>% #filter(str_detect(taxon, 'Vibrio'))
-  filter(if_any(ends_with(str_remove(fdr_or_qvalue, '^_')), ~. < alpha_test)) %>%
-  filter(association != 'time') %>%
-  select(-p.value:-q.value) %>%
-  pivot_wider(names_from = association, 
-              values_from = median_coef, 
-              values_fill = 0)
 
 #
 #### Make Upset Plot ####
@@ -652,131 +428,9 @@ base_plot
 ggdraw(base_plot) +
   draw_plot(colour_options$legend, 
             x = 0.75, y = 0.25, width = 0.25, height = 0.75)
-ggsave('../Results/Fig4_asv_upset.png', 
+ggsave('../Results/Fig5_asv_upset.png', 
        height = 12, width = 10, bg = 'white')
 
-#### Overrepresentation of taxa in each group ####
-ora_taxon_pre <- select(prePost_effects, asv_id, phylum:genus) %>%
-  distinct %>%
-  pivot_longer(cols = -asv_id,
-               names_to = 'taxon_level',
-               values_to = 'taxon_name') %>%
-  filter(!is.na(taxon_name))
-
-
-ora_group_pre <- prePost_effects %>%
-  mutate(Disease = !!sym(str_c('disease', fdr_or_qvalue)) & disease_coef > 0,
-         Healthy = !!sym(str_c('disease', fdr_or_qvalue)) & disease_coef < 0,
-         
-         Untreated = !!sym(str_c('antibiotic', fdr_or_qvalue)) & antibiotic_coef < 0,
-         Antibiotic = !!sym(str_c('antibiotic', fdr_or_qvalue)) & antibiotic_coef > 0,
-         
-         Postdose = !!sym(str_c('time', fdr_or_qvalue)) & time_coef > 0,
-         Predose = !!sym(str_c('time', fdr_or_qvalue)) & time_coef < 0,
-         .keep = 'unused') %>%
-  
-  select(phylum:genus, asv_id, Disease:Predose) %>%
-  mutate(across(where(is.logical), ~replace_na(., FALSE))) %>%
-  
-  filter(!if_all(.cols = where(is.logical), ~!.)) %>%
-  pivot_longer(cols = where(is.logical),
-               names_to = 'association',
-               values_to = 'in_group') %>%
-  filter(in_group) %>%
-  select(-in_group) %>%
-  # group_by(across(phylum:asv_id)) %>%
-  # summarise(association = str_c(association, collapse = '; '),
-  #           .groups = 'drop') %>%
-  
-  pivot_longer(cols = phylum:genus,
-               names_to = 'taxon_level',
-               values_to = 'taxon_name') %>%
-  filter(!is.na(taxon_name))
-
-
-ora_group_analysis <- summarise(ora_group_pre,
-          n_asvs = n_distinct(asv_id),
-          .by = c(association, taxon_level, taxon_name)) %>%
-  left_join(summarise(ora_group_pre,
-                      group_asvs = n_distinct(asv_id),
-                      .by = c(association, taxon_level)),
-            by = c('association', 'taxon_level')) %>%
-  left_join(summarise(ora_taxon_pre,
-                      taxa_asvs = n_distinct(asv_id),
-                      .by = c(taxon_level, taxon_name)),
-            by = c('taxon_level', 'taxon_name')) %>%
-  left_join(summarise(ora_taxon_pre,
-                      total_asvs = n_distinct(asv_id),
-                      .by = c(taxon_level)),
-            by = 'taxon_level') %>%
-  
-  rowwise %>%
-  mutate(row_fisher(n_asvs, taxa_asvs, group_asvs, total_asvs, direction = 'greater')) %>%
-  ungroup %>%
-  mutate(fdr.bh = p.adjust(p.value, 'fdr'), 
-         fdr.by = p.adjust(p.value, 'BY'),
-         q.value = safe_qvalue(p.value),
-         .by = c('taxon_level', 'association'))
-
-filter(ora_group_analysis, !!sym(str_remove(fdr_or_qvalue, '^_')) < alpha_test) %>%
-  filter(taxon_level == 'order') %>%
-  arrange(taxon_level, taxon_name, association)
-
-ora_group_analysis %>%
-  filter(str_detect(taxon_name, "Vibrio"))
-
-#### GSEA for Taxa ####
-prepped_gsea_input <- prePost_effects %>%
-  select(phylum:genus, asv_id, ends_with('coef'), ends_with('p.value')) %>%
-  select(-p.value, -VAR_p.value) %>%
-  pivot_longer(cols = c(ends_with('coef'), ends_with('p.value')),
-               names_to = c('association', '.value'),
-               names_pattern = '(.*)_(.*)') %>%
-  mutate(rank_metric = sign(coef) * -1 * log(p.value, base = 10),
-         .keep = 'unused') %>%
-  arrange(-rank_metric) %>%
-  filter(!is.na(rank_metric)) %>%
-  pivot_longer(cols = phylum:genus,
-               names_to = 'taxon_level',
-               values_to = 'taxon_name') %>%
-  filter(!is.na(taxon_name)) %>%
-  rename(TAXON_NAME = taxon_name) %>%
-  nest(asv_ranking_data = c(asv_id, TAXON_NAME, rank_metric))
-
-gsea_out <- prePost_effects %>%
-  select(phylum:genus) %>%
-  pivot_longer(cols = phylum:genus,
-               names_to = 'taxon_level',
-               values_to = 'taxon_name') %>%
-  filter(!is.na(taxon_name)) %>%
-  distinct %>%
-  expand_grid(association = c('time', 'disease', 'antibiotic')) %>%
-  left_join(prepped_gsea_input, 
-            by = c('taxon_level', 'association')) %>%
-  rowwise() %>%
-  mutate(asv_ranking_data = list(mutate(asv_ranking_data, 
-                                         in_pathway = asv_ranking_data$TAXON_NAME == taxon_name) %>%
-                                    arrange(-rank_metric)),
-         path_check = any(asv_ranking_data$in_pathway)) %>%
-  filter(path_check) %>% 
-  select(-path_check) %>%
-  mutate(SGSEA = calc_enrichment_score(asv_ranking_data$rank_metric, asv_ranking_data$in_pathway, alpha = 1)) %>%
-  mutate(permuted_sgsea = list(replicate(NPERM_GSEA - 1, calc_enrichment_score(asv_ranking_data$rank_metric, 
-                                                                        asv_ranking_data$in_pathway, 
-                                                                         alpha = 1, permute = TRUE))),
-         permuted_sgsea = list(c(SGSEA, permuted_sgsea)),
-         p.value = mean(permuted_sgsea >= SGSEA)) %>%
-  
-  ungroup %>%
-  select(association, taxon_level, taxon_name, SGSEA, p.value) %>%
-  mutate(fdr.bh = p.adjust(p.value, 'fdr'),
-         fdr.by = p.adjust(p.value, 'BY'), 
-         q.value = safe_qvalue(p.value),
-         .by = c('taxon_level', 'association'))
-
-filter(gsea_out, !!sym(str_remove(fdr_or_qvalue, '^_')) < alpha_test) %>%
-  filter(taxon_level == 'family') %>%
-  arrange(taxon_level, taxon_name, association)
 
 #### Plot by grouping ####
 select(prePost_effects, name, ends_with(fdr_or_qvalue), metrics) %>%
@@ -918,11 +572,12 @@ associated_asvs <- select(prePost_effects, domain:asv_id, name,
 
 associated_asvs %>%
   filter(str_detect(association, 'Disease')) %>%
-  arrange(n_associations) %>%
+  # arrange(n_associations) %>%
+  arrange(family, asv_id) %>%
   rowwise %>%
   mutate(plot = list(plot_asv(metrics, association) + labs(subtitle = name))) %>%
   pull(plot) %>%
-  wrap_plots(ncol = 3, guides = 'collect') +
+  wrap_plots(ncol = 1, guides = 'collect') +
   plot_annotation(tag_levels = 'A') +
   plot_layout(axes = 'collect', axis_titles = 'collect',
               guides = 'collect') &
@@ -930,7 +585,7 @@ associated_asvs %>%
   theme(axis.text = element_text(colour = 'black'),
         # plot.subtitle = element_blank(),
         plot.subtitle = element_markdown(colour = 'black', size = 8))
-ggsave('../Results/Fig5_diseaseAssociated_ASVs.png', height = 10, width = 7)
+ggsave('../Results/Fig6_diseaseAssociated_ASVs.png', height = 10, width = 6)
 
 associated_asvs %>%
   filter(str_detect(association, 'Healthy')) %>%
@@ -940,7 +595,10 @@ associated_asvs %>%
   pull(plot) %>%
   wrap_plots(ncol = 1, guides = 'collect') +
   plot_layout(axes = 'collect', axis_titles = 'collect',
-              guides = 'collect')
+              guides = 'collect') &
+  theme(axis.text = element_text(colour = 'black'),
+        plot.subtitle = element_markdown(colour = 'black', size = 8))
+ggsave('../Results/healthyAssociated_ASVs.png', height = 10, width = 6)
 
 associated_asvs %>%
   filter(str_detect(association, 'Untreated')) %>%
@@ -948,9 +606,12 @@ associated_asvs %>%
   rowwise %>%
   mutate(plot = list(plot_asv(metrics, association) + labs(subtitle = name))) %>%
   pull(plot) %>%
-  wrap_plots(ncol = 4) +
+  wrap_plots(ncol = 2) +
   plot_layout(axes = 'collect', axis_titles = 'collect',
-              guides = 'collect')
+              guides = 'collect') &
+  theme(axis.text = element_text(colour = 'black'),
+        plot.subtitle = element_markdown(colour = 'black', size = 8))
+ggsave('../Results/untreatedAssociated_ASVs.png', height = 10, width = 6)
 
 associated_asvs %>%
   filter(str_detect(association, 'Antibiotic')) %>%
@@ -958,9 +619,12 @@ associated_asvs %>%
   rowwise %>%
   mutate(plot = list(plot_asv(metrics, association) + labs(subtitle = name))) %>%
   pull(plot) %>%
-  wrap_plots(ncol = 2) +
+  wrap_plots(ncol = 1) +
   plot_layout(axes = 'collect', axis_titles = 'collect',
-              guides = 'collect')
+              guides = 'collect') &
+  theme(axis.text = element_text(colour = 'black'),
+        plot.subtitle = element_markdown(colour = 'black', size = 8))
+ggsave('../Results/antiAssociated_ASVs.png', height = 10, width = 6)
 
 associated_asvs %>%
   filter(str_detect(association, 'Predose')) %>%
@@ -968,10 +632,12 @@ associated_asvs %>%
   rowwise %>%
   mutate(plot = list(plot_asv(metrics, association) + labs(subtitle = name))) %>%
   pull(plot) %>%
-  wrap_plots(ncol = 4) +
+  wrap_plots(ncol = 1) +
   plot_layout(axes = 'collect', axis_titles = 'collect',
-              guides = 'collect')
-
+              guides = 'collect') &
+  theme(axis.text = element_text(colour = 'black'),
+        plot.subtitle = element_markdown(colour = 'black', size = 8))
+ggsave('../Results/preAssociated_ASVs.png', height = 10, width = 6)
 
 associated_asvs %>%
   filter(str_detect(association, 'Postdose')) %>%
@@ -979,54 +645,14 @@ associated_asvs %>%
   rowwise %>%
   mutate(plot = list(plot_asv(metrics, association) + labs(subtitle = name))) %>%
   pull(plot) %>%
-  wrap_plots(ncol = 3) +
+  c(list(guide_area())) %>%
+  wrap_plots(ncol = 2) +
   plot_layout(axes = 'collect', axis_titles = 'collect',
-              guides = 'collect')
+              guides = 'collect') &
+  theme(axis.text = element_text(colour = 'black'),
+        plot.subtitle = element_markdown(colour = 'black', size = 8))
+ggsave('../Results/postAssociated_ASVs.png', height = 10, width = 6)
 
-
-blat <- associated_asvs %>%
-  filter(str_detect(association, 'Disease')) %>%
-  arrange(n_associations) %>%
-  rowwise %>%
-  mutate(plot = list(plot_asv(metrics, association) + labs(subtitle = name))) %>%
-  group_by(association, n_associations) %>%
-  summarise(n_asv = n(),
-            group_plots = list(wrap_plots(plot)),
-            .groups = 'rowwise') %>%
-  mutate(group_plots = list(group_plots +
-                              plot_layout(axes = 'collect', 
-                                          # guides = 'collect', 
-                                          nrow = ((n_asv - 1) %/% 4 + 1))))
-quick_wrap <- function(plot_list, n_val){
-  if(any(n_val < 4)){
-    list(wrap_plots(plot_list, nrow = 1))
-  } else {
-    plot_list
-  }
-}
-
-wham <- blat %>%
-  filter(str_detect(association, 'Antibiotic|Disease')) %>%
-  ungroup %>%
-  mutate(plot_row = case_when(n_asv %in% c(1, 3) ~ 2, 
-                              n_asv == 2 ~ 1,
-                              n_asv == 4 ~ row_number())) %>%
-  arrange(plot_row) %>%
-  rowwise %>%
-  mutate(group_plots = list(group_plots & plot_annotation(title = association))) %>%
-  ungroup %>%
-  group_by(plot_row) %>%
-  summarise(group_plots = quick_wrap(group_plots, n_asv))
-
-
-wrap_plots(wham$group_plots) +
-  plot_layout(guides = 'collect',
-              ncol = 1)
-
-
-wrap_plots(tmp$plot, ncol = 1) +
-  plot_layout(guides = 'collect')
-ggsave('../Results/asvs_changing_diseaseAnti.png', height = 15, width = 12)
 
 
 

@@ -25,6 +25,8 @@ tank_data <- read_rds("../intermediate_files/full_tank_microbiome.rds") %>%
   rarefy_even_depth(verbose = TRUE, rngseed = 5222024) %>%
   identity()
 
+summarize_phyloseq(tank_data)
+
 metadata <- sample_data(tank_data) %>%
   as_tibble(rownames = 'sample_id') %>%
   mutate(anti = factor(anti, levels = c('N', 'A')),
@@ -91,52 +93,26 @@ richness_model_pois <- glmmTMB(richness ~ time_treat +
                           family = 'poisson',
                           data = alpha_metrics)
 
-richness_model_nb <- glmmTMB(richness ~ time_treat + 
-                                 (1 | tank) + 
-                                 (1 | geno / fragment), 
-                               family = 'nbinom2',
-                               data = alpha_metrics)
 
-# richness_model_cp <- glmmTMB(richness ~ time_treat + 
-#                                (1 | tank) + 
-#                                (1 | geno / fragment), 
-#                              family = 'compois',
-#                              data = alpha_metrics,
-#                              verbose = TRUE)
-
-MuMIn::AICc(richness_model_pois, richness_model_nb)
-AIC(richness_model_pois, richness_model_nb)
-BIC(richness_model_pois, richness_model_nb)
-
-diag.plots(richness_model_nb, col.nos = c('tank', 'anti', 'geno', 'health', 'time'), data = alpha_metrics)
-
-richness_model_nb2 <- glmmTMB(richness ~ time_treat + 
-                               (1 | tank) + 
-                               (1 | geno / fragment), 
-                             dispformula = ~time,
-                             family = 'nbinom2',
-                             data = alpha_metrics)
-
-MuMIn::AICc(richness_model_pois, richness_model_nb, richness_model_nb2)
-AIC(richness_model_pois, richness_model_nb, richness_model_nb2)
-BIC(richness_model_pois, richness_model_nb, richness_model_nb2)
-
-
-car::Anova(richness_model_nb2)
-emmeans(richness_model_nb2, ~time_treat, type = 'response') %>%
+car::Anova(richness_model_pois)
+emmeans(richness_model_pois, ~time_treat, type = 'response') %>%
   contrast(method = list('disease' = c(0, 1, -1/2, 0, -1/2),
                          'antibiotic' = c(1/2, 0, -1/2, 1/2, -1/2),
                          'time' = c(1/2, 0, 1/2, -1/2, -1/2)))
 
-ref_grid(richness_model_nb2) %>%
+ref_grid(richness_model_pois) %>%
   add_grouping('anti', 'time_treat', c('A', NA, 'N', 'A', 'N')) %>%
   emmeans(~anti, type = 'response') %>%
   contrast('revpairwise')
 
-1.19*155
+ref_grid(richness_model_pois) %>%
+  add_grouping('disease', 'time_treat', c(NA, 'D', 'H', NA, 'H')) %>%
+  emmeans(~disease, type = 'response') %>%
+  contrast('revpairwise')
 
-richness_plot <- emmeans(richness_model_nb2, ~time_treat, type = 'response') %>%
+richness_plot <- emmeans(richness_model_pois, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
+  rename(response = rate) %>%
   ggplot(aes(x = time, y = response, 
              ymin = response - std.error, 
              ymax = response + std.error,
@@ -179,33 +155,16 @@ evenness_model <- glmmTMB(evenness ~ time_treat +
         family = 'beta_family',
         data = alpha_metrics)
 
-diag.plots(evenness_model, col.nos = c('tank', 'anti', 'geno', 'health', 'time'), data = alpha_metrics)
 
-evenness_model2 <- glmmTMB(evenness ~ time_treat + 
-                            (1 | tank) + 
-                            (1 | geno / fragment), 
-                           dispformula = ~tank,
-                          family = 'beta_family',
-                          data = alpha_metrics)
-
-MuMIn::AICc(evenness_model, evenness_model2)
-AIC(evenness_model, evenness_model2)
-BIC(evenness_model, evenness_model2)
-
-car::Anova(evenness_model2)
-emmeans(evenness_model2, ~time_treat) %>%
+car::Anova(evenness_model)
+emmeans(evenness_model, ~time_treat) %>%
   contrast(method = list('disease' = c(0, 1, -1/2, 0, -1/2),
                          'antibiotic' = c(1/2, 0, -1/2, 1/2, -1/2),
                          'time' = c(1/2, 0, 1/2, -1/2, -1/2)))
 
 
-ref_grid(evenness_model2) %>%
-  add_grouping('diseae', 'time_treat', c(NA, 'D', 'H', NA, 'H')) %>%
-  emmeans(~diseae, type = 'response') %>%
-  contrast('pairwise')
 
-
-evenness_plot <- emmeans(evenness_model2, ~time_treat, type = 'response') %>%
+evenness_plot <- emmeans(evenness_model, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
   ggplot(aes(x = time, y = response, 
              ymin = response - std.error, 
@@ -249,27 +208,13 @@ diversity_model <- glmmTMB(diversity ~ time_treat +
         family = Gamma(link = 'log'),
         data = alpha_metrics)
 
-diag.plots(diversity_model, col.nos = c('tank', 'anti', 'geno', 'health', 'time'), data = alpha_metrics)
-
-diversity_model2 <- glmmTMB(diversity ~ time_treat + 
-                             (1 | tank) + 
-                             (1 | geno / fragment),
-                            dispformula = ~time,
-                           family = Gamma(link = 'log'),
-                           data = alpha_metrics)
-
-
-MuMIn::AICc(diversity_model, diversity_model2)
-AIC(diversity_model, diversity_model2)
-BIC(diversity_model, diversity_model2)
-
-car::Anova(diversity_model2)
-emmeans(diversity_model2, ~time_treat) %>%
+car::Anova(diversity_model)
+emmeans(diversity_model, ~time_treat) %>%
   contrast(method = list('disease' = c(0, 1, -1/2, 0, -1/2),
                          'antibiotic' = c(1/2, 0, -1/2, 1/2, -1/2),
                          'time' = c(1/2, 0, 1/2, -1/2, -1/2)))
 
-ref_grid(diversity_model2) %>%
+ref_grid(diversity_model) %>%
   add_grouping('anti', 'time_treat', c('A', NA, 'N', 'A', 'N')) %>%
   emmeans(~anti, type = 'response') %>%
   contrast('revpairwise')
@@ -322,6 +267,17 @@ dominance_model <- glmmTMB(dominance ~ time_treat +
 
 diag.plots(dominance_model, col.nos = c('tank', 'anti', 'geno', 'health', 'time'), data = alpha_metrics)
 
+# dominance_model2 <- glmmTMB(dominance ~ time_treat + 
+#                              (1 | tank) + 
+#                              (1 | geno/fragment), 
+#                            dispformula = ~time,
+#                            family = 'beta_family',
+#                            data = alpha_metrics)
+# 
+# MuMIn::AICc(dominance_model, dominance_model2)
+# AIC(dominance_model, dominance_model2)
+# BIC(dominance_model, dominance_model2)
+
 
 car::Anova(dominance_model)
 emmeans(dominance_model, ~time_treat) %>%
@@ -368,7 +324,7 @@ dominance_plot <- emmeans(dominance_model, ~time_treat, type = 'response') %>%
   theme(strip.background = element_blank(),
         panel.background = element_rect(colour = 'black'),
         legend.key = element_blank())
-
+dominance_plot
 
 
 #### Phylogenetic Diveristy ####
@@ -393,18 +349,6 @@ BIC(phylo_model_norm, phylo_model_gamma)
 
 diag.plots(phylo_model_norm, col.nos = c('tank', 'anti', 'geno', 'health', 'time'), data = alpha_metrics)
 
-phylo_model_norm2 <- glmmTMB(phylogenetic ~ time_treat + 
-                              (1 | tank) + 
-                              (1 | geno / fragment), 
-                            dispformula = ~tank,
-                            family = 'gaussian',
-                            data = alpha_metrics)
-
-MuMIn::AICc(phylo_model_norm, phylo_model_gamma, phylo_model_norm2)
-AIC(phylo_model_norm, phylo_model_gamma, phylo_model_norm2)
-BIC(phylo_model_norm, phylo_model_gamma, phylo_model_norm2)
-
-
 
 car::Anova(phylo_model_norm)
 emmeans(phylo_model_norm, ~time_treat) %>%
@@ -412,7 +356,7 @@ emmeans(phylo_model_norm, ~time_treat) %>%
                          'antibiotic' = c(1/2, 0, -1/2, 1/2, -1/2),
                          'time' = c(1/2, 0, 1/2, -1/2, -1/2)))
 
-phylo_plot <- emmeans(phylo_model_norm2, ~time_treat, type = 'response') %>%
+phylo_plot <- emmeans(phylo_model_norm, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
   rename(response = estimate) %>%
   ggplot(aes(x = time, y = response, 
@@ -439,7 +383,7 @@ phylo_plot <- emmeans(phylo_model_norm2, ~time_treat, type = 'response') %>%
          shape = guide_legend(override.aes = list(size = 4, fill = 'black'))) +
   # facet_wrap( ~ name, nrow = 1, scales = 'free_y') +
   labs(x = NULL, 
-       y = 'Faith\'s PD',
+       y = 'Phylogenetic Diversity',
        fill = 'Health\nState',
        shape = 'Antibiotic\nTreatment') +
   theme_classic() +
@@ -448,23 +392,11 @@ phylo_plot <- emmeans(phylo_model_norm2, ~time_treat, type = 'response') %>%
         legend.key = element_blank())
 
 #### Join Together ####
-((richness_plot + evenness_plot) /
-  (diversity_plot + dominance_plot) /
-  (phylo_plot + plot_spacer())) +
-  plot_layout(guides = 'collect', axes = 'collect',
-              axis_titles = 'collect')
-
-
-((richness_plot / diversity_plot / phylo_plot) +
-  plot_layout(axes = 'collect', guides = 'collect',
-              axis_titles = 'collect')) |
-  ((evenness_plot / dominance_plot / plot_spacer()) +
-     plot_layout(axes = 'collect', guides = 'collect',
-                 axis_titles = 'collect')) +
-  plot_layout(guides = 'collect')
-
-list(richness_plot, evenness_plot, diversity_plot, 
-     dominance_plot, phylo_plot) %>%
+list(phylo_plot, evenness_plot,
+     richness_plot, diversity_plot, 
+     dominance_plot, guide_area()) %>%
   wrap_plots(ncol = 2) +
   plot_layout(guides = 'collect', axes = 'collect',
-              axis_titles = 'collect')
+              axis_titles = 'collect') +
+  plot_annotation(tag_levels = 'A')
+ggsave('../Results/Fig3_alpha_diversity.png', height = 8, width = 6)
