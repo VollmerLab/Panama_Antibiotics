@@ -1,0 +1,27 @@
+association,family,species,asv_id,estimate,df,t.value,p.value,fdr.bh
+antibiotic,Vibrionaceae,Vibrio sp.,ASV8,-0.7 ± 0.26,90.0,-2.47,0.015,0.036
+antibiotic,Rubritaleaceae,Rubritalea sp.,ASV12,-1.7 ± 0.54,4.6,-3.13,0.029,0.049
+antibiotic,Verrucomicrobiaceae,Haloferula sp.,ASV20,-1.7 ± 0.37,4.8,-4.49,0.007,0.028
+antibiotic,Erythrobacteraceae,Qipengyuania sp.,ASV40,-0.8 ± 0.21,4.9,-3.65,0.015,0.036
+antibiotic,Roseobacteraceae,Thalassovita mediterranea,ASV93,-1.2 ± 0.23,91.0,-5.29,<0.001,<0.001
+antibiotic,Rubritaleaceae,Rubritalea tangerina,ASV185,-0.7 ± 0.23,4.6,-3.04,0.032,0.049
+antibiotic,Rubritaleaceae,Rubritalea tangerina,ASV217,-0.5 ± 0.19,34.5,-2.82,0.008,0.028
+antibiotic,Paracoccaceae,Pseudooceanicola sp.,ASV304,-0.6 ± 0.15,89.9,-4.36,<0.001,<0.001
+antibiotic,Flavobacteriaceae,Ascidiaceibacter salegens,ASV544,0.3 ± 0.14,94.0,2.30,0.024,0.047
+disease,Vibrionaceae,Vibrio sp.,ASV8,1.9 ± 0.48,93.2,3.94,<0.001,<0.001
+disease,Roseobacteraceae,,ASV9,1.9 ± 0.31,92.5,6.04,<0.001,<0.001
+disease,Fastidiosibacteraceae,Cysteiniphilum litorale,ASV25,2.4 ± 0.37,93.9,6.53,<0.001,<0.001
+disease,Roseobacteraceae,Thalassovita mediterranea,ASV93,1.4 ± 0.42,90.9,3.40,<0.001,0.003
+disease,Saprospiraceae,Saprospira grandis,ASV251,-1.0 ± 0.33,92.7,-2.94,0.004,0.012
+disease,Saprospiraceae,Saprospira grandis,ASV392,-0.7 ± 0.27,88.5,-2.48,0.015,0.035
+time,Roseobacteraceae,,ASV9,0.4 ± 0.17,90.6,2.33,0.022,0.028
+time,Rubritaleaceae,Rubritalea sp.,ASV12,2.5 ± 0.38,91.1,6.52,<0.001,<0.001
+time,Verrucomicrobiaceae,Haloferula sp.,ASV20,1.4 ± 0.27,91.2,5.29,<0.001,<0.001
+time,Erythrobacteraceae,Qipengyuania sp.,ASV40,-0.7 ± 0.16,67.4,-4.00,<0.001,<0.001
+time,Flavobacteriaceae,Seonamhaeicola sp.,ASV41,1.9 ± 0.37,91.7,5.06,<0.001,<0.001
+time,Rubritaleaceae,Rubritalea tangerina,ASV185,0.8 ± 0.18,69.8,4.46,<0.001,<0.001
+time,Rubritaleaceae,Rubritalea tangerina,ASV217,0.7 ± 0.18,69.2,4.15,<0.001,<0.001
+time,Saprospiraceae,Saprospira grandis,ASV251,-0.9 ± 0.18,90.7,-4.85,<0.001,<0.001
+time,Paracoccaceae,Pseudooceanicola sp.,ASV304,-0.5 ± 0.15,89.3,-3.64,<0.001,<0.001
+time,Saprospiraceae,Saprospira grandis,ASV392,-0.8 ± 0.15,86.5,-5.08,<0.001,<0.001
+time,Flavobacteriaceae,Ascidiaceibacter salegens,ASV544,0.4 ± 0.14,94.0,2.85,0.005,0.007

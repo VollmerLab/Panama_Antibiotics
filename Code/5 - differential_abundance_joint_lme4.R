@@ -163,7 +163,6 @@ prePost_effects %>%
   write_csv('../Results/individual_asv_results.csv')
 
 #### Summarize Results ####
-
 prePost_effects %>%
   select(asv_id, class, order, family, genus, contains(str_remove(fdr_or_qvalue, '^_'))) %>%
   mutate(across(contains(str_remove(fdr_or_qvalue, '^_')), ~replace_na(., 1))) %>%
@@ -216,8 +215,8 @@ asv_assocation_directions %>%
   select(disease, untreated)
 
 prePost_effects %>%
-  filter(asv_id %in% c('ASV124')) %>%
-  select(class:asv_id)
+  filter(asv_id %in% c('ASV9', 'ASV93', 'ASV8', 'ASV25'))
+  
   
 
 #### Tables ####
@@ -225,16 +224,54 @@ prePost_effects %>%
   select(phylum:asv_id, 
          ndf, ddf, f.value, p.value, 
          all_of(str_remove(fdr_or_qvalue, '^_'))) %>%
-  write_csv('../Results/Table1_ASVmainEffects.csv')
+  write_csv('../Results/TableS1_ASVmainEffects.csv')
 
 prePost_effects %>%
+  select(family:asv_id, 
+         ndf, ddf, f.value, p.value, 
+         all_of(str_remove(fdr_or_qvalue, '^_'))) %>%
+  filter(!!sym(str_remove(fdr_or_qvalue, '^_')) < alpha_test) %>%
+  arrange(str_extract(asv_id, '[0-9]+') %>% as.integer()) %>%
+  mutate(species = case_when(!is.na(species) ~ species,
+                             is.na(species) & is.na(genus) ~ '',
+                             TRUE ~ str_c(genus, ' sp.')),
+         across(c(p.value, fdr.bh), ~scales::pvalue(.)),
+         ddf = sprintf('%.1f', ddf),
+         f.value = sprintf('%.2f', f.value)) %>%
+  select(-genus) %>%
+  relocate(asv_id, .before = 'family') %>%
+  write_csv('../Results/Table1_ASVmainEffects_Sig.csv')
+
+
+posthocTables <- prePost_effects %>%
   filter(if_any(all_of(str_remove(fdr_or_qvalue, '^_')), ~. < alpha_test)) %>%
-  select(phylum:asv_id, 
-         starts_with('time'),
-         starts_with('antibiotic'),
-         starts_with('disease')) %>%
-  select(-ends_with('q.value'), -ends_with('fdr.by')) %>%
-  write_csv('../Results/Table2_ASVpostHocs.csv')
+  arrange(str_extract(asv_id, '[0-9]+') %>% as.integer()) %>%
+  select(family:asv_id, contrast,
+         contains(fdr_or_qvalue)) %>%
+  rowwise %>%
+  mutate(contrast_to_table(contrast), .keep = 'unused') %>%
+  pivot_longer(cols = c(starts_with('disease'), starts_with('antibiotic'), starts_with('time')),
+               names_to = c('association', '.value'),
+               names_pattern = '(.*)_(.*)') %>%
+  relocate(all_of(str_remove(fdr_or_qvalue, '^_')), .after = p.value)
+  
+
+posthocTables %>%
+  select(-family:-species) %>%
+  write_csv('../Results/TableS2_ASVpostHocs.csv')
+
+filter(posthocTables, fdr.bh < alpha_test) %>%
+  mutate(species = case_when(!is.na(species) ~ species,
+                             is.na(species) & is.na(genus) ~ '',
+                             TRUE ~ str_c(genus, ' sp.')),
+         across(c(p.value, fdr.bh), ~scales::pvalue(.)),
+         df = sprintf('%.1f', df),
+         t.value = sprintf('%.2f', t.value),
+         estimate = str_c(sprintf('%.1f', estimate), sprintf('%.2f', std.error), sep = ' ± ')) %>%
+  select(-genus, -std.error) %>%
+  arrange(association) %>%
+  relocate(association, .before = family) %>%
+  write_csv('../Results/Table2_ASVpostHocsSig.csv')
 
 #### Just the Pathogens ####
 prePost_effects %>%
