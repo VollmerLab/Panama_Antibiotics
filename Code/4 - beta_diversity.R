@@ -241,23 +241,32 @@ anova(the_rda, by = 'terms')
 
 
 const_var_exp <- summary(the_rda)$concont$importance[2, ]
-total_var_exp <- summary(the_rda)$cont$importance[2,]
+total_var_exp <- summary(the_rda)$cont$importance[3,]
 
 pcoa_data <- scores(the_rda)$sites %>%
   as_tibble(rownames = 'sample_id') %>%
   left_join(tank_metadata, by = 'sample_id') %>%
   # mutate(time = str_to_sentence(time) %>% str_c('\nDisease Dose') %>% fct_inorder()) %>%
-  rename(Dim1 = dbRDA1, Dim2 = dbRDA2)
+  rename(Dim1 = dbRDA1, Dim2 = dbRDA2) %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) 
 
 centroid_data <- pcoa_data %>%
   select(time, anti, health, Dim1, Dim2) %>%
   nest_by(time, anti, health) %>%
-  reframe(veganGetCentroids(data))
+  reframe(veganGetCentroids(data)) %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) 
 
 ellipse_data <- pcoa_data %>%
   select(time, anti, health, Dim1, Dim2) %>%
   nest_by(time, anti, health) %>%
-  reframe(veganCovEllipse(data, se = FALSE, conf = 0.66))
+  reframe(veganCovEllipse(data, se = FALSE, conf = 0.66)) %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) 
 
 dbrda_plot <- pcoa_data %>%
   ggplot(aes(x = Dim1, y = Dim2, colour = health, fill = interaction(time == 'before', health),
@@ -270,16 +279,17 @@ dbrda_plot <- pcoa_data %>%
   geom_point(data = centroid_data, size = 5, stroke = 2) +
   
   
-  scale_colour_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
-                                                                  type = "continuous"),
-                                         c('H', 'D')),
+  scale_colour_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
+                                                                    type = "continuous"),
+                                           "#80D1E9"),
+                                         c('H', 'D', 'H_A')),
                       breaks = c('D', 'H'), 
                       labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                       drop = FALSE) +
-  scale_fill_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
+  scale_fill_manual(values = set_names(c("#80D1E9", wesanderson::wes_palette("Zissou1", 2, 
                                                                 type = "continuous"),
-                                         'white'),
-                                       c('FALSE.H', 'FALSE.D', 'TRUE.H')),
+                                         'white', 'white'),
+                                       c('FALSE.H_A', 'FALSE.H', 'FALSE.D', 'TRUE.H_A', 'TRUE.H')),
                     breaks = c('TRUE.H', 'FALSE.H'),
                     labels = c('TRUE.H' = 'Before', 'FALSE.H' = "After")) +
   
@@ -296,7 +306,8 @@ dbrda_plot <- pcoa_data %>%
                                                                 'After' = 'circle'), 
                                             linewidth = 2, colour = 'black',
                                             stroke = 0.1)),
-    shape = guide_legend(override.aes = list(size = 4, fill = 'black', stroke = 0.1))) +
+    shape = guide_legend(override.aes = list(size = 4, fill = c("#3A9AB2", "#80D1E9"), 
+                                             stroke = 0.1))) +
   labs(x = str_c('dbRDA1 (', scales::percent(const_var_exp[1], accuracy = 0.1),')'), 
        y = str_c('dbRDA2 (', scales::percent(const_var_exp[2], accuracy = 0.1),')'),
        colour = 'Health\nState',
@@ -308,6 +319,7 @@ dbrda_plot <- pcoa_data %>%
         panel.background = element_rect(colour = 'black'),
         legend.key = element_blank())
 # ggsave('../Results/Fig3_asv_dbrda.png', height = 7, width = 10)
+dbrda_plot
 
 data.frame(ord_in$CCA$biplot[, axes])
 

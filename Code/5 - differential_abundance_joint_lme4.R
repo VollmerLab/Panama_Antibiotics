@@ -1,4 +1,5 @@
 ##TODO - Fix table 2 to have DF and t
+##TODO - check plot axis titles
 
 #### Libraries ####
 library(multcomp)
@@ -56,6 +57,15 @@ posthoc_padjust <- function(data, alpha){
   
 }
 
+contrast_to_table <- function(the_contrast){
+  broom::tidy(the_contrast) %>%
+    select(contrast, estimate, std.error, df, statistic, p.value) %>%
+    rename(t.value = statistic) %>%
+    pivot_wider(names_from = contrast, 
+                values_from = -contrast,
+                names_glue = '{contrast}_{.value}')
+}
+
 #### Data ####
 tank_data <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
                       show_col_types = FALSE) %>%
@@ -67,6 +77,9 @@ tank_data <- read_csv('../intermediate_files/normalized_tank_asv_counts.csv',
   rename(time = time_fac) %>%
   mutate(treatment = str_c(anti, health, sep = '_') %>% factor,
          time_treat = str_c(time, anti, health, sep = '_') %>% factor)
+
+sebastians_field <- read_csv('../intermediate_files/sebastians_reef_microbiomes.csv', 
+                             show_col_types = FALSE)
 
 #### Run analyses ####
 if(file.exists('../intermediate_files/all_asv_models.rds.xz')){
@@ -119,8 +132,9 @@ if(file.exists('../intermediate_files/all_asv_models.rds.xz')){
               metrics = list(cld(posthoc,
                                  Letters = LETTERS, 
                                  alpha = alpha_test) %>%
-                               tidy %>%
-                               select(time_treat, estimate, std.error, .group) %>%
+                               tidy(conf.int = TRUE) %>%
+                               select(time_treat, estimate, std.error, 
+                                      conf.low, conf.high, .group) %>%
                                mutate(.group = str_trim(.group)) %>%
                                rename(mean_est = estimate,
                                       se_est = std.error) %>%
@@ -231,7 +245,7 @@ prePost_effects %>%
          ndf, ddf, f.value, p.value, 
          all_of(str_remove(fdr_or_qvalue, '^_'))) %>%
   filter(!!sym(str_remove(fdr_or_qvalue, '^_')) < alpha_test) %>%
-  arrange(str_extract(asv_id, '[0-9]+') %>% as.integer()) %>%
+  arrange(family, str_extract(asv_id, '[0-9]+') %>% as.integer()) %>%
   mutate(species = case_when(!is.na(species) ~ species,
                              is.na(species) & is.na(genus) ~ '',
                              TRUE ~ str_c(genus, ' sp.')),
@@ -272,6 +286,24 @@ filter(posthocTables, fdr.bh < alpha_test) %>%
   arrange(association) %>%
   relocate(association, .before = family) %>%
   write_csv('../Results/Table2_ASVpostHocsSig.csv')
+
+#### Numbers for Text ####
+filter(prePost_effects, asv_id %in% c('ASV8', 'ASV93')) %>%
+  select(asv_id, posthoc) %>%
+  rowwise(asv_id) %>%
+  reframe(emmeans::contrast(posthoc,
+                            method = list(anti = c(1/2, 0, 0, 1/2, 0),
+                                          untreated = c(0, 0, 1/2, 0, 1/2),
+                                          disease = c(0, 1, 0, 0, 0))) %>%
+            broom::tidy())
+
+filter(prePost_effects, asv_id %in% c('ASV25', 'ASV9')) %>%
+  select(asv_id, posthoc) %>%
+  rowwise(asv_id) %>%
+  reframe(emmeans::contrast(posthoc,
+                            method = list(untreated = c(0, 0, 1/2, 0, 1/2),
+                                          disease = c(0, 1, 0, 0, 0))) %>%
+            broom::tidy())
 
 #### Just the Pathogens ####
 prePost_effects %>%
@@ -478,27 +510,27 @@ select(prePost_effects, name, ends_with(fdr_or_qvalue), metrics) %>%
 
 
 
-# data <- tmp$metrics[[12]]; association <- tmp$association[[12]]
-plot_asv <- function(data, association){
+# data <- tmp$metrics[[4]]; association <- tmp$association[[4]]
+plot_asv <- function(data, association, significance = TRUE){
   association_classes <- str_extract_all(association, 
                                      '(Pre|Post)dose|Healthy|Disease|Antibiotic|Untreated') %>%
     unlist
   
   base_plot <- data %>%
+    mutate(health = if_else(anti == 'A', 'A', health) %>% fct_relevel('D', after = Inf)) %>%
     ggplot(aes(x = time, y = mean_est, 
-               ymin = mean_est - se_est,
-               ymax = mean_est + se_est,
+               ymin = conf.low,
+               ymax = conf.high,
                fill = health,
                shape = anti)) +
     geom_errorbar(width = 0.1,
                   position = position_dodge(0.5),
                   show.legend = FALSE) +
     geom_point(position = position_dodge(0.5), 
-               size = 2) +
+               size = 2.5) +
     
-    scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
-                                                                  type = "continuous"),
-                                         c('H', 'D')),
+    scale_fill_manual(values = set_names(c("#3A9AB2", "#80D1E9", "#F11B00"),
+                                         c('H', 'A', 'D')),
                       breaks = c('D', 'H'), 
                       labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                       drop = FALSE) +
@@ -507,7 +539,7 @@ plot_asv <- function(data, association){
                        labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
     scale_x_discrete(labels = ~str_to_sentence(.) %>% str_c(., '\nDisease Dose')) +
     guides(fill = guide_legend(override.aes = list(size = 4, shape = 'circle filled')),
-           shape = guide_legend(override.aes = list(size = 4, fill = 'black'))) +
+           shape = guide_legend(override.aes = list(size = 4, fill = c("#3A9AB2", "#80D1E9")))) +
     # facet_wrap( ~ name, nrow = 1, scales = 'free_y') +
     labs(x = NULL, 
          y = case_when(y_metric == 'rclr' ~ str_to_upper(y_metric),
@@ -520,69 +552,93 @@ plot_asv <- function(data, association){
           legend.key = element_blank())
   
   
-  max_y <- max(data$mean_est + data$se_est)
-  n_sig <- 0
-  
-  if(any(str_detect(association_classes, '(Pre|Post)dose'))){
-    y_height <- 1.25 * max_y; n_sig <- n_sig + 1
-    base_plot <- base_plot +
-      ggpubr::geom_bracket(xmin = 0.8, xmax = "after", 
-                   y.position = y_height,
-                   label = "*", label.size = 6,
-                   vjust = 0.5,
-                   inherit.aes = FALSE)
-  }
-  
-  if(any(str_detect(association_classes, 'Antibiotic|Untreated'))){
-    y_height <- if_else(n_sig > 0, 1.05 * max_y, 1.25 * max_y); n_sig <- n_sig + 1
+  if(significance){
+    max_y <- max(data$conf.high)
+    n_sig <- 0
     
-    which_time_anti <- data %>%
-      filter(health == 'H') %>%
-      group_by(time) %>%
-      summarise(t.value = diff(mean_est) / mean(se_est)) %>%
-      mutate(p.value = 1 * pt(abs(t.value), Inf, lower.tail = FALSE)) %>%
-      filter(p.value < alpha_test) %>%
-      pull(time) %>%
-      as.character()
-    
-    if('before' %in% which_time_anti){
+    if(any(str_detect(association_classes, '(Pre|Post)dose'))){
+      y_height <- 1.25 * max_y; n_sig <- n_sig + 1
       base_plot <- base_plot +
-        ggpubr::geom_bracket(xmin = 0.8, xmax = 1.2, 
+        ggpubr::geom_bracket(xmin = 0.8, xmax = "after", 
                              y.position = y_height,
-                             label = "#", label.size = 3,
-                             vjust = 0.25,
-                             inherit.aes = FALSE) 
+                             label = "*", label.size = 6,
+                             vjust = 0.5,
+                             inherit.aes = FALSE)
     }
     
-    if('after' %in% which_time_anti){
+    if(any(str_detect(association_classes, 'Antibiotic|Untreated'))){
+      y_height <- if_else(n_sig > 0, 1.05 * max_y, 1.25 * max_y); n_sig <- n_sig + 1
+      
+      which_time_anti <- data %>%
+        filter(health == 'H') %>%
+        group_by(time) %>%
+        summarise(t.value = diff(mean_est) / mean(se_est)) %>%
+        mutate(p.value = 1 * pt(abs(t.value), Inf, lower.tail = FALSE)) %>%
+        filter(p.value < alpha_test) %>%
+        pull(time) %>%
+        as.character()
+      
+      if('before' %in% which_time_anti){
+        base_plot <- base_plot +
+          ggpubr::geom_bracket(xmin = 0.8, xmax = 1.2, 
+                               y.position = y_height,
+                               label = "#", label.size = 3,
+                               vjust = 0.25,
+                               inherit.aes = FALSE) 
+      }
+      
+      if('after' %in% which_time_anti){
+        base_plot <- base_plot +
+          ggpubr::geom_bracket(xmin = 1.8, xmax = 2.05, 
+                               y.position = y_height,
+                               label = "#", label.size = 3,
+                               vjust = 0.25,
+                               inherit.aes = FALSE)
+      }
+    }
+    
+    if(any(str_detect(association_classes, 'Healthy|Disease'))){
+      y_height <- 1.25 * max_y; n_sig <- n_sig + 1
+      
       base_plot <- base_plot +
-        ggpubr::geom_bracket(xmin = 1.8, xmax = 2.05, 
+        ggpubr::geom_bracket(xmin = 2.12, xmax = 2.21, 
                              y.position = y_height,
-                             label = "#", label.size = 3,
-                             vjust = 0.25,
+                             label = "+", label.size = 4,
+                             vjust = 0.5, #tip.length = 4,
+                             size = 0, colour = 'black',
                              inherit.aes = FALSE)
     }
   }
   
-  if(any(str_detect(association_classes, 'Healthy|Disease'))){
-    y_height <- 1.25 * max_y; n_sig <- n_sig + 1
-    
-    base_plot <- base_plot +
-      ggpubr::geom_bracket(xmin = 2.12, xmax = 2.21, 
-                           y.position = y_height,
-                           label = "+", label.size = 4,
-                           vjust = 0.5, #tip.length = 4,
-                           size = 0, colour = 'black',
-                           inherit.aes = FALSE)
-  }
   
   base_plot
+}
+
+plot_fc <- function(fold_change){
+  broom::tidy(fold_change, conf.int = TRUE) %>%
+    mutate(contrast = str_to_sentence(contrast) %>%
+             factor(levels = c('Time', 'Antibiotic', 'Disease'))) %>%
+    ggplot(aes(x = contrast, y = estimate, 
+               ymin = conf.low,
+               ymax = conf.high)) +
+    geom_hline(yintercept = 0) +
+    geom_errorbar(width = 0.1) +
+    geom_point() +
+    geom_text(aes(y = Inf, label = if_else(p.value < 0.05, '*', '')),
+              size = 10, vjust = 1) +
+    labs(x = NULL, 
+         y = "logFC") +
+    theme_classic() +
+    theme(strip.background = element_blank(),
+          axis.text = element_text(colour = 'black'),
+          panel.background = element_rect(colour = 'black'),
+          legend.key = element_blank())
 }
 
 
 associated_asvs <- select(prePost_effects, domain:asv_id, name, 
               ends_with('coef'), ends_with(fdr_or_qvalue), 
-              metrics) %>%
+              metrics, contrast) %>%
   filter(if_any(ends_with(fdr_or_qvalue), ~. < alpha_test)) %>%
   mutate(across(ends_with(fdr_or_qvalue), ~. < alpha_test),
          across(ends_with('coef'), ~if_else(. < 0, -1L, 1L))) %>%
@@ -605,6 +661,7 @@ associated_asvs <- select(prePost_effects, domain:asv_id, name,
   summarise(association = str_c(sort(association), collapse = ' & '),
             n_associations = n(),
             metrics = unique(metrics),
+            contrast = unique(contrast),
             .groups = 'drop')
 
 associated_asvs %>%
@@ -612,18 +669,222 @@ associated_asvs %>%
   # arrange(n_associations) %>%
   arrange(family, asv_id) %>%
   rowwise %>%
-  mutate(plot = list(plot_asv(metrics, association) + labs(subtitle = name))) %>%
+  mutate(plot = list(plot_asv(metrics, association, significance = FALSE) + labs(subtitle = name)),
+         plot_fc = list(plot_fc(contrast))) %>%
+  select(asv_id, starts_with('plot')) %>%
+  pivot_longer(cols = starts_with('plot'),
+               names_to = 'type',
+               values_to = 'plot') %>%
   pull(plot) %>%
-  wrap_plots(ncol = 1, guides = 'collect') +
-  plot_annotation(tag_levels = 'A') +
+  wrap_plots(ncol = 2, guides = 'collect', widths = c(0.8, 0.2)) +
+  plot_annotation(tag_levels = list(c('A', '', 'B', '', 'C', '', 'D', ''))) +
   plot_layout(axes = 'collect', axis_titles = 'collect',
               guides = 'collect') &
   expand_limits(y = c(0, 3.7)) &
   theme(axis.text = element_text(colour = 'black'),
         # plot.subtitle = element_blank(),
         plot.subtitle = element_markdown(colour = 'black', size = 8))
-ggsave('../Results/Fig6_diseaseAssociated_ASVs.png', height = 10, width = 6)
 
+
+associated_asvs %>%
+  filter(str_detect(association, 'Disease')) %>%
+  # arrange(n_associations) %>%
+  arrange(family, asv_id) %>%
+  rowwise %>%
+  mutate(plot = list(plot_asv(metrics, association, significance = FALSE) + labs(subtitle = name)),
+         plot_fc = list(plot_fc(contrast) +
+                          scale_y_continuous(position = "right"))) %>%
+  summarise(plot = list((plot + theme(plot.margin = margin(r = 0))) +
+                          (plot_fc + theme(plot.margin = margin(l = 0))) +
+                          plot_layout(widths = c(0.8, 0.2), tag_level = 'new'))) %>%
+  pull(plot) %>%
+  wrap_plots(ncol = 1, guides = 'collect') +
+  plot_annotation(tag_levels = c('A', '1'), tag_sep = '.') +
+  plot_layout(axes = 'collect', axis_titles = 'collect',
+              guides = 'collect') &
+  # expand_limits(y = c(0, 3.7)) &
+  theme(axis.text = element_text(colour = 'black'),
+        # plot.subtitle = element_blank(),
+        plot.subtitle = element_markdown(colour = 'black', size = 8))
+# ggsave('../Results/Fig6_diseaseAssociated_ASVs_v1.png', height = 10, width = 6)
+
+associated_asvs %>%
+  filter(str_detect(association, 'Disease')) %>%
+  # arrange(n_associations) %>%
+  arrange(family, asv_id) %>%
+  rowwise(name) %>%
+  reframe(broom::tidy(contrast, conf.int = TRUE)) %>%
+  mutate(contrast = str_to_sentence(contrast) %>%
+           factor(levels = c('Time', 'Antibiotic', 'Disease'))) %>%
+  ggplot(aes(x = contrast, y = estimate, 
+             colour = name,
+             ymin = conf.low,
+             ymax = conf.high)) +
+  geom_hline(yintercept = 0) +
+  geom_errorbar(width = 0.1,
+                position = position_dodge(0.25),
+                show.legend = FALSE) +
+  geom_point(position = position_dodge(0.25)) +
+  geom_text(aes(label = if_else(p.value < 0.05, '*', ''), y = Inf),
+            vjust = 1, position = position_dodge(0.25), size = 6,
+            show.legend = FALSE) +
+  guides(colour = guide_legend(override.aes = list(size = 4))) +
+  labs(y = 'logFC',
+       x = NULL,
+       colour = 'ASV') +
+  theme_classic() +
+  theme(legend.text = element_markdown(colour = 'black', size = 8))
+# ggsave('../Results/Fig6_diseaseAssociated_ASVs_v2.png', height = 6, width = 6)
+
+#### Field Models ####
+field_associations <- sebastians_field %>%
+  filter(asv_id %in% unique(associated_asvs$asv_id)) %>%
+  group_by(asv_id) %>%
+  filter(!all(rclr == 0)) %>%
+  summarise(model = list(lm(rclr ~ health)),
+            .groups = 'rowwise') %>%
+  mutate(posthoc = list(emmeans::emmeans(model, ~health))) %>%
+  reframe(emmeans::contrast(posthoc, 'pairwise') %>%
+            broom::tidy(conf.int = TRUE) %>%
+            select(estimate, conf.low, conf.high, p.value) %>%
+            mutate(contrast = 'Field')) %>%
+  left_join(select(associated_asvs, asv_id, name),
+            by = 'asv_id') %>%
+  mutate(fdr = p.adjust(p.value, str_remove(fdr_or_qvalue, '^_fdr.') %>% str_to_upper()))
+
+#### All Contrasts ####
+prePost_effects %>%
+  filter(if_any(all_of(str_c(c('antibiotic', 'disease'), fdr_or_qvalue)), ~. < alpha_test)) %>%
+  mutate(grouping = case_when(!!sym(str_c('antibiotic', fdr_or_qvalue)) < alpha_test & 
+                                !!sym(str_c('disease', fdr_or_qvalue)) < alpha_test ~ 'Disease & Antibiotic',
+                              !!sym(str_c('disease', fdr_or_qvalue)) < alpha_test ~ 'Disease',
+                              !!sym(str_c('antibiotic', fdr_or_qvalue)) < alpha_test ~ 'Antibiotic')) %>%
+
+  filter((grouping == 'Disease' & disease_coef > 0) |
+           (grouping == 'Antibiotic' & antibiotic_coef < 0) |
+           (grouping == 'Disease & Antibiotic' & antibiotic_coef < 0 & disease_coef > 0)) %>%
+  
+  rowwise(asv_id, name, grouping) %>%
+  mutate(fdr = list(c_across(all_of(str_c(c('disease', 'antibiotic', 'time'), fdr_or_qvalue))))) %>%
+  
+  reframe(broom::tidy(contrast, conf.int = TRUE) %>%
+            mutate(fdr = fdr)) %>%
+  select(asv_id, name, grouping, contrast, 
+         estimate, conf.low, conf.high, fdr) %>%
+  bind_rows(left_join(field_associations, 
+                      distinct(., asv_id, grouping),
+                      by = 'asv_id')) %>%
+  mutate(contrast = str_to_title(contrast),
+         grouping = factor(grouping, levels = c('Disease', 'Disease & Antibiotic', 'Antibiotic')),
+         fill_value = if_else(fdr >= alpha_test, NA_character_, contrast)) %>%
+  
+  filter(!is.na(grouping)) %>%
+  filter(contrast != 'Time') %>%
+  
+  mutate(fct_sort = case_when(grouping == 'Disease' ~ estimate[contrast == 'Disease'],
+                              grouping == 'Antibiotic' ~ -estimate[contrast == 'Antibiotic'],
+                              TRUE ~ (estimate[contrast == 'Disease'] + estimate[contrast == 'Antibiotic']) / 2),
+       .by = 'asv_id') %>%
+  mutate(name = fct_reorder(name, fct_sort)) %>%
+  
+  ggplot(aes(y = name, x = estimate, 
+             colour = contrast,
+             fill = fill_value,
+             xmin = conf.low,
+             xmax = conf.high)) +
+  geom_vline(xintercept = 0) +
+  geom_errorbar(width = 0.5,
+                position = position_dodge(0.75),
+                show.legend = FALSE) +
+  geom_point(position = position_dodge(0.75), 
+             shape = 'circle filled', size = 4) +
+  scale_colour_manual(values = c('Time' = 'gray50',
+                                 'Antibiotic' = "#80D1E9",
+                                 'Disease' = "#F11B00",
+                                 'Field' = 'forestgreen')) +
+  scale_fill_manual(values = c('Time' = 'gray50',
+                                 'Antibiotic' = "#80D1E9",
+                                 'Disease' = "#F11B00",
+                                 'Field' = 'forestgreen'), 
+                    na.value = 'white',
+                    breaks = c('Disease', 'Antibiotic'),
+                    labels = c('Disease' = 'Significant', 'Antibiotic' = "Non-Significant")) +
+  guides(colour = guide_legend(override.aes = list(size = 4, shape = 'circle')),
+         fill = guide_legend(override.aes = list(size = 4, 
+                                                 shape = c('Significant' = 'circle', 
+                                                           "Non-Significant" = 'circle open'), 
+                                                 fill = 'black'))) +
+  facet_grid(grouping ~ ., scales = 'free_y', space = 'free_y',
+             labeller = label_wrap_gen(width = 10, multi_line = TRUE)) +
+  labs(x = 'log<sub>2</sub>(FC)',
+       y = NULL,
+       colour = 'Contrast',
+       fill = 'Significance') +
+  theme_classic() +
+  theme(axis.text.y = element_markdown(colour = 'black', size = 8),
+        panel.background = element_rect(colour = 'black'),
+        strip.background = element_blank(),
+        legend.key = element_blank(),
+        strip.text = element_text(colour = 'black', size = 14),
+        axis.text.x = element_text(colour = 'black', size = 10),
+        axis.title.x = element_markdown(colour = 'black', size = 12))
+ggsave('../Results/Fig6_diseaseAssociated_ASVs_v3.png', height = 6, width = 6)
+
+#### FC vs Control (untreated & healthy) ####
+tmp <- prePost_effects %>%
+  filter(if_any(all_of(str_c(c('antibiotic', 'disease'), fdr_or_qvalue)), ~. < alpha_test)) %>%
+  mutate(grouping = case_when(!!sym(str_c('antibiotic', fdr_or_qvalue)) < alpha_test & 
+                                !!sym(str_c('disease', fdr_or_qvalue)) < alpha_test ~ 'Both',
+                              !!sym(str_c('disease', fdr_or_qvalue)) < alpha_test ~ 'Disease',
+                              !!sym(str_c('antibiotic', fdr_or_qvalue)) < alpha_test ~ 'Antibiotic')) %>%
+  rowwise(asv_id, name, grouping) %>%
+  mutate(new_contrast = list(emmeans::contrast(posthoc,
+                                               method = list(before_anti = c(0, 0, 0, 1, -1),
+                                                             after_anti = c(1, 0, -1, 0, 0),
+                                                             after_disease = c(0, 1, -1, 0, 0))))) 
+
+tmp %>%
+  reframe(broom::tidy(new_contrast, conf.int = TRUE)) %>%
+  select(asv_id, name, grouping, contrast, 
+         estimate, conf.low, conf.high, p.value) %>%
+  bind_rows(left_join(field_associations, 
+                      distinct(., asv_id, grouping),
+                      by = 'asv_id')) %>%
+  mutate(time = str_extract(contrast, 'Field|before|after') %>% str_to_title %>%
+           factor(levels = rev(c('Field', 'Before', 'After'))),
+         antibiotic = if_else(str_detect(contrast, 'anti'), 'Antibiotic', 'Untreated'),
+         disease = if_else(!str_detect(contrast, 'anti'), 'Disease', 'Healthy'),
+         control_v = if_else(str_detect(contrast, 'anti'), 'Antibiotic', 'Disease'),
+         signigicance_control_v = case_when(p.value > alpha_test ~ NA_character_,
+                                            TRUE ~ control_v)) %>%
+  # filter(asv_id == 'ASV8') %>%
+  
+  ggplot(aes(y = name, x = estimate, xmin = conf.low, xmax = conf.high, 
+             shape = time, colour = control_v, fill = signigicance_control_v,
+             group = time)) +
+  geom_vline(xintercept = 0, linetype = 'dashed') +
+  geom_errorbar(width = 0.1, position = position_dodge(0.5),
+                show.legend = FALSE) +
+  geom_point(position = position_dodge(0.5), size = 2) +
+  scale_shape_manual(values = c('Field' = 'square filled', 
+                                'Before' = 'triangle down filled', 
+                                'After' = 'circle filled'),
+                     breaks = c('Field', 'Before', 'After')) +
+  scale_fill_manual(na.value = 'white', values = c('Antibiotic' = "#3A9AB2", 'Disease' = "#F11B00")) +
+  scale_colour_manual(values = c('Antibiotic' = "#3A9AB2", 'Disease' = "#F11B00")) +
+  guides(fill = 'none') +
+  facet_grid(grouping ~ ., scales = 'free_y', space = 'free_y') +
+  labs(x = 'logFC', y = NULL,
+       colour = 'Contrast',
+       shape = 'Time') +
+  theme_classic() +
+  theme(axis.text.y = element_markdown(colour = 'black', size = 8),
+        panel.background = element_rect(colour = 'black'),
+        strip.background = element_blank(),
+        legend.key = element_blank())
+ggsave('../Results/Figure6_vsControl.png', height = 10, width = 7)
+
+#### Other Plots ####
 associated_asvs %>%
   filter(str_detect(association, 'Healthy')) %>%
   arrange(n_associations) %>%

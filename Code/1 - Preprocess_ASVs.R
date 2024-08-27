@@ -23,13 +23,54 @@ filter_missingness <- function(data, prop_missing){
   data[keep, keep.lib.sizes = FALSE]
 }
 
+phyloseq_filter_prevalence_fix <- function (physeq, prev.trh = 0.05, 
+                                            abund.trh = NULL, threshold_condition = "OR", 
+                                            abund.type = "total") {
+  if (prev.trh > 1 | prev.trh < 0) {
+    stop("Prevalence threshold should be non-negative value in the range of [0, 1].\n")
+  }
+  if (!is.null(abund.trh)) {
+    if (abund.trh <= 0) {
+      stop("Abundance threshold should be non-negative value larger 0.\n")
+    }
+  }
+  prevalenceThreshold <- prev.trh * phyloseq::nsamples(physeq)
+  prevdf <- prevalence(physeq, package = 'base')
+  if (abund.type == "total") {
+    prevdf$AbundFilt <- prevdf$TotalAbundance
+  }
+  if (abund.type == "mean") {
+    prevdf$AbundFilt <- prevdf$MeanAbundance
+  }
+  if (abund.type == "median") {
+    prevdf$AbundFilt <- prevdf$MedianAbundance
+  }
+  if (is.null(abund.trh)) {
+    tt <- prevdf$Prevalence >= prevalenceThreshold
+  }
+  if (!is.null(abund.trh)) {
+    if (threshold_condition == "OR") {
+      tt <- (prevdf$Prevalence >= prevalenceThreshold | 
+               prevdf$AbundFilt >= abund.trh)
+    }
+    if (threshold_condition == "AND") {
+      tt <- (prevdf$Prevalence >= prevalenceThreshold & 
+               prevdf$AbundFilt >= abund.trh)
+    }
+  }
+  keepTaxa <- prevdf$Taxa[tt]
+  res <- phyloseq::prune_taxa(taxa = keepTaxa, x = physeq)
+  return(res)
+}
+
+
 #### Data ####
 tank_microbiome <- read_rds('../intermediate_files/full_tank_microbiome.rds')
 
 #### Normalize ASV counts ####
 otu_tmm <- tank_microbiome %>%
   # subset_taxa(rownames(tax_table(microbiome_data)) %in% asvs_to_keep) %>%
-  phyloseq_filter_prevalence(prev.trh = 0.1) %>% 
+  phyloseq_filter_prevalence_fix(prev.trh = 0.1) %>% 
   prune_samples(sample_sums(.) > 0, .) %>%
   otu_table() %>% 
   t %>% #NOTE: *genus and family do not need the t but ASVs need the t*

@@ -59,15 +59,17 @@ alpha_metrics <- alpha(tank_data, zeroes = TRUE,
 alpha_metrics %>% 
   pivot_longer(cols = c(richness:phylogenetic),
                names_to = 'metric') %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health)) %>%
   
   ggplot(aes(x = time, y = value, fill = health, shape = anti)) +
   stat_summary(fun.data = mean_se, position = position_dodge(0.5)) +
   
   facet_wrap(~metric, scales = 'free_y') +
   
-  scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
-                                                                type = "continuous"),
-                                       c('H', 'D')),
+  scale_fill_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
+                                                                  type = "continuous"), "#80D1E9"),
+                                       c('H', 'D', 'H_A')),
                     breaks = c('D', 'H'), 
                     labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                     drop = FALSE) +
@@ -76,7 +78,7 @@ alpha_metrics %>%
                      labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
   scale_x_discrete(labels = ~str_to_sentence(.) %>% str_c(., '\nDisease Dose')) +
   guides(fill = guide_legend(override.aes = list(size = 1, shape = 'circle filled')),
-         shape = guide_legend(override.aes = list(size = 1, fill = 'black'))) +
+         shape = guide_legend(override.aes = list(size = 1, fill = c("#3A9AB2", "#80D1E9")))) +
   labs(x = NULL, 
        y = 'Chao1',
        fill = 'Health\nState',
@@ -112,6 +114,9 @@ ref_grid(richness_model_pois) %>%
 
 richness_plot <- emmeans(richness_model_pois, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   rename(response = rate) %>%
   ggplot(aes(x = time, y = response, 
              ymin = response - std.error, 
@@ -123,9 +128,10 @@ richness_plot <- emmeans(richness_model_pois, ~time_treat, type = 'response') %>
   geom_point(position = position_dodge(0.5), 
              size = 2) +
   
-  scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
+  scale_fill_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
                                                                 type = "continuous"),
-                                       c('H', 'D')),
+                                         "#80D1E9"),
+                                       c('H', 'D', 'H_A')),
                     breaks = c('D', 'H'), 
                     labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                     drop = FALSE) +
@@ -134,7 +140,7 @@ richness_plot <- emmeans(richness_model_pois, ~time_treat, type = 'response') %>
                      labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
   scale_x_discrete(labels = ~str_to_sentence(.) %>% str_c(., '\nDisease Dose')) +
   guides(fill = guide_legend(override.aes = list(size = 4, shape = 'circle filled')),
-         shape = guide_legend(override.aes = list(size = 4, fill = 'black'))) +
+         shape = guide_legend(override.aes = list(size = 4, fill = c("#3A9AB2", "#80D1E9")))) +
   # facet_wrap( ~ name, nrow = 1, scales = 'free_y') +
   labs(x = NULL, 
        y = 'Richness',
@@ -166,6 +172,9 @@ emmeans(evenness_model, ~time_treat) %>%
 
 evenness_plot <- emmeans(evenness_model, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   ggplot(aes(x = time, y = response, 
              ymin = response - std.error, 
              ymax = response + std.error,
@@ -176,9 +185,10 @@ evenness_plot <- emmeans(evenness_model, ~time_treat, type = 'response') %>%
   geom_point(position = position_dodge(0.5), 
              size = 2) +
   
-  scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
-                                                                type = "continuous"),
-                                       c('H', 'D')),
+  scale_fill_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
+                                                                  type = "continuous"),
+                                         "#80D1E9"),
+                                       c('H', 'D', 'H_A')),
                     breaks = c('D', 'H'), 
                     labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                     drop = FALSE) +
@@ -187,7 +197,7 @@ evenness_plot <- emmeans(evenness_model, ~time_treat, type = 'response') %>%
                      labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
   scale_x_discrete(labels = ~str_to_sentence(.) %>% str_c(., '\nDisease Dose')) +
   guides(fill = guide_legend(override.aes = list(size = 4, shape = 'circle filled')),
-         shape = guide_legend(override.aes = list(size = 4, fill = 'black'))) +
+         shape = guide_legend(override.aes = list(size = 4, fill = c("#3A9AB2", "#80D1E9")))) +
   # facet_wrap( ~ name, nrow = 1, scales = 'free_y') +
   labs(x = NULL, 
        y = 'Evenness',
@@ -222,6 +232,9 @@ ref_grid(diversity_model) %>%
 
 diversity_plot <- emmeans(diversity_model, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   ggplot(aes(x = time, y = response, 
              ymin = response - std.error, 
              ymax = response + std.error,
@@ -232,9 +245,10 @@ diversity_plot <- emmeans(diversity_model, ~time_treat, type = 'response') %>%
   geom_point(position = position_dodge(0.5), 
              size = 2) +
   
-  scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
-                                                                type = "continuous"),
-                                       c('H', 'D')),
+  scale_fill_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
+                                                                  type = "continuous"),
+                                         "#80D1E9"),
+                                       c('H', 'D', 'H_A')),
                     breaks = c('D', 'H'), 
                     labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                     drop = FALSE) +
@@ -243,7 +257,7 @@ diversity_plot <- emmeans(diversity_model, ~time_treat, type = 'response') %>%
                      labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
   scale_x_discrete(labels = ~str_to_sentence(.) %>% str_c(., '\nDisease Dose')) +
   guides(fill = guide_legend(override.aes = list(size = 4, shape = 'circle filled')),
-         shape = guide_legend(override.aes = list(size = 4, fill = 'black'))) +
+         shape = guide_legend(override.aes = list(size = 4, fill = c("#3A9AB2", "#80D1E9")))) +
   # facet_wrap( ~ name, nrow = 1, scales = 'free_y') +
   labs(x = NULL, 
        y = 'Diversity',
@@ -293,6 +307,9 @@ ref_grid(dominance_model) %>%
 
 dominance_plot <- emmeans(dominance_model, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   ggplot(aes(x = time, y = response, 
              ymin = response - std.error, 
              ymax = response + std.error,
@@ -303,9 +320,10 @@ dominance_plot <- emmeans(dominance_model, ~time_treat, type = 'response') %>%
   geom_point(position = position_dodge(0.5), 
              size = 2) +
   
-  scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
-                                                                type = "continuous"),
-                                       c('H', 'D')),
+  scale_fill_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
+                                                                  type = "continuous"),
+                                         "#80D1E9"),
+                                       c('H', 'D', 'H_A')),
                     breaks = c('D', 'H'), 
                     labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                     drop = FALSE) +
@@ -314,7 +332,7 @@ dominance_plot <- emmeans(dominance_model, ~time_treat, type = 'response') %>%
                      labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
   scale_x_discrete(labels = ~str_to_sentence(.) %>% str_c(., '\nDisease Dose')) +
   guides(fill = guide_legend(override.aes = list(size = 4, shape = 'circle filled')),
-         shape = guide_legend(override.aes = list(size = 4, fill = 'black'))) +
+         shape = guide_legend(override.aes = list(size = 4, fill = c("#3A9AB2", "#80D1E9")))) +
   # facet_wrap( ~ name, nrow = 1, scales = 'free_y') +
   labs(x = NULL, 
        y = 'Dominance',
@@ -358,6 +376,9 @@ emmeans(phylo_model_norm, ~time_treat) %>%
 
 phylo_plot <- emmeans(phylo_model_norm, ~time_treat, type = 'response') %>%
   process_outemmeans %>%
+  mutate(health = case_when(health == 'H' & anti == 'A' ~ 'H_A',
+                            TRUE ~ health),
+         health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   rename(response = estimate) %>%
   ggplot(aes(x = time, y = response, 
              ymin = response - std.error, 
@@ -369,9 +390,10 @@ phylo_plot <- emmeans(phylo_model_norm, ~time_treat, type = 'response') %>%
   geom_point(position = position_dodge(0.5), 
              size = 2) +
   
-  scale_fill_manual(values = set_names(wesanderson::wes_palette("Zissou1", 2, 
-                                                                type = "continuous"),
-                                       c('H', 'D')),
+  scale_fill_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
+                                                                  type = "continuous"),
+                                         "#80D1E9"),
+                                       c('H', 'D', 'H_A')),
                     breaks = c('D', 'H'), 
                     labels = c('H' = 'Healthy', 'D' = 'Diseased'),
                     drop = FALSE) +
@@ -380,7 +402,7 @@ phylo_plot <- emmeans(phylo_model_norm, ~time_treat, type = 'response') %>%
                      labels = c('A'= 'Antibiotic\nTreated', 'N' = 'Untreated')) +
   scale_x_discrete(labels = ~str_to_sentence(.) %>% str_c(., '\nDisease Dose')) +
   guides(fill = guide_legend(override.aes = list(size = 4, shape = 'circle filled')),
-         shape = guide_legend(override.aes = list(size = 4, fill = 'black'))) +
+         shape = guide_legend(override.aes = list(size = 4, fill = c("#3A9AB2", "#80D1E9")))) +
   # facet_wrap( ~ name, nrow = 1, scales = 'free_y') +
   labs(x = NULL, 
        y = 'Phylogenetic Diversity',
@@ -398,5 +420,42 @@ list(phylo_plot, evenness_plot,
   wrap_plots(ncol = 2) +
   plot_layout(guides = 'collect', axes = 'collect',
               axis_titles = 'collect') +
-  plot_annotation(tag_levels = 'A')
+  plot_annotation(tag_levels = 'A') &
+  theme(legend.box = "horizontal")
 ggsave('../Results/Fig3_alpha_diversity.png', height = 8, width = 6)
+
+#### Significance Table ####
+# model <- phylo_model_norm
+model_2_table <- function(model){
+  main_effect <- car::Anova(model) %>%
+    as_tibble() %>%
+    select(-Df) %>%
+    rename(p_chisq = `Pr(>Chisq)`)
+  
+  individual_effects <- emmeans(model, ~time_treat) %>%
+    contrast(method = list('disease' = c(0, 1, -1/2, 0, -1/2),
+                           'antibiotic' = c(1/2, 0, -1/2, 1/2, -1/2),
+                           'time' = c(1/2, 0, 1/2, -1/2, -1/2))) %>%
+    as_tibble %>%
+    select(contrast, estimate, p.value) %>%
+    mutate(direction = if_else(estimate < 0, '-', '+'),
+           .keep = 'unused') %>%
+    pivot_wider(names_from = contrast,
+                values_from = c(direction, p.value), 
+                names_vary = 'slowest')
+  
+  bind_cols(main_effect, individual_effects)
+}
+
+tribble(
+  ~'metric', ~'model',
+  'richness', richness_model_pois,
+  'evenness', evenness_model,
+  'diversity', diversity_model,
+  'dominance', dominance_model,
+  'phylo', phylo_model_norm,
+) %>%
+  rowwise(metric) %>%
+  reframe(model_2_table(model)) %>%
+  write_csv('../Results/alpha_diversity_metrics.csv')
+  

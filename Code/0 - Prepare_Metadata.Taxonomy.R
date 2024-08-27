@@ -87,8 +87,10 @@ microbiome_data <- microbiome_raw %>%
                 family != "Mitochondria" &
                 class != "Chloroplast" & 
                 order != "Chloroplast") %>%
+  subset_samples(dataset == 'tank') %>%
+  subset_samples(anti_health %in% c('A_D', 'N_D')) %>%
+  subset_samples(geno != c('GE')) %>%
   prune_samples(sample_sums(.) > 1000, .) %>%
-  subset_samples(site != 'MG') %>% #no disease samples
   prune_samples(!str_detect(rownames(sample_data(.)), 
                             str_c(remove_samples, collapse = '|')), .)
 
