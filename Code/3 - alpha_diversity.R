@@ -119,8 +119,9 @@ richness_plot <- emmeans(richness_model_pois, ~time_treat, type = 'response') %>
          health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   rename(response = rate) %>%
   ggplot(aes(x = time, y = response, 
-             ymin = response - std.error, 
-             ymax = response + std.error,
+             # ymin = response - std.error, 
+             # ymax = response + std.error,
+             ymin = conf.low, ymax = conf.high,
              fill = health, shape = anti)) +
   geom_errorbar(width = 0.1,
                 position = position_dodge(0.5),
@@ -176,8 +177,9 @@ evenness_plot <- emmeans(evenness_model, ~time_treat, type = 'response') %>%
                             TRUE ~ health),
          health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   ggplot(aes(x = time, y = response, 
-             ymin = response - std.error, 
-             ymax = response + std.error,
+             # ymin = response - std.error, 
+             # ymax = response + std.error,
+             ymin = conf.low, ymax = conf.high,
              fill = health, shape = anti)) +
   geom_errorbar(width = 0.1,
                 position = position_dodge(0.5),
@@ -236,8 +238,9 @@ diversity_plot <- emmeans(diversity_model, ~time_treat, type = 'response') %>%
                             TRUE ~ health),
          health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   ggplot(aes(x = time, y = response, 
-             ymin = response - std.error, 
-             ymax = response + std.error,
+             # ymin = response - std.error, 
+             # ymax = response + std.error,
+             ymin = conf.low, ymax = conf.high,
              fill = health, shape = anti)) +
   geom_errorbar(width = 0.1,
                 position = position_dodge(0.5),
@@ -311,8 +314,9 @@ dominance_plot <- emmeans(dominance_model, ~time_treat, type = 'response') %>%
                             TRUE ~ health),
          health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   ggplot(aes(x = time, y = response, 
-             ymin = response - std.error, 
-             ymax = response + std.error,
+             # ymin = response - std.error, 
+             # ymax = response + std.error,
+             ymin = conf.low, ymax = conf.high,
              fill = health, shape = anti)) +
   geom_errorbar(width = 0.1,
                 position = position_dodge(0.5),
@@ -381,8 +385,9 @@ phylo_plot <- emmeans(phylo_model_norm, ~time_treat, type = 'response') %>%
          health = factor(health, levels = c('H', 'H_A', 'D'))) %>%
   rename(response = estimate) %>%
   ggplot(aes(x = time, y = response, 
-             ymin = response - std.error, 
-             ymax = response + std.error,
+             # ymin = response - std.error, 
+             # ymax = response + std.error,
+             ymin = conf.low, ymax = conf.high,
              fill = health, shape = anti)) +
   geom_errorbar(width = 0.1,
                 position = position_dodge(0.5),
@@ -423,6 +428,7 @@ list(phylo_plot, evenness_plot,
   plot_annotation(tag_levels = 'A') &
   theme(legend.box = "horizontal")
 ggsave('../Results/Fig3_alpha_diversity.png', height = 8, width = 6)
+ggsave('../Results/Fig3.tiff', height = 8, width = 6, dpi = 'print')
 
 #### Significance Table ####
 # model <- phylo_model_norm

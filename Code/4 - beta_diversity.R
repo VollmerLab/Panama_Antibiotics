@@ -274,9 +274,9 @@ dbrda_plot <- pcoa_data %>%
   geom_path(data = ellipse_data, aes(colour = health),
             linewidth = 0.5, show.legend = FALSE, linetype = 'solid') +
   
-  geom_point(size = 1.5, stroke = 1) +
+  geom_point(size = 3, stroke = 1) +
   
-  geom_point(data = centroid_data, size = 5, stroke = 2) +
+  geom_point(data = centroid_data, size = 7, stroke = 2) +
   
   
   scale_colour_manual(values = set_names(c(wesanderson::wes_palette("Zissou1", 2, 
@@ -374,7 +374,8 @@ filter(the_env, fdr.bh < 0.05) %>%
 dbrda_plot +
   geom_segment(data = filter(the_env, fdr.bh < 0.05, r2 > 0.09), 
                xend = 0, yend = 0, inherit.aes = FALSE,
-               aes(x = 3.5 * Dim1, y = 3.5 * Dim2)) +
+               aes(x = 3.5 * Dim1, y = 3.5 * Dim2),
+               alpha = 0.25, linetype = 'dashed') +
   geom_text(data = filter(the_env, fdr.bh < 0.05, r2 > 0.09), 
                inherit.aes = FALSE,
                aes(x = 3.5 * Dim1, y = 3.5 * Dim2,
@@ -427,8 +428,9 @@ dbrda_plot +
                                      TRUE ~ 0.5)), 
             check_overlap = FALSE) +
   expand_limits(x = c(-5.5, 6))
-ggsave('../Results/Fig3_asv_dbrda.png', height = 9, width = 12) 
 
+ggsave('../Results/Fig4_asv_dbrda.png', height = 9, width = 12) 
+ggsave('../Results/Fig4_r1.tiff', height = 9, width = 12, dpi = 'print')
 
 
 #### NMDS ####

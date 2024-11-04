@@ -247,9 +247,24 @@ plot_microshades_jds <- function(mdf_group, cdf, group_label = "Phylum Genus", x
 
 # data <- microbiome_data
 make_microbe_plot <- function(data, highest_taxon = 'order', lower_taxon = 'genus',
-                              top_choices = NULL, ...){
+                              top_choices = NULL, sample_font_size, sample_vjust, ...){
   
   grouping_levels <- c('health', 'time', 'anti')
+  
+  sample_sizes <- sample_data(data) %>%
+    as_tibble %>%
+    mutate(time = time_fac) %>%
+    summarise(n = n(),
+              n_frag = n_distinct(fragment),
+              .by = all_of(grouping_levels)) %>%
+    # count(across(all_of(grouping_levels))) %>%
+    mutate(health = str_replace_all(health, c('H' = 'Healthy', 'D' = 'Diseased')),
+           time = str_replace_all(time, c('before' = 'Before', 'after' = 'After')),
+           anti = str_replace_all(anti, c('A' = 'Antibiotics', 'N' = 'Untreated'))) %>%
+    mutate(Sample = str_c(!!!syms(grouping_levels[c(3, 1)]), sep = '_'),
+           Sample = fct_relevel(Sample, 'Untreated_Diseased', after = Inf),
+           time = factor(time, levels = c('Before', 'After'))) %>%
+    select(Sample, time, n, n_frag)
   
   update_data <- data %>%
     tax_glom(lower_taxon) %>%
@@ -351,6 +366,9 @@ make_microbe_plot <- function(data, highest_taxon = 'order', lower_taxon = 'genu
   }
   
   plot_ordergenus_prelim <- plot_microshades_jds(mdf_ordergenus, cdf_ordergenus) + 
+    geom_text(data = sample_sizes, 
+              aes(x = Sample, y = Inf, label = n), 
+              inherit.aes = FALSE, vjust = sample_vjust, size = sample_font_size) +
     scale_x_discrete(labels = ~str_replace_all(., '_', '\n')) +
     scale_y_continuous(labels = scales::percent, expand = expansion(mult = c(0, 0.05))) +
     facet_grid(~time, scales = "free", space = "free",
@@ -396,13 +414,18 @@ sample_data(microbiome_data)
 #### Make Plot ####
 microbial_diversity <- microbiome_data %>%
   make_microbe_plot(highest_taxon = 'order', lower_taxon = 'genus',
-                    legend_key_size = 1, legend_text_size = 14)
+                    legend_key_size = 1, legend_text_size = 14, 
+                    sample_font_size = 5, sample_vjust = 2.5)
 
 
 plot_grid(microbial_diversity$plot + theme(strip.text = element_text(hjust = 0)),
           cowplot::plot_grid(NULL, microbial_diversity$legend, NULL, ncol = 1, rel_heights = c(0.12, 1, 0.12)), 
           rel_widths = c(1, .25))
 ggsave('../Results/Fig2_overall_composition.png', height = 10, width = 10, bg = 'white')
+ggsave('../Results/Fig2_r1.tiff', height = 10, width = 10, dpi = 'print', bg = 'white')
+
+
+
 write_rds(microbial_diversity[-1], '../intermediate_files/asv_colors.rds')
 
 #### Describe post rarity purge ####

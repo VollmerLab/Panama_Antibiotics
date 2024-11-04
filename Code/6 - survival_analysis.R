@@ -115,14 +115,18 @@ broom::tidy(km_model) %>%
                               exposure == 'Disease' & antibiotics == 'Antibiotic' ~ 'D_A',
                               TRUE ~ exposure)) %>%
   ggplot(aes(x = time, y = estimate, colour = exposure,
-             ymin = estimate - std.error, ymax = estimate + std.error,
+             # ymin = estimate - std.error, ymax = estimate + std.error,
+             ymin = conf.low, ymax = conf.high,
              fill = exposure, linetype = antibiotics)) +
   pammtools::geom_stepribbon(alpha = 0.25, colour = NA, show.legend = FALSE,
                              direction = 'mid') +
   pammtools::geom_stephazard(show.legend = TRUE, direction = 'mid',
                              linewidth = 0.75) +
   
-  geom_text(data = sig_groups, aes(x = Inf, y = estimate, label = .group),
+  geom_text(data = sig_groups, aes(x = Inf, label = .group,
+                                   y = case_when(.group == 'B' & antibiotics == 'Untreated' ~ 1.01 * estimate,
+                                                 .group == 'B' & antibiotics == 'Antibiotic' ~ (1 - 0.01) * estimate,
+                                                 TRUE ~ estimate)),
             inherit.aes = FALSE, hjust = 1.2) +
   
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
@@ -158,6 +162,7 @@ broom::tidy(km_model) %>%
         legend.text = element_text(colour = 'black', size = 12),
         legend.title = element_text(colour = 'black', size = 14))
 ggsave('../Results/Fig1_survival.png', height = 7, width = 10)
+ggsave('../Results/Fig1.tiff', height = 7, width = 10, dpi = 'print')
 
 broom::tidy(km_model) %>%
   filter(time == max(time))

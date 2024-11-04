@@ -1,5 +1,3 @@
-##TODO - Fix table 2 to have DF and t
-##TODO - check plot axis titles
 
 #### Libraries ####
 library(multcomp)
@@ -175,6 +173,19 @@ if(file.exists('../intermediate_files/all_asv_models.rds.xz')){
 prePost_effects %>%
   select(-where(is.list), -name) %>%
   write_csv('../Results/individual_asv_results.csv')
+
+#### Numbers for Paper ####
+prePost_effects %>%
+  filter(asv_id == 'ASV8') %>%
+  pull(posthoc) %>%
+  pluck(1) 
+
+prePost_effects %>%
+  filter(asv_id == 'ASV8') %>%
+  pull(contrast) %>%
+  pluck(1) %>%
+  broom::tidy()
+mean(exp(c(1.41, 1.9)))
 
 #### Summarize Results ####
 prePost_effects %>%
@@ -499,7 +510,7 @@ ggdraw(base_plot) +
             x = 0.75, y = 0.25, width = 0.25, height = 0.75)
 ggsave('../Results/Fig5_asv_upset.png', 
        height = 12, width = 10, bg = 'white')
-
+ggsave('../Results/Fig5.jpg', height = 12, width = 10, dpi = 'print', bg = 'white')
 
 #### Plot by grouping ####
 select(prePost_effects, name, ends_with(fdr_or_qvalue), metrics) %>%
@@ -744,13 +755,24 @@ field_associations <- sebastians_field %>%
   summarise(model = list(lm(rclr ~ health)),
             .groups = 'rowwise') %>%
   mutate(posthoc = list(emmeans::emmeans(model, ~health))) %>%
-  reframe(emmeans::contrast(posthoc, 'pairwise') %>%
+  reframe(anova(model) %>%
+            as_tibble(rownames = 'term') %>%
+            mutate(dDF = Df[term == 'Residuals']) %>%
+            filter(term == 'health') %>%
+            select(Df, dDF, `F value`, `Pr(>F)`),
+          
+          emmeans::contrast(posthoc, 'pairwise') %>%
             broom::tidy(conf.int = TRUE) %>%
             select(estimate, conf.low, conf.high, p.value) %>%
             mutate(contrast = 'Field')) %>%
   left_join(select(associated_asvs, asv_id, name),
             by = 'asv_id') %>%
   mutate(fdr = p.adjust(p.value, str_remove(fdr_or_qvalue, '^_fdr.') %>% str_to_upper()))
+
+filter(field_associations, fdr < 0.05)
+
+filter(field_associations, fdr >= 0.05)
+
 
 #### All Contrasts ####
 prePost_effects %>%
@@ -771,9 +793,9 @@ prePost_effects %>%
             mutate(fdr = fdr)) %>%
   select(asv_id, name, grouping, contrast, 
          estimate, conf.low, conf.high, fdr) %>%
-  bind_rows(left_join(field_associations, 
-                      distinct(., asv_id, grouping),
-                      by = 'asv_id')) %>%
+  # bind_rows(left_join(field_associations, 
+  #                     distinct(., asv_id, grouping),
+  #                     by = 'asv_id')) %>%
   mutate(contrast = str_to_title(contrast),
          grouping = factor(grouping, levels = c('Disease', 'Disease & Antibiotic', 'Antibiotic')),
          fill_value = if_else(fdr >= alpha_test, NA_character_, contrast)) %>%
@@ -829,6 +851,43 @@ prePost_effects %>%
         axis.text.x = element_text(colour = 'black', size = 10),
         axis.title.x = element_markdown(colour = 'black', size = 12))
 ggsave('../Results/Fig6_diseaseAssociated_ASVs_v3.png', height = 6, width = 6)
+ggsave('../Results/Fig6_r1.tiff', height = 6, width = 6, dpi = 'print')
+
+
+#Aureispira question
+prePost_effects %>%
+  filter(str_detect(genus, 'Aureispira'))  %>%
+  select(species, asv_id, fdr.bh)
+
+prePost_effects %>%
+  filter(str_detect(genus, 'Aureispira')) %>%
+  rowwise(asv_id, name) %>%
+  mutate(fdr = list(c_across(all_of(str_c(c('disease', 'antibiotic', 'time'), fdr_or_qvalue))))) %>%
+  
+  reframe(broom::tidy(contrast, conf.int = TRUE) %>%
+            mutate(fdr = fdr)) %>%
+  select(asv_id, name, contrast, 
+         estimate, conf.low, conf.high, fdr) %>%
+  ggplot(aes(y = name, x = estimate, 
+             colour = contrast,
+             # fill = fill_value,
+             xmin = conf.low,
+             xmax = conf.high)) +
+  geom_vline(xintercept = 0) +
+  geom_errorbar(width = 0.5,
+                position = position_dodge(0.75),
+                show.legend = FALSE) +
+  geom_point(position = position_dodge(0.75), 
+             shape = 'circle filled', size = 4) +
+  scale_colour_manual(values = c('time' = 'gray50',
+                                 'antibiotic' = "#80D1E9",
+                                 'disease' = "#F11B00",
+                                 'Field' = 'forestgreen')) +
+  guides(colour = guide_legend(override.aes = list(size = 4, shape = 'circle')),
+         fill = guide_legend(override.aes = list(size = 4, 
+                                                 shape = c('Significant' = 'circle', 
+                                                           "Non-Significant" = 'circle open'), 
+                                                 fill = 'black'))) 
 
 #### FC vs Control (untreated & healthy) ####
 tmp <- prePost_effects %>%
