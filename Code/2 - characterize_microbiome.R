@@ -288,6 +288,9 @@ make_microbe_plot <- function(data, highest_taxon = 'order', lower_taxon = 'genu
     rename(Abundance = rel_abun) %>%
     mutate(Sample = str_c(!!!syms(grouping_levels[c(3, 1)]), sep = '_'),
            Sample = fct_relevel(Sample, 'Untreated_Diseased', after = Inf),
+           Sample = factor(Sample, levels = c('Untreated_Healthy',
+                                              'Antibiotics_Healthy',
+                                              'Untreated_Diseased')),
            time = factor(time, levels = c('Before', 'After'))) %>%
     as.data.frame() %>%
     mutate(genus = str_c('<i>', genus, '</i>'))
@@ -417,12 +420,13 @@ microbial_diversity <- microbiome_data %>%
                     legend_key_size = 1, legend_text_size = 14, 
                     sample_font_size = 5, sample_vjust = 2.5)
 
+microbial_diversity$plot
 
 plot_grid(microbial_diversity$plot + theme(strip.text = element_text(hjust = 0)),
           cowplot::plot_grid(NULL, microbial_diversity$legend, NULL, ncol = 1, rel_heights = c(0.12, 1, 0.12)), 
           rel_widths = c(1, .25))
 ggsave('../Results/Fig2_overall_composition.png', height = 10, width = 10, bg = 'white')
-ggsave('../Results/Fig2_r1.tiff', height = 10, width = 10, dpi = 'print', bg = 'white')
+ggsave('../Results/Fig2_r4.tiff', height = 10, width = 10, dpi = 'print', bg = 'white')
 
 
 

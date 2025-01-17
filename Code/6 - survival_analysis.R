@@ -149,7 +149,7 @@ broom::tidy(km_model) %>%
   guides(colour = guide_legend(override.aes = list(linewidth = 1.5)),
          linetype = guide_legend(override.aes = list(linewidth = 1.5))) +
   labs(x = 'Time Post-Exposure (D)',
-       y = 'Fragment Survival (%)',
+       y = 'Fragments Uninfected (%)',
        colour = 'Exposure',
        fill = 'Exposure',
        linetype = 'Antibiotic\nTreatment') +
@@ -162,7 +162,7 @@ broom::tidy(km_model) %>%
         legend.text = element_text(colour = 'black', size = 12),
         legend.title = element_text(colour = 'black', size = 14))
 ggsave('../Results/Fig1_survival.png', height = 7, width = 10)
-ggsave('../Results/Fig1.tiff', height = 7, width = 10, dpi = 'print')
+ggsave('../Results/Fig1_r4.tiff', height = 7, width = 10, dpi = 'print')
 
 broom::tidy(km_model) %>%
   filter(time == max(time))

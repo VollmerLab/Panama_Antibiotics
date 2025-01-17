@@ -64,8 +64,23 @@ phyloseq_filter_prevalence_fix <- function (physeq, prev.trh = 0.05,
 }
 
 
+
 #### Data ####
 tank_microbiome <- read_rds('../intermediate_files/full_tank_microbiome.rds')
+
+cyanos_to_add <- read_rds('../intermediate_files/cyanos_to_add.rds')
+
+# Remove phylogenetic trees from both objects
+tank_microbiome <- phyloseq(otu_table(tank_microbiome),
+                            sample_data(tank_microbiome),
+                            tax_table(tank_microbiome))
+cyanos_to_add <- phyloseq(otu_table(cyanos_to_add),
+                          sample_data(cyanos_to_add),
+                          tax_table(cyanos_to_add))
+
+# Merge the phyloseq objects
+tank_microbiome <- merge_phyloseq(tank_microbiome, cyanos_to_add)
+
 
 #### Normalize ASV counts ####
 otu_tmm <- tank_microbiome %>%
@@ -82,6 +97,8 @@ otu_tmm <- tank_microbiome %>%
   filter_missingness(0.9) %>%
   
   edgeR::calcNormFactors(method = 'TMMwsp')
+
+rownames(otu_tmm$counts)[rownames(otu_tmm$counts) %in% colnames(otu_table(cyanos_to_add))]
 
 #### Normalize with rCLR - compositional ####
 compositional_asvs <- otu_table(tank_microbiome) %>% 
